@@ -1,0 +1,56 @@
+import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useStoreState, useStoreActions } from 'easy-peasy';
+
+const Nav = () => {
+  const items = useStoreState((state) => state.items);
+  const search = useStoreState((state) => state.search);
+  const setSearch = useStoreActions((actions) => actions.setSearch);
+  const setSearchResults = useStoreActions(
+    (actions) => actions.setSearchResults
+  );
+
+  useEffect(() => {
+    const filteredResults = items.filter(
+      (item) =>
+        item.brand.toLowerCase().includes(search.toLowerCase()) ||
+        item.model.toLowerCase().includes(search.toLowerCase()) ||
+        parseInt(item.price) === parseInt(search.toLowerCase()) ||
+        item.entry.toLowerCase().includes(search.toLowerCase())
+    );
+
+    setSearchResults(filteredResults.reverse());
+  }, [items, search, setSearchResults]);
+
+  return (
+    <nav className="Nav">
+      <form
+        action=""
+        className="searchForm"
+        onSubmit={(e) => e.preventDefault()}
+      >
+        <label htmlFor="search">Search Item</label>
+        <input
+          id="search"
+          type="text"
+          placeholder="search items"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </form>
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="login">Login</Link>
+        </li>
+        <li>
+          <Link to="/about">About</Link>
+        </li>
+      </ul>
+    </nav>
+  );
+};
+
+export default Nav;

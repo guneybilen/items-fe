@@ -1,23 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from 'react';
+import useAxiosFetch from './hooks/useAxiosFetch';
+import Header from './components/Header';
+import Nav from './components/Nav';
+import Footer from './components/Footer';
+import Home from './components/Home';
+// import NewItem from './components/NewItem';
+import ItemPage from './components/ItemPage';
+import About from './components/About';
+import Missing from './components/Missing';
+import EditItem from './components/EditItem';
+import Login from './auth/Login';
+
+import { Route, Routes } from 'react-router-dom';
+import { useStoreActions } from 'easy-peasy';
 
 function App() {
+  const setItems = useStoreActions((actions) => actions.setItems);
+
+  const { data, fetchError, isLoading } = useAxiosFetch(
+    'http://localhost:8000/api/items/'
+  );
+
+  useEffect(() => {
+    setItems(data);
+  }, [data, setItems]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header title="electronics guru" />
+      <Nav />
+      <Routes>
+        <Route
+          path="/"
+          exact
+          element={<Home fetchError={fetchError} isLoading={isLoading} />}
+        />
+        {/* <Route path="/item" exact element={<NewItem />} /> */}
+        <Route path="login/" exact element={<Login />} />
+        <Route path="edit/:slug" exact element={<EditItem />} />
+        <Route path="items/:slug" element={<ItemPage />} />
+        <Route path="/about" element={<About />} />
+        <Route path="*" element={<Missing />} />
+      </Routes>
+      <Footer />
     </div>
   );
 }
