@@ -6,9 +6,10 @@ export default function Login() {
   const [password, setPassword] = React.useState('');
   const [message, setMessage] = React.useState('');
 
-  const success = async (text) => {
-    console.log('Yeah! Authenticated!');
-    await localStorage.setItem('salesToken', text.access);
+  const success = (data) => {
+    console.log('Authenticated!');
+    localStorage.setItem('token', data.access);
+    localStorage.setItem('token', data.refresh);
     window.location = '/';
   };
 
