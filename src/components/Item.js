@@ -10,7 +10,7 @@ const Item = ({ item }) => {
           {item.brand} &nbsp;
           {item.model}
         </div>
-        <div className="h5 text-dark">{item.price}</div>
+        <div className="h5 text-dark">CAD$ {item.price}</div>
         <p className="postDate">{dt}</p>
       </Link>
       <p className="postBody">

@@ -1,26 +1,48 @@
-import { useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 // import { format } from 'date-fns';
 
 const EditItem = () => {
   const history = useNavigate();
-  const { slug } = useParams();
+  const updated = useRef(false);
+  const dirty = useRef(false);
+
+  const formEl = useRef(null);
+
+  const { sluggedName } = useParams();
 
   const brand = useStoreState((state) => state.brand);
   const model = useStoreState((state) => state.model);
   const entry = useStoreState((state) => state.entry);
   const price = useStoreState((state) => state.price);
+  const seller = useStoreState((state) => state.seller);
+  const slug = useStoreState((state) => state.slug);
 
   const setBrand = useStoreActions((actions) => actions.setBrand);
   const setModel = useStoreActions((actions) => actions.setModel);
   const setPrice = useStoreActions((actions) => actions.setPrice);
   const setEntry = useStoreActions((actions) => actions.setEntry);
-
+  const setSeller = useStoreActions((actions) => actions.setSeller);
+  const setSlug = useStoreActions((actions) => actions.setSlug);
   const editItem = useStoreActions((actions) => actions.editItem);
 
   const getItemById = useStoreState((state) => state.getItemById);
-  const item = getItemById(slug);
+  const item = getItemById(sluggedName);
+
+  useEffect(() => {
+    if (
+      slug !== sluggedName &&
+      updated.current === true &&
+      dirty.current === true
+    ) {
+      history(`/items/${slug}`);
+    }
+
+    if (updated.current === true && dirty.current === false) {
+      history(`/items/${slug}`);
+    }
+  });
 
   useEffect(() => {
     if (item) {
@@ -28,20 +50,33 @@ const EditItem = () => {
       setModel(item.model);
       setPrice(item.price);
       setEntry(item.entry);
+      setSeller(item.seller);
+      setSlug(item.slug);
     }
-  }, [item, setBrand, setModel, setPrice, setEntry]);
 
-  const handleEdit = (slug) => {
+    let eventVar;
+    if (formEl && formEl.current) {
+      eventVar = formEl.current.addEventListener('input', () => {
+        updated.current = true;
+        dirty.current = true;
+      });
+    }
+
+    return () => eventVar?.removeEventListener('input');
+  }, [item, setBrand, setModel, setPrice, setEntry, setSeller, setSlug]);
+
+  const handleEdit = (sluggedName) => {
     // const datetime = format(new Date(), 'MMMM dd, yyyy pp');
     const updatedItem = {
-      slug: slug,
+      sluggedName: sluggedName,
       brand: brand,
       model: model,
       price: price,
       entry: entry,
+      seller: seller,
     };
     editItem(updatedItem);
-    history(`/item/${slug}`);
+    updated.current = true;
   };
 
   return (
@@ -52,6 +87,7 @@ const EditItem = () => {
           <form
             action=""
             className="newPostForm"
+            ref={formEl}
             onSubmit={(e) => e.preventDefault()}
           >
             <label htmlFor="itemBrand">Brand:</label>
@@ -86,13 +122,18 @@ const EditItem = () => {
               value={entry}
               onChange={(e) => setEntry(e.target.value)}
             />
-            <button type="button" onClick={() => handleEdit(item.slug)}>
+            <button
+              type="button"
+              onClick={() => {
+                handleEdit(sluggedName);
+              }}
+            >
               Submit
             </button>
           </form>
         </>
       )}
-      {!brand && !model && !price && (
+      {/* {!item && (
         <>
           <h2>item not found</h2>
           <p>well that's dissapponting.</p>
@@ -100,7 +141,7 @@ const EditItem = () => {
             <Link to="/">visit our homepage</Link>
           </p>
         </>
-      )}
+      )} */}
     </main>
   );
 };

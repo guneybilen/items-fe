@@ -4,7 +4,7 @@ const Feed = ({ items }) => {
   return (
     <>
       {items.map((item) => (
-        <Item key={item.pk} item={item} />
+        <Item key={item.slug} item={item} />
       ))}
     </>
   );

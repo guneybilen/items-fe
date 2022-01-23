@@ -8,8 +8,8 @@ export default function Login() {
 
   const success = (data) => {
     console.log('Authenticated!');
-    localStorage.setItem('token', data.access);
-    localStorage.setItem('token', data.refresh);
+    localStorage.setItem('access', data.access);
+    localStorage.setItem('refresh', data.refresh);
     window.location = '/';
   };
 

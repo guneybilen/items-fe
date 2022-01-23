@@ -37,8 +37,8 @@ function App() {
         />
         {/* <Route path="/item" exact element={<NewItem />} /> */}
         <Route path="login/" exact element={<Login />} />
-        <Route path="edit/:slug" exact element={<EditItem />} />
-        <Route path="items/:slug" element={<ItemPage />} />
+        <Route path="edit/:sluggedName" exact element={<EditItem />} />
+        <Route path="items/:sluggedName" element={<ItemPage />} />
         <Route path="/about" element={<About />} />
         <Route path="*" element={<Missing />} />
       </Routes>

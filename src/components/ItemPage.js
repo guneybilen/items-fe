@@ -3,11 +3,11 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 import { format, parseISO } from 'date-fns';
 
 const ItemPage = () => {
-  const { slug } = useParams();
+  const { sluggedName } = useParams();
   const history = useNavigate();
   const deleteItem = useStoreActions((actions) => actions.deleteItem);
   const getItemById = useStoreState((state) => state.getItemById);
-  const item = getItemById(slug);
+  const item = getItemById(sluggedName);
 
   // let dt = format(parseISO(item.createdAt), 'MMMM dd, yyyy pp');
 
@@ -23,23 +23,27 @@ const ItemPage = () => {
           <>
             <h3>{item?.brand}</h3>
             <p>{item?.model}</p>
+            <p>CAD$ {item.price}</p>
+
+            <p className="itemBody">{item?.entry}</p>
+
             <p className="itemDate">
               {item.createdAt &&
                 format(parseISO(item.createdAt), 'MMMM dd, yyyy pp')}
             </p>
-            <p className="itemBody">{item?.body}</p>
-            <Link to={`/edit/${item?.slug}`}>
+
+            <Link to={`/edit/${item.slug}`}>
               <button className="editButton">Edit Item</button>
             </Link>
             <button
               className="deleteButton"
-              onClick={() => handleDelete(item.slug)}
+              onClick={() => handleDelete(item.sluggedName)}
             >
               Delete Item
             </button>
           </>
         )}
-        {!item && (
+        {/* {!item && (
           <>
             <h2>item not found</h2>
             <p>well, that is disappointing</p>
@@ -47,7 +51,7 @@ const ItemPage = () => {
               <Link to="/">visit our homepage</Link>
             </p>
           </>
-        )}
+        )} */}
       </article>
     </main>
   );
