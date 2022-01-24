@@ -1,21 +1,26 @@
 import React from 'react';
 import login_api from '../api/login_api';
+import { useStoreActions } from 'easy-peasy';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
+  const history = useNavigate();
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [message, setMessage] = React.useState('');
+  const setUser = useStoreActions((actions) => actions.setUser);
 
-  const success = (data) => {
+  const success = (data, username) => {
     console.log('Authenticated!');
     localStorage.setItem('access', data.access);
     localStorage.setItem('refresh', data.refresh);
-    window.location = '/';
+    localStorage.setItem('username', username);
+    setUser(username);
+    history('/');
   };
 
   const tryLogin = async (e) => {
     e.preventDefault();
-    console.log('Loggin in with', username, password);
     await login_api(username, password, success, (text) => {
       setMessage(text);
     });

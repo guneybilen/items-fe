@@ -10,15 +10,15 @@ const EditItem = () => {
 
   const formEl = useRef(null);
 
-  const { sluggedName } = useParams();
+  const { slug } = useParams();
 
   const brand = useStoreState((state) => state.brand);
   const model = useStoreState((state) => state.model);
   const entry = useStoreState((state) => state.entry);
   const price = useStoreState((state) => state.price);
   const seller = useStoreState((state) => state.seller);
-  const slug = useStoreState((state) => state.slug);
-
+  const sluggy = useStoreState((state) => state.slug);
+  // console.log(sluggy);
   const setBrand = useStoreActions((actions) => actions.setBrand);
   const setModel = useStoreActions((actions) => actions.setModel);
   const setPrice = useStoreActions((actions) => actions.setPrice);
@@ -28,24 +28,24 @@ const EditItem = () => {
   const editItem = useStoreActions((actions) => actions.editItem);
 
   const getItemById = useStoreState((state) => state.getItemById);
-  const item = getItemById(sluggedName);
+  const item = getItemById(slug);
+
+  // console.log('sluggy', sluggy);
+  // console.log('slug', slug);
 
   useEffect(() => {
-    if (
-      slug !== sluggedName &&
-      updated.current === true &&
-      dirty.current === true
-    ) {
+    if (updated.current === true && dirty.current === false) {
       history(`/items/${slug}`);
     }
 
-    if (updated.current === true && dirty.current === false) {
-      history(`/items/${slug}`);
+    if (updated.current === true && dirty.current === true) {
+      history(`/items/${sluggy}`);
     }
   });
 
   useEffect(() => {
     if (item) {
+      setSlug(slug);
       setBrand(item.brand);
       setModel(item.model);
       setPrice(item.price);
@@ -57,18 +57,19 @@ const EditItem = () => {
     let eventVar;
     if (formEl && formEl.current) {
       eventVar = formEl.current.addEventListener('input', () => {
-        updated.current = true;
         dirty.current = true;
       });
     }
 
     return () => eventVar?.removeEventListener('input');
+
+    //eslint-disable-next-line
   }, [item, setBrand, setModel, setPrice, setEntry, setSeller, setSlug]);
 
-  const handleEdit = (sluggedName) => {
+  const handleEdit = (sluggy) => {
     // const datetime = format(new Date(), 'MMMM dd, yyyy pp');
     const updatedItem = {
-      sluggedName: sluggedName,
+      slug: sluggy,
       brand: brand,
       model: model,
       price: price,
@@ -106,7 +107,7 @@ const EditItem = () => {
               value={model}
               onChange={(e) => setModel(e.target.value)}
             />
-            <label htmlFor="itemPrice">Price:</label>
+            <label htmlFor="itemPrice">CAD$ Price:</label>
             <input
               type="text"
               id="itemPrice"
@@ -125,7 +126,7 @@ const EditItem = () => {
             <button
               type="button"
               onClick={() => {
-                handleEdit(sluggedName);
+                handleEdit(sluggy);
               }}
             >
               Submit
@@ -145,5 +146,4 @@ const EditItem = () => {
     </main>
   );
 };
-
 export default EditItem;

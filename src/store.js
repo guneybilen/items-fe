@@ -3,16 +3,20 @@ import { createStore, action, thunk, computed } from 'easy-peasy';
 // import api from './api/items';
 
 export default createStore({
+  user: '',
+  setUser: action((state, payload) => {
+    state.user = payload;
+  }),
+
+  nickname: '',
+  setNickname: action((state, payload) => {
+    state.nickname = payload;
+  }),
+
   items: [],
   setItems: action((state, payload) => {
     state.items = payload;
   }),
-
-  // setItemsComputed: computed((data, response, slug) => {
-  //   data.items.map((item) =>
-  //     item.slug === slug ? { ...response.data } : item
-  //   );
-  // }),
 
   slug: '',
   setSlug: action((state, payload) => {
@@ -75,45 +79,61 @@ export default createStore({
     return (slug) => state.items.find((item) => item.slug.toString() === slug);
   }),
 
-  // savePost: thunk(async (actions, newItem, helpers) => {
-  //   const { items } = helpers.getState();
-  //   try {
-  //     const response = await api.post(
-  //       `http://localhost:8000/api/items`,
-  //       newItem
-  //     );
-  //     actions.setItems(() => [...items, response.data]);
-  //     actions.setSlug('');
-  //     actions.setBrand('');
-  //     actions.setPhone('');
-  //     actions.setPrice('');
-  //     actions.setSeller('');
-  //     actions.setEmail('');
-  //     actions.setCreatedAt('');
-  //     actions.setEntry('');
-  //   } catch (err) {
-  //     console.log(`Error: ${err.message}`);
-  //   }
-  // }),
+  savePost: thunk(async (actions, newItem, helpers) => {
+    const { items } = helpers.getState();
+    try {
+      const response = await axios.post(
+        `http://localhost:8000/api/items/`,
+        newItem,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            accept: 'application/json',
+            Authorization: `JWT ${localStorage.getItem('access')}`,
+          },
+        }
+      );
+      actions.setItems([...items, response.data]);
+      actions.setSlug('');
+      actions.setBrand('');
+      actions.setPhone('');
+      actions.setPrice('');
+      actions.setModel('');
+      actions.setEntry('');
+    } catch (err) {
+      console.log(`Error: ${err.message}`);
+    }
+  }),
 
-  // deletePost: thunk(async (actions, id, helpers) => {
-  //   const { items } = helpers.getState();
-  //   try {
-  //     await api.delete(`http://localhost:8000/item/${id}`);
-  //     actions.setItems(() => items.filter((items) => items.id !== id));
-  //   } catch (err) {
-  //     console.log(`Error: ${err.message}`);
-  //   }
-  // }),
+  deleteItem: thunk(async (actions, slug, helpers) => {
+    const { items } = helpers.getState();
+    try {
+      await axios.delete(`http://localhost:8000/api/items/${slug}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          accept: 'application/json',
+          Authorization: `JWT ${localStorage.getItem('access')}`,
+        },
+      });
+      actions.setItems(items.filter((items) => items.slug !== slug));
+      actions.setBrand('');
+      actions.setPhone('');
+      actions.setPrice('');
+      actions.setModel('');
+      actions.setEntry('');
+    } catch (err) {
+      console.log(`Error: ${err.message}`);
+    }
+  }),
 
   editItem: thunk(async (actions, updatedItem, helpers) => {
     const { items } = helpers.getState();
 
-    const { sluggedName } = updatedItem;
+    const { slug } = updatedItem;
 
     try {
       const response = await axios.put(
-        `http://localhost:8000/api/items/${sluggedName}/`,
+        `http://localhost:8000/api/items/${slug}/`,
         updatedItem,
         {
           headers: {
@@ -125,19 +145,18 @@ export default createStore({
       );
 
       actions.setItems(
-        items.map((item) =>
-          item.slug === sluggedName ? { ...response.data } : item
-        )
+        items.map((item) => (item.slug === slug ? { ...response.data } : item))
       );
 
-      actions.setSlug(response.data.slug);
-      // actions.setBrand('');
-      // actions.setPhone('');
-      // actions.setPrice('');
+      actions.setSlug('');
+      actions.setBrand('');
+      actions.setPhone('');
+      actions.setPrice('');
+      actions.setModel('');
       // actions.setSeller('');
       // actions.setEmail('');
       // actions.setCreatedAt('');
-      // actions.setEntry('');
+      actions.setEntry('');
     } catch (err) {
       console.log(`Error: ${err}`);
     }

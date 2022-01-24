@@ -1,48 +1,97 @@
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import { useNavigate } from 'react-router-dom';
-import { format } from 'date-fns';
+// import { format } from 'date-fns';
 
 const NewPost = () => {
   const history = useNavigate();
 
-  const posts = useStoreState((state) => state.posts);
-  const postTitle = useStoreState((state) => state.postTitle);
-  const postBody = useStoreState((state) => state.postBody);
+  const items = useStoreState((state) => state.items);
+  // console.log(items[0]['user']);
+  const brand = useStoreState((state) => state.brand);
+  const model = useStoreState((state) => state.model);
+  const entry = useStoreState((state) => state.entry);
+  const price = useStoreState((state) => state.price);
+  // const user = useStoreState((state) => state.user);
 
   const savePost = useStoreActions((actions) => actions.savePost);
-  const setPostTitle = useStoreActions((actions) => actions.setPostTitle);
-  const setPostBody = useStoreActions((actions) => actions.setPostBody);
+  const setBrand = useStoreActions((actions) => actions.setBrand);
+  const setModel = useStoreActions((actions) => actions.setModel);
+  const setPrice = useStoreActions((actions) => actions.setPrice);
+  const setEntry = useStoreActions((actions) => actions.setEntry);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const id = posts.length ? posts[posts.length - 1].id + 1 : 1;
-    const datetime = format(new Date(), 'MMMM dd, yyyy pp');
-    const newPost = { id, title: postTitle, datetime, body: postBody };
-    savePost(newPost);
-    history('/');
+    // const datetime = format(new Date(), 'MMMM dd, yyyy pp');
+
+    let emails = items.map((item) => item.user);
+    let found = emails.find(
+      (email) => email === localStorage.getItem('username')
+    );
+
+    let singleItem = '';
+    if (found) {
+      singleItem = items.find((item) => item.user === found);
+      const newPost = {
+        brand: brand,
+        model: model,
+        price: price,
+        entry: entry,
+        seller: singleItem.seller,
+      };
+      savePost(newPost);
+      history('/');
+    }
   };
 
   return (
     <main className="NewPost">
-      <h2>New Post</h2>
-      <form action="" className="newPostForm" onSubmit={handleSubmit}>
-        <label htmlFor="postTitle">Title:</label>
+      <h2>New Item</h2>
+      <form
+        action=""
+        className="newPostForm"
+        // ref = {formEll}
+        onSubmit={(e) => e.preventDefault()}
+      >
+        <label htmlFor="itemBrand">Brand:</label>
         <input
           type="text"
-          id="postTitle"
+          id="itemBrand"
           required
-          value={postTitle}
-          onChange={(e) => setPostTitle(e.target.value)}
+          value={brand}
+          onChange={(e) => setBrand(e.target.value)}
         />
-        <label htmlFor="postBody">Body:</label>
+        <label htmlFor="itemModel">Model:</label>
+        <input
+          type="text"
+          id="itemModel"
+          required
+          value={model}
+          onChange={(e) => setModel(e.target.value)}
+        />
+        <label htmlFor="itemPrice">(CAD$) Price:</label>
+        <input
+          type="text"
+          id="itemPrice"
+          required
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+        />
+        <label htmlFor="itemBody">Entry:</label>
         <textarea
           type="text"
-          id="postBody"
+          id="itemBody"
           required
-          value={postBody}
-          onChange={(e) => setPostBody(e.target.value)}
+          value={entry}
+          onChange={(e) => setEntry(e.target.value)}
         />
-        <button type="submit">Submit</button>
+        <button
+          type="button"
+          onClick={(e) => {
+            handleSubmit(e);
+          }}
+        >
+          Submit
+        </button>
       </form>
     </main>
   );

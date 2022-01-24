@@ -1,14 +1,21 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 
 const Nav = () => {
+  const history = useNavigate();
   const items = useStoreState((state) => state.items);
   const search = useStoreState((state) => state.search);
   const setSearch = useStoreActions((actions) => actions.setSearch);
   const setSearchResults = useStoreActions(
     (actions) => actions.setSearchResults
   );
+
+  const handleLogout = () => {
+    localStorage.removeItem('access');
+    localStorage.removeItem('refresh');
+    history('/');
+  };
 
   useEffect(() => {
     const filteredResults = items.filter(
@@ -43,7 +50,16 @@ const Nav = () => {
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="login">Login</Link>
+          <Link to="/item">Post New</Link>
+        </li>
+        <li>
+          {localStorage.getItem('access') && (
+            //eslint-disable-next-line
+            <a href="#" onClick={handleLogout}>
+              Logout
+            </a>
+          )}
+          {!localStorage.getItem('access') && <Link to="/login">Login</Link>}
         </li>
         <li>
           <Link to="/about">About</Link>

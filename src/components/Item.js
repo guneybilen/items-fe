@@ -10,14 +10,14 @@ const Item = ({ item }) => {
           {item.brand} &nbsp;
           {item.model}
         </div>
-        <div className="h5 text-dark">CAD$ {item.price}</div>
-        <p className="postDate">{dt}</p>
       </Link>
+      <div className="h5 text-dark">CAD$ {item.price}</div>
       <p className="postBody">
         {item.entry?.length < 25
           ? item.entry
           : `${item.entry?.slice(0, 25)}...`}
       </p>
+      <p className="postDate">{dt}</p>
       <hr />
     </article>
   );

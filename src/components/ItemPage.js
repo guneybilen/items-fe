@@ -3,17 +3,20 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 import { format, parseISO } from 'date-fns';
 
 const ItemPage = () => {
-  const { sluggedName } = useParams();
+  const { slug } = useParams();
   const history = useNavigate();
   const deleteItem = useStoreActions((actions) => actions.deleteItem);
   const getItemById = useStoreState((state) => state.getItemById);
-  const item = getItemById(sluggedName);
+  const item = getItemById(slug);
 
   // let dt = format(parseISO(item.createdAt), 'MMMM dd, yyyy pp');
 
-  const handleDelete = (id) => {
-    deleteItem(id);
-    history('/');
+  const handleDelete = (slug) => {
+    let confirmation = window.confirm('Are you sure for deleting the item?');
+    if (confirmation) {
+      deleteItem(slug);
+      history('/');
+    }
   };
 
   return (
@@ -37,21 +40,12 @@ const ItemPage = () => {
             </Link>
             <button
               className="deleteButton"
-              onClick={() => handleDelete(item.sluggedName)}
+              onClick={() => handleDelete(item.slug)}
             >
               Delete Item
             </button>
           </>
         )}
-        {/* {!item && (
-          <>
-            <h2>item not found</h2>
-            <p>well, that is disappointing</p>
-            <p>
-              <Link to="/">visit our homepage</Link>
-            </p>
-          </>
-        )} */}
       </article>
     </main>
   );

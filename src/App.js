@@ -4,7 +4,7 @@ import Header from './components/Header';
 import Nav from './components/Nav';
 import Footer from './components/Footer';
 import Home from './components/Home';
-// import NewItem from './components/NewItem';
+import NewItem from './components/NewItem';
 import ItemPage from './components/ItemPage';
 import About from './components/About';
 import Missing from './components/Missing';
@@ -16,6 +16,8 @@ import { useStoreActions } from 'easy-peasy';
 
 function App() {
   const setItems = useStoreActions((actions) => actions.setItems);
+  const setNickname = useStoreActions((actions) => actions.setNickname);
+  const setSeller = useStoreActions((actions) => actions.setSeller);
 
   const { data, fetchError, isLoading } = useAxiosFetch(
     'http://localhost:8000/api/items/'
@@ -23,7 +25,7 @@ function App() {
 
   useEffect(() => {
     setItems(data);
-  }, [data, setItems]);
+  }, [data, setItems, setNickname, setSeller]);
 
   return (
     <div className="App">
@@ -35,10 +37,10 @@ function App() {
           exact
           element={<Home fetchError={fetchError} isLoading={isLoading} />}
         />
-        {/* <Route path="/item" exact element={<NewItem />} /> */}
+        <Route path="/item" exact element={<NewItem />} />
         <Route path="login/" exact element={<Login />} />
-        <Route path="edit/:sluggedName" exact element={<EditItem />} />
-        <Route path="items/:sluggedName" element={<ItemPage />} />
+        <Route path="edit/:slug" exact element={<EditItem />} />
+        <Route path="items/:slug" element={<ItemPage />} />
         <Route path="/about" element={<About />} />
         <Route path="*" element={<Missing />} />
       </Routes>
