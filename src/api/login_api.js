@@ -13,6 +13,7 @@ const login_api = async (username, password, success, fail) => {
     success(response.data, username);
   } else {
     console.log('login in failed ', response.status);
+    fail();
   }
 };
 

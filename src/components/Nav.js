@@ -7,6 +7,8 @@ const Nav = () => {
   const items = useStoreState((state) => state.items);
   const search = useStoreState((state) => state.search);
   const setSearch = useStoreActions((actions) => actions.setSearch);
+  const nickname = useStoreState((state) => state.nickname);
+
   const setSearchResults = useStoreActions(
     (actions) => actions.setSearchResults
   );
@@ -14,6 +16,7 @@ const Nav = () => {
   const handleLogout = () => {
     localStorage.removeItem('access');
     localStorage.removeItem('refresh');
+    localStorage.removeItem('username');
     history('/');
   };
 
@@ -50,7 +53,7 @@ const Nav = () => {
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/item">Post New</Link>
+          <Link to="/item">New</Link>
         </li>
         <li>
           {localStorage.getItem('access') && (
@@ -63,6 +66,15 @@ const Nav = () => {
         </li>
         <li>
           <Link to="/about">About</Link>
+        </li>
+        <li>
+          {!localStorage.getItem('access') && <Link to="/signup">Signup</Link>}
+
+          {localStorage.getItem('access') && (
+            <span>
+              <i>{nickname}</i>
+            </span>
+          )}
         </li>
       </ul>
     </nav>

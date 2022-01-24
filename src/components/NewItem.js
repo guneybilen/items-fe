@@ -1,18 +1,14 @@
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import { useNavigate } from 'react-router-dom';
-// import { format } from 'date-fns';
 
 const NewPost = () => {
   const history = useNavigate();
 
-  const items = useStoreState((state) => state.items);
-  // console.log(items[0]['user']);
+  const id = useStoreState((state) => state.id);
   const brand = useStoreState((state) => state.brand);
   const model = useStoreState((state) => state.model);
   const entry = useStoreState((state) => state.entry);
   const price = useStoreState((state) => state.price);
-  // const user = useStoreState((state) => state.user);
-
   const savePost = useStoreActions((actions) => actions.savePost);
   const setBrand = useStoreActions((actions) => actions.setBrand);
   const setModel = useStoreActions((actions) => actions.setModel);
@@ -21,26 +17,17 @@ const NewPost = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // const datetime = format(new Date(), 'MMMM dd, yyyy pp');
 
-    let emails = items.map((item) => item.user);
-    let found = emails.find(
-      (email) => email === localStorage.getItem('username')
-    );
-
-    let singleItem = '';
-    if (found) {
-      singleItem = items.find((item) => item.user === found);
-      const newPost = {
-        brand: brand,
-        model: model,
-        price: price,
-        entry: entry,
-        seller: singleItem.seller,
-      };
-      savePost(newPost);
-      history('/');
-    }
+    const newPost = {
+      brand: brand,
+      model: model,
+      price: price,
+      entry: entry,
+      seller: id,
+    };
+    console.log('id', id);
+    savePost(newPost);
+    history('/');
   };
 
   return (
@@ -49,7 +36,6 @@ const NewPost = () => {
       <form
         action=""
         className="newPostForm"
-        // ref = {formEll}
         onSubmit={(e) => e.preventDefault()}
       >
         <label htmlFor="itemBrand">Brand:</label>

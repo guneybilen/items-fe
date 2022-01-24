@@ -10,14 +10,13 @@ import About from './components/About';
 import Missing from './components/Missing';
 import EditItem from './components/EditItem';
 import Login from './auth/Login';
+import Signup from './auth/Signup';
 
 import { Route, Routes } from 'react-router-dom';
 import { useStoreActions } from 'easy-peasy';
 
 function App() {
   const setItems = useStoreActions((actions) => actions.setItems);
-  const setNickname = useStoreActions((actions) => actions.setNickname);
-  const setSeller = useStoreActions((actions) => actions.setSeller);
 
   const { data, fetchError, isLoading } = useAxiosFetch(
     'http://localhost:8000/api/items/'
@@ -25,7 +24,7 @@ function App() {
 
   useEffect(() => {
     setItems(data);
-  }, [data, setItems, setNickname, setSeller]);
+  }, [data, setItems]);
 
   return (
     <div className="App">
@@ -39,6 +38,8 @@ function App() {
         />
         <Route path="/item" exact element={<NewItem />} />
         <Route path="login/" exact element={<Login />} />
+        <Route path="signup/" exact element={<Signup />} />
+
         <Route path="edit/:slug" exact element={<EditItem />} />
         <Route path="items/:slug" element={<ItemPage />} />
         <Route path="/about" element={<About />} />

@@ -13,6 +13,16 @@ export default createStore({
     state.nickname = payload;
   }),
 
+  id: '',
+  setId: action((state, payload) => {
+    state.id = payload;
+  }),
+
+  username: '',
+  setUsername: action((state, payload) => {
+    state.username = payload;
+  }),
+
   items: [],
   setItems: action((state, payload) => {
     state.items = payload;
