@@ -16,7 +16,6 @@ const Nav = () => {
   const handleLogout = () => {
     localStorage.removeItem('access');
     localStorage.removeItem('refresh');
-    localStorage.removeItem('username');
     history('/');
   };
 

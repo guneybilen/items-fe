@@ -5,6 +5,7 @@ import { format, parseISO } from 'date-fns';
 const ItemPage = () => {
   const { slug } = useParams();
   const history = useNavigate();
+  const nickname = useStoreState((state) => state.nickname);
   const deleteItem = useStoreActions((actions) => actions.deleteItem);
   const getItemById = useStoreState((state) => state.getItemById);
   const item = getItemById(slug);
@@ -14,7 +15,7 @@ const ItemPage = () => {
   const handleDelete = (slug) => {
     let confirmation = window.confirm('Are you sure for deleting the item?');
     if (confirmation) {
-      deleteItem(slug);
+      deleteItem({ slug, nickname });
       history('/');
     }
   };

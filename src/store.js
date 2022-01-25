@@ -1,26 +1,19 @@
 import axios from 'axios';
 import { createStore, action, thunk, computed } from 'easy-peasy';
 // import api from './api/items';
+axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.withCredentials = true;
 
 export default createStore({
-  user: '',
-  setUser: action((state, payload) => {
-    state.user = payload;
-  }),
-
   nickname: '',
   setNickname: action((state, payload) => {
     state.nickname = payload;
   }),
 
-  id: '',
-  setId: action((state, payload) => {
-    state.id = payload;
-  }),
-
-  username: '',
-  setUsername: action((state, payload) => {
-    state.username = payload;
+  loggedInID: '',
+  setLoggedInID: action((state, payload) => {
+    state.loggedInID = payload;
   }),
 
   items: [],
@@ -46,16 +39,6 @@ export default createStore({
   price: 0,
   setPrice: action((state, payload) => {
     state.price = payload;
-  }),
-
-  email: '',
-  setEmail: action((state, payload) => {
-    state.email = payload;
-  }),
-
-  phone: '',
-  setPhone: action((state, payload) => {
-    state.phone = payload;
   }),
 
   entry: '',
@@ -99,14 +82,13 @@ export default createStore({
           headers: {
             'Content-Type': 'application/json',
             accept: 'application/json',
-            Authorization: `JWT ${localStorage.getItem('access')}`,
+            Authorization: `Bearer ${localStorage.getItem('access')}`,
           },
         }
       );
       actions.setItems([...items, response.data]);
       actions.setSlug('');
       actions.setBrand('');
-      actions.setPhone('');
       actions.setPrice('');
       actions.setModel('');
       actions.setEntry('');
@@ -115,19 +97,24 @@ export default createStore({
     }
   }),
 
-  deleteItem: thunk(async (actions, slug, helpers) => {
+  deleteItem: thunk(async (actions, info, helpers) => {
     const { items } = helpers.getState();
+    const { slug, nickname } = info;
+    console.log('nickname', nickname);
     try {
-      await axios.delete(`http://localhost:8000/api/items/${slug}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          accept: 'application/json',
-          Authorization: `JWT ${localStorage.getItem('access')}`,
-        },
-      });
+      await axios.delete(
+        `http://localhost:8000/api/items/${slug}`,
+        { data: { nickname: nickname } },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            accept: 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('access')}`,
+          },
+        }
+      );
       actions.setItems(items.filter((items) => items.slug !== slug));
       actions.setBrand('');
-      actions.setPhone('');
       actions.setPrice('');
       actions.setModel('');
       actions.setEntry('');
@@ -149,7 +136,8 @@ export default createStore({
           headers: {
             'Content-Type': 'application/json',
             accept: 'application/json',
-            Authorization: `JWT ${localStorage.getItem('access')}`,
+            auth: `Bearer ${localStorage.getItem('access')}`,
+            name: 'bilen',
           },
         }
       );
@@ -160,12 +148,8 @@ export default createStore({
 
       actions.setSlug('');
       actions.setBrand('');
-      actions.setPhone('');
       actions.setPrice('');
       actions.setModel('');
-      // actions.setSeller('');
-      // actions.setEmail('');
-      // actions.setCreatedAt('');
       actions.setEntry('');
     } catch (err) {
       console.log(`Error: ${err}`);

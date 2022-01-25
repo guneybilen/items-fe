@@ -7,9 +7,7 @@ const Signup = () => {
   const setNicknameEasyPeasy = useStoreActions(
     (actions) => actions.setNickname
   );
-  const setUserNameEasyPeasy = useStoreActions(
-    (actions) => actions.setUsername
-  );
+
   const [email, setEmail] = useState('');
   const [password1, setPassword1] = useState('');
   const [password2, setPassword2] = useState('');
@@ -18,16 +16,13 @@ const Signup = () => {
   //eslint-disable-next-line
   const [loading, setLoading] = useState(true);
   const history = useNavigate();
-  const setUser = useStoreActions((actions) => actions.setUser);
 
   //eslint-disable-next-line
-  const success = (data, username) => {
+  const success = (data) => {
     console.log('Authenticated!');
     localStorage.setItem('access', data.access);
     localStorage.setItem('refresh', data.refresh);
     setNicknameEasyPeasy(nickname);
-    setUserNameEasyPeasy(username);
-    setUser(username);
     history('/');
   };
 

@@ -17,13 +17,13 @@ import { useStoreActions } from 'easy-peasy';
 
 function App() {
   const setItems = useStoreActions((actions) => actions.setItems);
-
   const { data, fetchError, isLoading } = useAxiosFetch(
     'http://localhost:8000/api/items/'
   );
 
   useEffect(() => {
     setItems(data);
+    // console.log(data);
   }, [data, setItems]);
 
   return (

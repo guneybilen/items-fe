@@ -13,12 +13,13 @@ const EditItem = () => {
   const { slug } = useParams();
 
   const brand = useStoreState((state) => state.brand);
+
+  const nickname = useStoreState((state) => state.nickname);
   const model = useStoreState((state) => state.model);
   const entry = useStoreState((state) => state.entry);
   const price = useStoreState((state) => state.price);
   const seller = useStoreState((state) => state.seller);
   const sluggy = useStoreState((state) => state.slug);
-  // console.log(sluggy);
   const setBrand = useStoreActions((actions) => actions.setBrand);
   const setModel = useStoreActions((actions) => actions.setModel);
   const setPrice = useStoreActions((actions) => actions.setPrice);
@@ -75,6 +76,7 @@ const EditItem = () => {
       price: price,
       entry: entry,
       seller: seller,
+      nickname: nickname,
     };
     editItem(updatedItem);
     updated.current = true;
