@@ -17,6 +17,7 @@ export default function Login() {
     console.log('Authenticated!');
     console.log(data);
     localStorage.setItem('access', data.access_token);
+    localStorage.setItem('nickname', data['user']['nickname']);
     setLoggedInID(data['user']['id']);
     setLoggedInNickname(data['user']['nickname']);
     history('/');

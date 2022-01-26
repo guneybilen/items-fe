@@ -15,7 +15,7 @@ const Nav = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('access');
-    localStorage.removeItem('refresh');
+    localStorage.removeItem('nickname');
     history('/');
   };
 
@@ -71,7 +71,7 @@ const Nav = () => {
 
           {localStorage.getItem('access') && (
             <span>
-              <i>{loggedInNickname}</i>
+              <i>{localStorage.getItem('nickname')}</i>
             </span>
           )}
         </li>
