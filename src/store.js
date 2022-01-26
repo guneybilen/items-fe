@@ -6,9 +6,14 @@ axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.withCredentials = true;
 
 export default createStore({
-  nickname: '',
-  setNickname: action((state, payload) => {
-    state.nickname = payload;
+  loggedInNickname: '',
+  setLoggedInNickname: action((state, payload) => {
+    state.loggedInNickname = payload;
+  }),
+
+  sellerNickname: '',
+  setSellerNickname: action((state, payload) => {
+    state.sellerNickname = payload;
   }),
 
   loggedInID: '',

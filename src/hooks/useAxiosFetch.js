@@ -13,8 +13,18 @@ const useAxiosFetch = (dataUrl) => {
     const fetchData = async (url) => {
       setIsLoading(true);
       try {
+        // const response = await axios.get(
+        //   url,
+        //   {
+        //     cancelToken: source.token,
+        //   },
+        //  headers:{'auth': `Bearer ${localStorage.getItem('access')}`}
+        // );
+
         const response = await axios.get(url, {
+          params: {},
           cancelToken: source.token,
+          headers: { auth: `Bearer ${localStorage.getItem('access')}` },
         });
 
         if (isMounted) {

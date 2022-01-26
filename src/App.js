@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-import useAxiosFetch from './hooks/useAxiosFetch';
 import Header from './components/Header';
 import Nav from './components/Nav';
 import Footer from './components/Footer';
@@ -11,31 +9,26 @@ import Missing from './components/Missing';
 import EditItem from './components/EditItem';
 import Login from './auth/Login';
 import Signup from './auth/Signup';
+import { useStoreState } from 'easy-peasy';
+import { useState, useEffect } from 'react';
 
 import { Route, Routes } from 'react-router-dom';
-import { useStoreActions } from 'easy-peasy';
 
 function App() {
-  const setItems = useStoreActions((actions) => actions.setItems);
-  const { data, fetchError, isLoading } = useAxiosFetch(
-    'http://localhost:8000/api/items/'
-  );
+  const items = useStoreState((state) => state.items);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    setItems(data);
-    // console.log(data);
-  }, [data, setItems]);
+    setLoaded(true);
+  }, [items]);
 
+  console.log(items);
   return (
     <div className="App">
       <Header title="electronics guru" />
       <Nav />
       <Routes>
-        <Route
-          path="/"
-          exact
-          element={<Home fetchError={fetchError} isLoading={isLoading} />}
-        />
+        {loaded && <Route path="/" exact element={<Home />} />}
         <Route path="/item" exact element={<NewItem />} />
         <Route path="login/" exact element={<Login />} />
         <Route path="signup/" exact element={<Signup />} />

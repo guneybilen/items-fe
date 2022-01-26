@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
   const setNicknameEasyPeasy = useStoreActions(
-    (actions) => actions.setNickname
+    (actions) => actions.setLoggedInNickname
   );
 
   const [email, setEmail] = useState('');

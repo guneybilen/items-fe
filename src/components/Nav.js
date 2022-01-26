@@ -7,7 +7,7 @@ const Nav = () => {
   const items = useStoreState((state) => state.items);
   const search = useStoreState((state) => state.search);
   const setSearch = useStoreActions((actions) => actions.setSearch);
-  const nickname = useStoreState((state) => state.nickname);
+  const loggedInNickname = useStoreState((state) => state.loggedInNickname);
 
   const setSearchResults = useStoreActions(
     (actions) => actions.setSearchResults
@@ -71,7 +71,7 @@ const Nav = () => {
 
           {localStorage.getItem('access') && (
             <span>
-              <i>{nickname}</i>
+              <i>{loggedInNickname}</i>
             </span>
           )}
         </li>

@@ -14,7 +14,7 @@ const EditItem = () => {
 
   const brand = useStoreState((state) => state.brand);
 
-  const nickname = useStoreState((state) => state.nickname);
+  const sellerNickname = useStoreState((state) => state.sellerNickname);
   const model = useStoreState((state) => state.model);
   const entry = useStoreState((state) => state.entry);
   const price = useStoreState((state) => state.price);
@@ -24,6 +24,9 @@ const EditItem = () => {
   const setModel = useStoreActions((actions) => actions.setModel);
   const setPrice = useStoreActions((actions) => actions.setPrice);
   const setEntry = useStoreActions((actions) => actions.setEntry);
+  const setSellerNickname = useStoreActions(
+    (actions) => actions.setSellerNickname
+  );
   const setSeller = useStoreActions((actions) => actions.setSeller);
   const setSlug = useStoreActions((actions) => actions.setSlug);
   const editItem = useStoreActions((actions) => actions.editItem);
@@ -51,6 +54,7 @@ const EditItem = () => {
       setModel(item.model);
       setPrice(item.price);
       setEntry(item.entry);
+      setSellerNickname(item.get_seller_nickname);
       setSeller(item.seller);
       setSlug(item.slug);
     }
@@ -76,7 +80,7 @@ const EditItem = () => {
       price: price,
       entry: entry,
       seller: seller,
-      nickname: nickname,
+      nickname: sellerNickname,
     };
     editItem(updatedItem);
     updated.current = true;
@@ -136,15 +140,6 @@ const EditItem = () => {
           </form>
         </>
       )}
-      {/* {!item && (
-        <>
-          <h2>item not found</h2>
-          <p>well that's dissapponting.</p>
-          <p>
-            <Link to="/">visit our homepage</Link>
-          </p>
-        </>
-      )} */}
     </main>
   );
 };

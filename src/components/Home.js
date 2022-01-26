@@ -1,8 +1,21 @@
 import Feed from './Feed';
 import { useStoreState } from 'easy-peasy';
+import useAxiosFetch from '../hooks/useAxiosFetch';
+import { useStoreActions } from 'easy-peasy';
+import { useEffect } from 'react';
 
-const Home = ({ isLoading, fetchError }) => {
+const Home = () => {
   const searchResults = useStoreState((state) => state.searchResults);
+  const setItems = useStoreActions((actions) => actions.setItems);
+
+  const { data, fetchError, isLoading } = useAxiosFetch(
+    'http://localhost:8000/api/items/'
+  );
+
+  useEffect(() => {
+    setItems(data);
+    // console.log(data);
+  }, [data, setItems]);
 
   return (
     <main className="Home">

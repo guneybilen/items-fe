@@ -9,15 +9,16 @@ export default function Login() {
   const [password, setPassword] = React.useState('');
   const [message, setMessage] = React.useState('');
   const setLoggedInID = useStoreActions((actions) => actions.setLoggedInID);
-  const setNickname = useStoreActions((actions) => actions.setNickname);
+  const setLoggedInNickname = useStoreActions(
+    (actions) => actions.setLoggedInNickname
+  );
 
   const success = (data) => {
     console.log('Authenticated!');
-    // console.log(data);
+    console.log(data);
     localStorage.setItem('access', data.access_token);
-    localStorage.setItem('refresh', data.refresh);
     setLoggedInID(data['user']['id']);
-    setNickname(data['user']['nickname']);
+    setLoggedInNickname(data['user']['nickname']);
     history('/');
   };
 
