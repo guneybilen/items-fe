@@ -3,6 +3,7 @@ import { format, parseISO } from 'date-fns';
 
 const Item = ({ item }) => {
   let dt = format(parseISO(item.createdAt), 'MMMM dd, yyyy pp');
+
   return (
     <article className="item">
       <Link to={`items/${item.slug}/`} className="item-link">

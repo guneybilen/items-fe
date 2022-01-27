@@ -7,7 +7,6 @@ const Nav = () => {
   const items = useStoreState((state) => state.items);
   const search = useStoreState((state) => state.search);
   const setSearch = useStoreActions((actions) => actions.setSearch);
-  const loggedInNickname = useStoreState((state) => state.loggedInNickname);
 
   const setSearchResults = useStoreActions(
     (actions) => actions.setSearchResults
