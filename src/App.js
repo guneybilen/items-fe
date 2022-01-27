@@ -12,8 +12,12 @@ import Signup from './auth/Signup';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import { useEffect } from 'react';
 import useAxiosFetch from './hooks/useAxiosFetch';
-
+import axios from 'axios';
 import { Route, Routes, useNavigate } from 'react-router-dom';
+
+axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.withCredentials = true;
 
 function App() {
   const history = useNavigate();
@@ -23,6 +27,17 @@ function App() {
   const { data, fetchError, isLoading } = useAxiosFetch(
     'http://localhost:8000/api/items/'
   );
+
+  useEffect(() => {
+    if (!localStorage.getItem('access')) {
+      axios
+        .post('http://localhost:8000/api/refreshtokenview/')
+        .then((e) => localStorage.setItem('access', e.data.access_token))
+        .catch((e) => {
+          console.log(e.message);
+        });
+    }
+  }, []);
 
   useEffect(() => {
     setItems(data);
@@ -43,6 +58,7 @@ function App() {
         <Routes history={history}>
           <Route
             path="/"
+            forceRefresh={true}
             exact
             element={<Home fetchError={fetchError} isLoading={isLoading} />}
           />

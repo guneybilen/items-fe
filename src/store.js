@@ -81,7 +81,7 @@ export default createStore({
     const { items } = helpers.getState();
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/items/`,
+        `http://localhost:8000/api/item/`,
         newItem,
         {
           headers: {

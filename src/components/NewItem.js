@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 const NewPost = () => {
   const history = useNavigate();
 
-  const id = useStoreState((state) => state.id);
+  const loggedInID = useStoreState((state) => state.loggedInID);
   const brand = useStoreState((state) => state.brand);
   const model = useStoreState((state) => state.model);
   const entry = useStoreState((state) => state.entry);
@@ -23,9 +23,9 @@ const NewPost = () => {
       model: model,
       price: price,
       entry: entry,
-      seller: id,
+      seller: loggedInID,
     };
-    console.log('id', id);
+    // console.log('loggedInID', loggedInID);
     savePost(newPost);
     history('/');
   };
