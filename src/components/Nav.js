@@ -13,8 +13,7 @@ const Nav = () => {
   );
 
   const handleLogout = () => {
-    localStorage.removeItem('access');
-    localStorage.removeItem('nickname');
+    localStorage.clear();
     history('/');
   };
 

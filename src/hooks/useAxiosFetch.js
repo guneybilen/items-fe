@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const useAxiosFetch = (dataUrl) => {
   const [data, setData] = useState([]);
   const [fetchError, setFetchError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const history = useNavigate();
 
   useEffect(() => {
     let isMounted = true;
@@ -13,14 +15,6 @@ const useAxiosFetch = (dataUrl) => {
     const fetchData = async (url) => {
       setIsLoading(true);
       try {
-        // const response = await axios.get(
-        //   url,
-        //   {
-        //     cancelToken: source.token,
-        //   },
-        //  headers:{'auth': `Bearer ${localStorage.getItem('access')}`}
-        // );
-
         const response = await axios.get(url, {
           params: {},
           cancelToken: source.token,
@@ -29,14 +23,14 @@ const useAxiosFetch = (dataUrl) => {
 
         if (isMounted) {
           setData(response.data);
-          // console.log('useAxiosFetch', response.data);
-
           setFetchError(null);
         }
       } catch (error) {
         if (isMounted) {
           setFetchError(error.message);
           setData([]);
+          localStorage.setItem('nickname', '');
+          history('login');
         }
       } finally {
         isMounted && setIsLoading(false);
@@ -48,7 +42,7 @@ const useAxiosFetch = (dataUrl) => {
       isMounted = false;
       source.cancel();
     };
-  }, [dataUrl]);
+  }, [dataUrl, history]);
 
   return { data, fetchError, isLoading };
 };

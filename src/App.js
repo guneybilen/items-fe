@@ -24,36 +24,33 @@ function App() {
   const items = useStoreState((state) => state.items);
   const setItems = useStoreActions((actions) => actions.setItems);
 
+  const loggedInID = useStoreState((state) => state.loggedInID);
+
   const { data, fetchError, isLoading } = useAxiosFetch(
     'http://localhost:8000/api/items/'
   );
 
   useEffect(() => {
-    if (!localStorage.getItem('access')) {
-      axios
-        .post('http://localhost:8000/api/refreshtokenview/')
-        .then((e) => localStorage.setItem('access', e.data.access_token))
-        .catch((e) => {
-          console.log(e.message);
-        });
+    async function fetchData() {
+      let response = await axios.post(
+        'http://localhost:8000/api/refreshtokenview/'
+      );
+      if (response.status === 200) {
+        localStorage.setItem('access', response.data.access_token);
+      }
+      localStorage.setItem('nickname', response.data['nickname']);
     }
-  }, []);
+    fetchData();
+  }, [history]);
 
   useEffect(() => {
     setItems(data);
-    // console.log(data);
   }, [data, setItems]);
-
-  // useEffect(() => {
-  //   if (items) {
-  //     setLoaded(true);
-  //   }
-  // }, [items]);
 
   return (
     <div className="App">
       <Header title="electronics guru" />
-      <Nav />
+      <Nav loggedInID={loggedInID} />
       {items && (
         <Routes history={history}>
           <Route
