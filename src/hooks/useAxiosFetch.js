@@ -29,7 +29,7 @@ const useAxiosFetch = (dataUrl) => {
         if (isMounted) {
           setFetchError(error.message);
           setData([]);
-          localStorage.setItem('nickname', '');
+          localStorage.removeItem('nickname');
           history('login');
         }
       } finally {

@@ -32,13 +32,21 @@ function App() {
 
   useEffect(() => {
     async function fetchData() {
-      let response = await axios.post(
-        'http://localhost:8000/api/refreshtokenview/'
-      );
-      if (response.status === 200) {
-        localStorage.setItem('access', response.data.access_token);
+      try {
+        let response = await axios.post(
+          'http://localhost:8000/api/refreshtokenview/'
+        );
+        if (response.status === 200 && response.data['nickname']) {
+          localStorage.setItem('access', response.data.access_token);
+          localStorage.setItem('nickname', response.data['nickname']);
+        }
+        if (response.status === 204) {
+          localStorage.removeItem('nickname');
+        }
+      } catch (e) {
+        console.log(e.message);
+        localStorage.clear();
       }
-      localStorage.setItem('nickname', response.data['nickname']);
     }
     fetchData();
   }, [history]);

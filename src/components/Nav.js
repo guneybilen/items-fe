@@ -7,13 +7,18 @@ const Nav = () => {
   const items = useStoreState((state) => state.items);
   const search = useStoreState((state) => state.search);
   const setSearch = useStoreActions((actions) => actions.setSearch);
+  const setLoggedInNickname = useStoreActions(
+    (actions) => actions.setLoggedInNickname
+  );
 
+  const loggedInNickname = useStoreState((state) => state.loggedInNickname);
   const setSearchResults = useStoreActions(
     (actions) => actions.setSearchResults
   );
 
   const handleLogout = () => {
     localStorage.clear();
+    setLoggedInNickname('');
     history('/');
   };
 
@@ -53,13 +58,13 @@ const Nav = () => {
           <Link to="/item">New</Link>
         </li>
         <li>
-          {localStorage.getItem('access') && (
+          {loggedInNickname && (
             //eslint-disable-next-line
             <a href="#" onClick={handleLogout}>
               Logout
             </a>
           )}
-          {!localStorage.getItem('access') && <Link to="/login">Login</Link>}
+          {!loggedInNickname && <Link to="/login">Login</Link>}
         </li>
         <li>
           <Link to="/about">About</Link>
