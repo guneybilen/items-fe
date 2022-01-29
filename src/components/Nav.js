@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import logout_api from '../api/logout_api';
+import jwt_decode from 'jwt-decode';
 
 const Nav = () => {
   const history = useNavigate();
@@ -15,6 +16,15 @@ const Nav = () => {
   const setSearchResults = useStoreActions(
     (actions) => actions.setSearchResults
   );
+
+  useEffect(() => {
+    let decoded = jwt_decode(localStorage.getItem('access'));
+
+    if (decoded['exp'] > Date.now()) {
+      console.log(decoded['exp'] > Date.now());
+      setLoggedInNickname('');
+    }
+  }, [setLoggedInNickname]);
 
   const handleLogout = () => {
     localStorage.clear();

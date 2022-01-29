@@ -11,10 +11,20 @@ import { useEffect } from 'react';
 import useAxiosFetch from './hooks/useAxiosFetch';
 import RequireAuth from './components/RequireAuth';
 import { Routes, Route } from 'react-router-dom';
+// import jwt_decode from 'jwt-decode';
 
 function App() {
   const setItems = useStoreActions((actions) => actions.setItems);
   const { data } = useAxiosFetch('http://localhost:8000/api/items/');
+  // const setLoggedInNickname = useStoreActions(
+  //   (actions) => actions.setLoggedInNickname
+  // );
+  // let decoded = jwt_decode(localStorage.getItem('access'));
+
+  // if (decoded['exp'] > Date.now()) {
+  //   console.log(decoded['exp'] > Date.now());
+  //   setLoggedInNickname('');
+  // }
 
   useEffect(() => {
     // console.log(data);
