@@ -1,19 +1,14 @@
-import { useStoreState, useStoreActions } from 'easy-peasy';
+import { useStoreActions } from 'easy-peasy';
 import { useNavigate } from 'react-router-dom';
-
+import { useState } from 'react';
 const NewPost = () => {
   const history = useNavigate();
 
-  const loggedInID = useStoreState((state) => state.loggedInID);
-  const brand = useStoreState((state) => state.brand);
-  const model = useStoreState((state) => state.model);
-  const entry = useStoreState((state) => state.entry);
-  const price = useStoreState((state) => state.price);
+  const [brand, setBrand] = useState('');
+  const [model, setModel] = useState('');
+  const [entry, setEntry] = useState('');
+  const [price, setPrice] = useState('');
   const savePost = useStoreActions((actions) => actions.savePost);
-  const setBrand = useStoreActions((actions) => actions.setBrand);
-  const setModel = useStoreActions((actions) => actions.setModel);
-  const setPrice = useStoreActions((actions) => actions.setPrice);
-  const setEntry = useStoreActions((actions) => actions.setEntry);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,9 +18,8 @@ const NewPost = () => {
       model: model,
       price: price,
       entry: entry,
-      seller: loggedInID,
+      seller: localStorage.getItem('loggedInId'),
     };
-    // console.log('loggedInID', loggedInID);
     savePost(newPost);
     history('/');
   };

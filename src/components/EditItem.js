@@ -14,28 +14,19 @@ const EditItem = () => {
 
   const brand = useStoreState((state) => state.brand);
 
-  const sellerNickname = useStoreState((state) => state.sellerNickname);
   const model = useStoreState((state) => state.model);
   const entry = useStoreState((state) => state.entry);
   const price = useStoreState((state) => state.price);
-  const seller = useStoreState((state) => state.seller);
   const sluggy = useStoreState((state) => state.slug);
   const setBrand = useStoreActions((actions) => actions.setBrand);
   const setModel = useStoreActions((actions) => actions.setModel);
   const setPrice = useStoreActions((actions) => actions.setPrice);
   const setEntry = useStoreActions((actions) => actions.setEntry);
-  const setSellerNickname = useStoreActions(
-    (actions) => actions.setSellerNickname
-  );
-  const setSeller = useStoreActions((actions) => actions.setSeller);
   const setSlug = useStoreActions((actions) => actions.setSlug);
   const editItem = useStoreActions((actions) => actions.editItem);
 
   const getItemById = useStoreState((state) => state.getItemById);
   const item = getItemById(slug);
-
-  // console.log('sluggy', sluggy);
-  // console.log('slug', slug);
 
   useEffect(() => {
     if (updated.current === true && dirty.current === false) {
@@ -54,8 +45,6 @@ const EditItem = () => {
       setModel(item.model);
       setPrice(item.price);
       setEntry(item.entry);
-      setSellerNickname(item.get_seller_nickname);
-      setSeller(item.seller);
       setSlug(item.slug);
     }
 
@@ -69,7 +58,7 @@ const EditItem = () => {
     return () => eventVar?.removeEventListener('input');
 
     //eslint-disable-next-line
-  }, [item, setBrand, setModel, setPrice, setEntry, setSeller, setSlug]);
+  }, [item, setBrand, setModel, setPrice, setEntry, setSlug]);
 
   const handleEdit = (sluggy) => {
     // const datetime = format(new Date(), 'MMMM dd, yyyy pp');
@@ -79,8 +68,8 @@ const EditItem = () => {
       model: model,
       price: price,
       entry: entry,
-      seller: seller,
-      nickname: sellerNickname,
+      seller: localStorage.getItem('seller'),
+      nickname: localStorage.getItem('nickname'),
     };
     editItem(updatedItem);
     updated.current = true;

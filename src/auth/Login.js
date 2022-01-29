@@ -9,6 +9,7 @@ export default function Login() {
   const [password, setPassword] = React.useState('');
   const [message, setMessage] = React.useState('');
   const setLoggedInID = useStoreActions((actions) => actions.setLoggedInID);
+  // const loggedInNickname = useStoreState((state) => state.loggedInNickname);
   const setLoggedInNickname = useStoreActions(
     (actions) => actions.setLoggedInNickname
   );
@@ -18,8 +19,10 @@ export default function Login() {
     // console.log(data);
     localStorage.setItem('access', data.access_token);
     localStorage.setItem('nickname', data['user']['nickname']);
+    localStorage.setItem('loggedInId', data['user']['id']);
     setLoggedInID(data['user']['id']);
     setLoggedInNickname(data['user']['nickname']);
+    // console.log(data['user']['nickname']);
     history('/');
   };
 

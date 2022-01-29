@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
+import logout_api from '../api/logout_api';
 
 const Nav = () => {
   const history = useNavigate();
@@ -11,27 +12,33 @@ const Nav = () => {
     (actions) => actions.setLoggedInNickname
   );
 
-  const loggedInNickname = useStoreState((state) => state.loggedInNickname);
   const setSearchResults = useStoreActions(
     (actions) => actions.setSearchResults
   );
 
   const handleLogout = () => {
     localStorage.clear();
+    logout_api();
     setLoggedInNickname('');
     history('/');
   };
 
   useEffect(() => {
-    const filteredResults = items.filter(
-      (item) =>
-        item.brand.toLowerCase().includes(search.toLowerCase()) ||
-        item.model.toLowerCase().includes(search.toLowerCase()) ||
-        parseInt(item.price) === parseInt(search.toLowerCase()) ||
-        item.entry.toLowerCase().includes(search.toLowerCase())
-    );
-
-    setSearchResults(filteredResults.reverse());
+    try {
+      const filteredResults =
+        items &&
+        items.filter(
+          (item) =>
+            item.brand.toLowerCase().includes(search.toLowerCase()) ||
+            item.model.toLowerCase().includes(search.toLowerCase()) ||
+            parseInt(item.price) === parseInt(search.toLowerCase()) ||
+            item.entry.toLowerCase().includes(search.toLowerCase())
+        );
+      setSearchResults(filteredResults.reverse());
+    } catch (e) {
+      console.error(e);
+      setSearchResults('');
+    }
   }, [items, search, setSearchResults]);
 
   return (
@@ -58,13 +65,13 @@ const Nav = () => {
           <Link to="/item">New</Link>
         </li>
         <li>
-          {loggedInNickname && (
+          {localStorage.getItem('nickname') && (
             //eslint-disable-next-line
             <a href="#" onClick={handleLogout}>
               Logout
             </a>
           )}
-          {!loggedInNickname && <Link to="/login">Login</Link>}
+          {!localStorage.getItem('nickname') && <Link to="/login">Login</Link>}
         </li>
         <li>
           <Link to="/about">About</Link>

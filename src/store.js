@@ -1,9 +1,5 @@
 import axios from 'axios';
 import { createStore, action, thunk, computed } from 'easy-peasy';
-// import api from './api/items';
-axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
-axios.defaults.xsrfCookieName = 'csrftoken';
-axios.defaults.withCredentials = true;
 
 export default createStore({
   loggedInNickname: '',

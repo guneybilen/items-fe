@@ -11,6 +11,10 @@ const ItemPage = () => {
   const deleteItem = useStoreActions((actions) => actions.deleteItem);
   const getItemById = useStoreState((state) => state.getItemById);
   const item = getItemById(slug);
+  if (item) {
+    localStorage.setItem('seller', item.seller);
+  }
+
   const [itemOwner, setItemOwner] = useState(false);
 
   // let dt = format(parseISO(item.createdAt), 'MMMM dd, yyyy pp');
@@ -24,11 +28,8 @@ const ItemPage = () => {
   };
 
   useEffect(() => {
-    if (
-      item &&
-      item.get_seller_nickname === loggedInNickname &&
-      parseInt(item.seller) === parseInt(loggedInID)
-    )
+    // console.log(item.get_seller_nickname);
+    if (item && item.get_seller_nickname === localStorage.getItem('nickname'))
       setItemOwner(true);
   }, [item, loggedInNickname, loggedInID]);
 
