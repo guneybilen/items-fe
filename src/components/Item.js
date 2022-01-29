@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
-import { format, parseISO } from 'date-fns';
+import { formatDistance, parseISO } from 'date-fns';
 
 const Item = ({ item }) => {
-  let dt = format(parseISO(item.createdAt), 'MMMM dd, yyyy pp');
+  // let dt = format(parseISO(item.createdAt), 'MMMM dd, yyyy pp');
+  let dt = formatDistance(new Date(), parseISO(item.createdAt));
 
   return (
     <article className="item">
@@ -18,7 +19,7 @@ const Item = ({ item }) => {
           ? item.entry
           : `${item.entry?.slice(0, 25)}...`}
       </p>
-      <p className="postDate">{dt}</p>
+      <p className="postDate">...{dt}</p>
       <hr />
     </article>
   );

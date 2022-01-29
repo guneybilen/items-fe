@@ -1,6 +1,6 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useStoreState, useStoreActions } from 'easy-peasy';
-import { format, parseISO } from 'date-fns';
+import { formatDistance, parseISO } from 'date-fns';
 import { useState, useEffect } from 'react';
 
 const ItemPage = () => {
@@ -45,8 +45,11 @@ const ItemPage = () => {
             <p className="itemBody">{item?.entry}</p>
 
             <p className="itemDate">
+              ...
               {item.createdAt &&
-                format(parseISO(item.createdAt), 'MMMM dd, yyyy pp')}
+                formatDistance(new Date(), parseISO(item.createdAt), {
+                  addSuffix: true,
+                })}
             </p>
 
             {itemOwner && (

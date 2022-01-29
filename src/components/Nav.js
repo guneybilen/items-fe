@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import logout_api from '../api/logout_api';
-import jwt_decode from 'jwt-decode';
+// import jwt_decode from 'jwt-decode';
 
 const Nav = () => {
   const history = useNavigate();
@@ -17,14 +17,21 @@ const Nav = () => {
     (actions) => actions.setSearchResults
   );
 
-  useEffect(() => {
-    let decoded = jwt_decode(localStorage.getItem('access'));
+  // useEffect(() => {
+  // let decoded =
+  // localStorage.getItem('access') &&
+  // jwt_decode(localStorage.getItem('access'));
+  // let expiration = decoded && decoded['exp'];
+  // let now = Math.floor(Date.now() / 1000);
+  // console.log(expiration, now);
 
-    if (decoded['exp'] > Date.now()) {
-      console.log(decoded['exp'] > Date.now());
-      setLoggedInNickname('');
-    }
-  }, [setLoggedInNickname]);
+  // if (expiration && expiration < now && localStorage.getItem('access')) {
+  // console.log('bilen');
+
+  // console.log(decoded['exp'] > Date.now());
+  // setLoggedInNickname('');
+  // }
+  // });
 
   const handleLogout = () => {
     localStorage.clear();
@@ -87,7 +94,9 @@ const Nav = () => {
           <Link to="/about">About</Link>
         </li>
         <li>
-          {!localStorage.getItem('access') && <Link to="/signup">Signup</Link>}
+          {!localStorage.getItem('nickname') && (
+            <Link to="/signup">Signup</Link>
+          )}
 
           {localStorage.getItem('access') && (
             <span>
