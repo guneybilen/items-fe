@@ -10,6 +10,7 @@ const login_api = async (username, password, success, fail) => {
 
   if (response.status === 200) {
     console.log('success');
+    // console.log(response.data);
     success(response.data);
   } else {
     console.log('login in failed ', response.status);

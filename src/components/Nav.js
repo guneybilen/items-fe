@@ -98,7 +98,7 @@ const Nav = () => {
             <Link to="/signup">Signup</Link>
           )}
 
-          {localStorage.getItem('access') && (
+          {localStorage.getItem('nickname') && (
             <span>
               <i>{localStorage.getItem('nickname')}</i>
             </span>

@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import login_api from '../api/login_api';
 import { useStoreActions } from 'easy-peasy';
 import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
+  const scrollRef = useRef(null);
   const setNicknameEasyPeasy = useStoreActions(
     (actions) => actions.setLoggedInNickname
   );
 
   const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
   const [password1, setPassword1] = useState('');
   const [password2, setPassword2] = useState('');
   const [nickname, setNickname] = useState('');
@@ -17,11 +19,18 @@ const Signup = () => {
   const [loading, setLoading] = useState(true);
   const history = useNavigate();
 
+  const scrollTo = (ref) => {
+    if (ref && ref.current /* + other conditions */) {
+      ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   //eslint-disable-next-line
   const success = (data) => {
     console.log('Authenticated!');
-    localStorage.setItem('access', data.access);
-    localStorage.setItem('refresh', data.refresh);
+    // console.log(data);
+    localStorage.setItem('loggedInId', data.user.id);
+    localStorage.setItem('nickname', data.user.nickname);
     setNicknameEasyPeasy(nickname);
     history('/');
   };
@@ -42,7 +51,7 @@ const Signup = () => {
     const user = {
       email: email,
       password: password1,
-      password2: password2,
+      passwordConfirm: password2,
       nickname: nickname,
     };
 
@@ -53,18 +62,40 @@ const Signup = () => {
       },
       body: JSON.stringify(user),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          return res.text().then((text) => {
+            throw new Error(text);
+          });
+        } else {
+          return res.json();
+        }
+      })
       .then(() => {
         login_api(email, password1, success, fail);
       })
       .catch((err) => {
-        console.log(err);
+        let errorLocal = err;
+        // console.log('errorLocal', JSON.parse(errorLocal['message']).message);
+        setError(JSON.parse(errorLocal['message']).message);
+        scrollTo(scrollRef);
       });
   };
 
   return (
     <>
       <main className="PostPage text-center">
+        {error && (
+          <div className="alert" id="id001" ref={scrollRef}>
+            <span
+              className="closebtn"
+              // onClick="this.parentElement.style.display='none';"
+            >
+              &times;
+            </span>
+            <strong>{error}</strong>
+          </div>
+        )}
         <form onSubmit={onSubmit}>
           <div>
             {loading === false && <h1>Signup</h1>}
@@ -91,6 +122,7 @@ const Signup = () => {
               name="password1"
               type="password"
               value={password1}
+              autoComplete="on"
               onChange={(e) => setPassword1(e.target.value)}
               required
             />{' '}
@@ -101,6 +133,7 @@ const Signup = () => {
             <br />
             <input
               name="password2"
+              autoComplete="on"
               type="password"
               value={password2}
               onChange={(e) => setPassword2(e.target.value)}

@@ -16,7 +16,7 @@ export default function Login() {
 
   const success = (data) => {
     console.log('Authenticated!');
-    // console.log(data);
+    console.log(data);
     localStorage.setItem('access', data.access_token);
     localStorage.setItem('nickname', data['user']['nickname']);
     localStorage.setItem('loggedInId', data['user']['id']);

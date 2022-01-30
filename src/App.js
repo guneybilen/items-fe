@@ -36,7 +36,7 @@ function App() {
       <Header title="electronics guru" />
       <Nav />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route forceRefresh={true} path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/about" element={<About />} />
         <Route path="items/:slug" element={<ItemPage />} />
