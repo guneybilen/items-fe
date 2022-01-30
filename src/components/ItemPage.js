@@ -41,9 +41,7 @@ const ItemPage = () => {
             <h3>{item?.brand}</h3>
             <p>{item?.model}</p>
             <p>CAD$ {item.price}</p>
-
             <p className="itemBody">{item?.entry}</p>
-
             <p className="itemDate">
               ...
               {item.createdAt &&
@@ -51,7 +49,15 @@ const ItemPage = () => {
                   addSuffix: true,
                 })}
             </p>
-
+            <p className="itemImage">
+              <image src={item?.item_image1?.url} />
+            </p>
+            <p className="itemImage">
+              <image src={item?.item_image2?.url} />
+            </p>
+            <p className="itemImage">
+              <image src={item?.item_image3?.url} />
+            </p>
             {itemOwner && (
               <>
                 <Link to={`/edit/${item.slug}`}>

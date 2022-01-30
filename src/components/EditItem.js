@@ -17,10 +17,18 @@ const EditItem = () => {
   const model = useStoreState((state) => state.model);
   const entry = useStoreState((state) => state.entry);
   const price = useStoreState((state) => state.price);
+  const image1 = useStoreState((state) => state.image1);
+  const image2 = useStoreState((state) => state.image2);
+  const image3 = useStoreState((state) => state.image3);
+
   const sluggy = useStoreState((state) => state.slug);
   const setBrand = useStoreActions((actions) => actions.setBrand);
   const setModel = useStoreActions((actions) => actions.setModel);
   const setPrice = useStoreActions((actions) => actions.setPrice);
+  const setImage1 = useStoreActions((actions) => actions.setImage1);
+  const setImage2 = useStoreActions((actions) => actions.setImage2);
+  const setImage3 = useStoreActions((actions) => actions.setImage3);
+
   const setEntry = useStoreActions((actions) => actions.setEntry);
   const setSlug = useStoreActions((actions) => actions.setSlug);
   const editItem = useStoreActions((actions) => actions.editItem);
@@ -46,6 +54,9 @@ const EditItem = () => {
       setPrice(item.price);
       setEntry(item.entry);
       setSlug(item.slug);
+      setImage1(item.item_image1);
+      setImage2(item.item_image2);
+      setImage3(item.item_image3);
     }
 
     let eventVar;
@@ -62,16 +73,31 @@ const EditItem = () => {
 
   const handleEdit = (sluggy) => {
     // const datetime = format(new Date(), 'MMMM dd, yyyy pp');
-    const updatedItem = {
-      slug: sluggy,
-      brand: brand,
-      model: model,
-      price: price,
-      entry: entry,
-      seller: localStorage.getItem('seller'),
-      nickname: localStorage.getItem('nickname'),
-    };
-    editItem(updatedItem);
+    let form_data = new FormData();
+    form_data.append('item_image1', image1);
+    form_data.append('item_image2', image2);
+    form_data.append('item_image3', image3);
+    form_data.append('slug', sluggy);
+    form_data.append('brand', brand);
+    form_data.append('price', price);
+    form_data.append('entry', entry);
+    form_data.append('model', model);
+    form_data.append('seller', localStorage.getItem('seller'));
+    form_data.append('nickname', localStorage.getItem('nickname'));
+
+    // const updatedItem = {
+    //   slug: sluggy,
+    //   brand: brand,
+    //   model: model,
+    //   price: price,
+    //   entry: entry,
+    //   seller: localStorage.getItem('seller'),
+    //   nickname: localStorage.getItem('nickname'),
+    //   item_image1: image1,
+    //   item_image2: image2,
+    //   item_image3: image3,
+    // };
+    editItem({ form_data, sluggy });
     updated.current = true;
   };
 
@@ -84,6 +110,7 @@ const EditItem = () => {
             action=""
             className="newPostForm"
             ref={formEl}
+            encType="multipart/form-data"
             onSubmit={(e) => e.preventDefault()}
           >
             <label htmlFor="itemBrand">Brand:</label>
@@ -106,8 +133,7 @@ const EditItem = () => {
             <input
               type="text"
               id="itemPrice"
-              required
-              value={price}
+              value={price ? '' : price}
               onChange={(e) => setPrice(e.target.value)}
             />
             <label htmlFor="itemBody">Entry:</label>
@@ -117,6 +143,33 @@ const EditItem = () => {
               required
               value={entry}
               onChange={(e) => setEntry(e.target.value)}
+            />
+            <label htmlFor="image1">image1:</label>
+            <input
+              type="file"
+              id="image1"
+              alt="item"
+              name="image"
+              accept="image/*"
+              onChange={(e) => setImage1(e.target.files[0])}
+            />
+            <label htmlFor="image2">image2:</label>
+            <input
+              type="file"
+              id="image2"
+              alt="item"
+              name="image"
+              accept="image/*"
+              onChange={(e) => setImage2(e.target.files[0])}
+            />
+            <label htmlFor="image3">image3:</label>
+            <input
+              type="file"
+              id="image3"
+              alt="item"
+              name="image"
+              accept="image/*"
+              onChange={(e) => setImage3(e.target.files[0])}
             />
             <button
               type="button"

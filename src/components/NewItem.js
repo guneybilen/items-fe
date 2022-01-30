@@ -4,12 +4,16 @@ import { useState } from 'react';
 
 const NewPost = () => {
   const loggedInId = localStorage.getItem('loggedInId');
+  console.log(loggedInId);
   const history = useNavigate();
 
   const [brand, setBrand] = useState('');
   const [model, setModel] = useState('');
   const [entry, setEntry] = useState('');
   const [price, setPrice] = useState('');
+  const [image1, setImage1] = useState(null);
+  const [image2, setImage2] = useState(null);
+  const [image3, setImage3] = useState(null);
 
   const savePost = useStoreActions((actions) => actions.savePost);
 
@@ -17,14 +21,27 @@ const NewPost = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const newPost = {
-      brand: brand,
-      model: model,
-      price: price,
-      entry: entry,
-      seller: loggedInId,
-    };
-    savePost(newPost);
+    let form_data = new FormData();
+    form_data.append('item_image1', image1);
+    form_data.append('item_image2', image2);
+    form_data.append('item_image3', image3);
+    form_data.append('brand', brand);
+    form_data.append('price', price);
+    form_data.append('entry', entry);
+    form_data.append('model', model);
+    form_data.append('seller', loggedInId);
+
+    // const newPost = {
+    //   brand: brand,
+    //   model: model,
+    //   price: price,
+    //   entry: entry,
+    //   seller: loggedInId,
+    //   item_image1: image1,
+    //   item_image2: image2,
+    //   item_image3: image3,
+    // };
+    savePost(form_data);
     history('/');
   };
 
@@ -36,6 +53,7 @@ const NewPost = () => {
           action=""
           className="newPostForm"
           onSubmit={(e) => e.preventDefault()}
+          encType="multipart/form-data"
         >
           <label htmlFor="itemBrand">Brand:</label>
           <input
@@ -68,6 +86,33 @@ const NewPost = () => {
             required
             value={entry}
             onChange={(e) => setEntry(e.target.value)}
+          />
+          <label htmlFor="image1">image1:</label>
+          <input
+            type="file"
+            id="image1"
+            alt="item"
+            name="image"
+            accept="image/*"
+            onChange={(e) => setImage1(e.target.files[0])}
+          />
+          <label htmlFor="image2">image2:</label>
+          <input
+            type="file"
+            id="image2"
+            alt="item"
+            name="image"
+            accept="image/*"
+            onChange={(e) => setImage2(e.target.files[0])}
+          />
+          <label htmlFor="image3">image3:</label>
+          <input
+            type="file"
+            id="image3"
+            alt="item"
+            name="image"
+            accept="image/*"
+            onChange={(e) => setImage3(e.target.files[0])}
           />
           <button
             type="button"

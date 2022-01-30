@@ -57,6 +57,21 @@ export default createStore({
     state.seller = payload;
   }),
 
+  image1: '',
+  setImage1: action((state, payload) => {
+    state.image1 = payload;
+  }),
+
+  image2: '',
+  setImage2: action((state, payload) => {
+    state.image2 = payload;
+  }),
+
+  image3: '',
+  setImage3: action((state, payload) => {
+    state.image3 = payload;
+  }),
+
   search: '',
   setSearch: action((state, payload) => {
     state.search = payload;
@@ -81,7 +96,7 @@ export default createStore({
         newItem,
         {
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
             accept: 'application/json',
             Authorization: `Bearer ${localStorage.getItem('access')}`,
           },
@@ -119,6 +134,9 @@ export default createStore({
       actions.setPrice('');
       actions.setModel('');
       actions.setEntry('');
+      actions.setImage1('');
+      actions.setImage2('');
+      actions.setImage3('');
     } catch (err) {
       console.log(`Error: ${err.message}`);
     }
@@ -127,18 +145,17 @@ export default createStore({
   editItem: thunk(async (actions, updatedItem, helpers) => {
     const { items } = helpers.getState();
 
-    const { slug } = updatedItem;
+    const slug = updatedItem.sluggy;
+    const form_data = updatedItem.form_data;
 
     try {
       const response = await axios.put(
         `http://localhost:8000/api/items/${slug}/`,
-        updatedItem,
+        form_data,
         {
           headers: {
-            'Content-Type': 'application/json',
-            accept: 'application/json',
+            'Content-Type': 'multipart/form-data',
             auth: `Bearer ${localStorage.getItem('access')}`,
-            name: 'bilen',
           },
         }
       );
@@ -152,6 +169,9 @@ export default createStore({
       actions.setPrice('');
       actions.setModel('');
       actions.setEntry('');
+      actions.Image1(null);
+      actions.Image2(null);
+      actions.Image3(null);
     } catch (err) {
       console.log(`Error: ${err}`);
     }

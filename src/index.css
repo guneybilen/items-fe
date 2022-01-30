@@ -41,6 +41,7 @@ body {
 .Header,
 .Footer {
   width: 100%;
+  height: 10%;
   background-color: papayawhip;
   padding: 1rem;
   display: flex;
