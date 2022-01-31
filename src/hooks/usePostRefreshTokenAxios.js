@@ -20,6 +20,8 @@ const usePostRefreshTokenAxios = () => {
         );
         if (response.status === 200 && response.data['nickname']) {
           localStorage.setItem('access', response.data.access_token);
+          localStorage.setItem('nickname', response.data.nickname);
+          localStorage.setItem('loggedInId', response.data.user_id);
           setLoggedInNickname(response.data['nickname']);
         }
         if (response.status === 204) {

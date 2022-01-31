@@ -74,9 +74,13 @@ const EditItem = () => {
   const handleEdit = (sluggy) => {
     // const datetime = format(new Date(), 'MMMM dd, yyyy pp');
     let form_data = new FormData();
-    form_data.append('item_image1', image1);
-    form_data.append('item_image2', image2);
-    form_data.append('item_image3', image3);
+    console.log(image1);
+    console.log(image2);
+    console.log(image3);
+
+    if (image1) form_data.append('item_image1', image1);
+    if (image2) form_data.append('item_image2', image2);
+    if (image3) form_data.append('item_image3', image3);
     form_data.append('slug', sluggy);
     form_data.append('brand', brand);
     form_data.append('price', price);

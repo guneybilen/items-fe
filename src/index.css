@@ -304,3 +304,21 @@ body {
     font-size: 3rem;
   }
 }
+
+#forImageButton2,
+#forImageButton3 {
+  display: none;
+}
+
+#forImageButton1 {
+  display: inline-block;
+}
+
+#buttonForRemove1,
+#buttonForRemove2 #buttonForRemove3 {
+  display: none;
+}
+
+#undobuttonForRemove1 {
+  display: none;
+}
