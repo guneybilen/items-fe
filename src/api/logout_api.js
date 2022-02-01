@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 const login_api = async () => {
-  const response = await axios.get(`http://localhost:8000/api/logout/`);
+  const response = await axios.get(
+    `https://justlikenew-vaauo.ondigitalocean.app/api/logout/`
+  );
 
   if (response.status === 200) {
     console.log('success');
