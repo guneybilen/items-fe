@@ -130,6 +130,7 @@ body {
 .NewPost,
 .LoginPage,
 .PostPage,
+.SignupPage,
 .About,
 .Missing {
   width: 100%;

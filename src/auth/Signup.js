@@ -84,7 +84,7 @@ const Signup = () => {
 
   return (
     <>
-      <main className="PostPage text-center">
+      <main className="SignupPage text-center">
         {error && (
           <div className="alert" id="id001" ref={scrollRef}>
             <span
@@ -109,6 +109,7 @@ const Signup = () => {
             <input
               name="email"
               type="email"
+              className="form-control"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -121,6 +122,7 @@ const Signup = () => {
             <input
               name="password1"
               type="password"
+              className="form-control"
               value={password1}
               autoComplete="on"
               onChange={(e) => setPassword1(e.target.value)}
@@ -135,6 +137,7 @@ const Signup = () => {
               name="password2"
               autoComplete="on"
               type="password"
+              className="form-control"
               value={password2}
               onChange={(e) => setPassword2(e.target.value)}
               required
@@ -148,12 +151,13 @@ const Signup = () => {
               name="nickname"
               type="text"
               value={nickname}
+              className="form-control"
               onChange={(e) => setNickname(e.target.value)}
               required
             />{' '}
             <br />
             <br />
-            <input type="submit" value="Signup" />
+            <input type="submit" value="Signup" className="btn btn-primary" />
           </div>
         </form>
       </main>
