@@ -52,7 +52,7 @@ const Nav = () => {
             parseInt(item.price) === parseInt(search.toLowerCase()) ||
             item.entry.toLowerCase().includes(search.toLowerCase())
         );
-      setSearchResults(filteredResults.reverse());
+      setSearchResults(filteredResults?.reverse());
     } catch (e) {
       console.error(e);
       setSearchResults('');
