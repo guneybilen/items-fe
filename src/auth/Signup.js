@@ -159,7 +159,7 @@ const Signup = () => {
             <input
               type="submit"
               value="Signup"
-              className="btn btn-primary btn-lg btn-block"
+              className="btn btn-primary btn-lg w-100"
             />
           </div>
         </form>
