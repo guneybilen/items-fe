@@ -82,7 +82,7 @@ export default createStore({
   }),
 
   itemCount: computed((state) =>
-    state.items.length > 0 ? state.items.length : 0
+    state.items?.length > 0 ? state.items.length : 0
   ),
 
   getItemById: computed((state) => {
