@@ -34,7 +34,7 @@ export default function Login() {
   };
 
   return (
-    <div>
+    <main className="LoginPage text-center">
       <form>
         <div className="mb-3">
           <label htmlFor="username" className="form-label">
@@ -73,6 +73,6 @@ export default function Login() {
           Login
         </button>
       </form>
-    </div>
+    </main>
   );
 }
