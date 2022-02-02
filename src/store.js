@@ -81,7 +81,9 @@ export default createStore({
     state.searchResults = payload;
   }),
 
-  itemCount: computed((state) => state.items.length),
+  itemCount: computed((state) =>
+    state.items.length > 0 ? state.items.length : 0
+  ),
 
   getItemById: computed((state) => {
     // console.log('state ', state);
