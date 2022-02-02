@@ -2,7 +2,6 @@ import React, { useState, useRef } from 'react';
 import login_api from '../api/login_api';
 import { useStoreActions } from 'easy-peasy';
 import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
 
 const Signup = () => {
   const scrollRef = useRef(null);
