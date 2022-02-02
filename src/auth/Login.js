@@ -69,7 +69,11 @@ export default function Login() {
           />
         </div>
         <div style={{ margin: '1em', color: 'red' }}>{message}</div>
-        <button type="submit" className="btn btn-primary" onClick={tryLogin}>
+        <button
+          type="submit"
+          className="btn btn-primary btn-block"
+          onClick={tryLogin}
+        >
           Login
         </button>
       </form>
