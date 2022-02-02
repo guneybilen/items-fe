@@ -7,7 +7,7 @@ import axios from 'axios';
 // axios.defaults.xsrfCookieName = 'csrftoken';
 
 const usePostRefreshTokenAxios = () => {
-  // axios.defaults.withCredentials = true;
+  axios.defaults.withCredentials = true;
   const history = useNavigate();
   const setLoggedInNickname = useStoreActions(
     (actions) => actions.setLoggedInNickname
