@@ -55,7 +55,7 @@ const Signup = () => {
       nickname: nickname,
     };
 
-    fetch('https://justlikenew-vaauo.ondigitalocean.app/api/users', {
+    fetch('https://justlikenew-vaauo.ondigitalocean.app/api/users/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
