@@ -43,7 +43,8 @@ const Nav = () => {
   useEffect(() => {
     try {
       const filteredResults =
-        items &&
+        Array.isArray(items) &&
+        items.length > 0 &&
         items.filter(
           (item) =>
             item.brand.toLowerCase().includes(search.toLowerCase()) ||
