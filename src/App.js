@@ -15,7 +15,9 @@ import { Routes, Route } from 'react-router-dom';
 
 function App() {
   const setItems = useStoreActions((actions) => actions.setItems);
-  const { data } = useAxiosFetch('http://localhost:8000/api/items/');
+  const { data } = useAxiosFetch(
+    'https://items-fe-8xk84.ondigitalocean.app/api/items/'
+  );
 
   useEffect(() => {
     // console.log(data);

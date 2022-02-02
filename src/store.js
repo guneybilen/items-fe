@@ -92,7 +92,7 @@ export default createStore({
     const { items } = helpers.getState();
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/item/`,
+        `https://items-fe-8xk84.ondigitalocean.app/api/item/`,
         newItem,
         {
           headers: {
@@ -119,7 +119,7 @@ export default createStore({
     console.log('nickname', nickname);
     try {
       await axios.delete(
-        `http://localhost:8000/api/items/${slug}`,
+        `https://items-fe-8xk84.ondigitalocean.app/api/items/${slug}`,
         { data: { nickname: nickname } },
         {
           headers: {
@@ -150,7 +150,7 @@ export default createStore({
 
     try {
       const response = await axios.put(
-        `http://localhost:8000/api/items/${slug}/`,
+        `https://items-fe-8xk84.ondigitalocean.app/api/items/${slug}/`,
         form_data,
         {
           headers: {

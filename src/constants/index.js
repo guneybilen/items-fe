@@ -1,1 +1,1 @@
-export const API_URL = "http://localhost:8000/api/items/";
+export const API_URL = 'https://items-fe-8xk84.ondigitalocean.app/api/items/';

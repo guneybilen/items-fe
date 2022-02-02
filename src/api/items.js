@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export default axios.create({
-  baseUrl: 'http://localhost:8000/api/items/',
+  baseUrl: 'https://items-fe-8xk84.ondigitalocean.app/api/items/',
 });
