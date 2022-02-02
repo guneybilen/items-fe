@@ -9,7 +9,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 function RequireAuth() {
   axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
   axios.defaults.xsrfCookieName = 'csrftoken';
-  axios.defaults.withCredentials = true;
+  // axios.defaults.withCredentials = true;
   usePostRefreshTokenAxios();
   return (
     <Routes>

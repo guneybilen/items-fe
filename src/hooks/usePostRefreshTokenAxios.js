@@ -6,7 +6,7 @@ import axios from 'axios';
 const usePostRefreshTokenAxios = () => {
   axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
   axios.defaults.xsrfCookieName = 'csrftoken';
-  axios.defaults.withCredentials = true;
+  // axios.defaults.withCredentials = true;
   const history = useNavigate();
   const setLoggedInNickname = useStoreActions(
     (actions) => actions.setLoggedInNickname
@@ -16,10 +16,7 @@ const usePostRefreshTokenAxios = () => {
     async function fetchData() {
       try {
         let response = await axios.post(
-          'https://justlikenew-vaauo.ondigitalocean.app/api/refreshtokenview/',
-          {
-            withCredentials: true,
-          }
+          'https://justlikenew-vaauo.ondigitalocean.app/api/refreshtokenview/'
         );
         if (response.status === 200 && response.data['nickname']) {
           localStorage.setItem('access', response.data.access_token);

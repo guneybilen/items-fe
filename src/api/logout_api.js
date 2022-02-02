@@ -2,10 +2,7 @@ import axios from 'axios';
 
 const logout_api = async () => {
   const response = await axios.get(
-    `https://justlikenew-vaauo.ondigitalocean.app/api/logout/`,
-    {
-      withCredentials: true,
-    }
+    `https://justlikenew-vaauo.ondigitalocean.app/api/logout/`
   );
 
   if (response.status === 200) {
