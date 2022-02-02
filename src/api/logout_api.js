@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
+axios.defaults.xsrfCookieName = 'csrftoken';
+
 const logout_api = async () => {
   const response = await axios.get(
     `https://justlikenew-vaauo.ondigitalocean.app/api/logout/`

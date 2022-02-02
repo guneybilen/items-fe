@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import login_api from '../api/login_api';
 import { useStoreActions } from 'easy-peasy';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const Signup = () => {
   const scrollRef = useRef(null);
@@ -55,10 +56,15 @@ const Signup = () => {
       nickname: nickname,
     };
 
+    var csrftoken = Cookies.get('csrftoken');
+    var headers = new Headers();
+    headers.append('X-CSRFToken', csrftoken);
     fetch('https://justlikenew-vaauo.ondigitalocean.app/api/users/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        headers: headers,
+        credentials: 'include',
       },
       body: JSON.stringify(user),
     })

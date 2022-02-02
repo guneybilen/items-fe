@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useStoreActions } from 'easy-peasy';
 import axios from 'axios';
 
+axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
+axios.defaults.xsrfCookieName = 'csrftoken';
+
 const usePostRefreshTokenAxios = () => {
-  axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
-  axios.defaults.xsrfCookieName = 'csrftoken';
   // axios.defaults.withCredentials = true;
   const history = useNavigate();
   const setLoggedInNickname = useStoreActions(
