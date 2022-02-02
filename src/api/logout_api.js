@@ -1,8 +1,11 @@
 import axios from 'axios';
 
-const login_api = async () => {
+const logout_api = async () => {
   const response = await axios.get(
-    `https://justlikenew-vaauo.ondigitalocean.app/api/logout/`
+    `https://justlikenew-vaauo.ondigitalocean.app/api/logout/`,
+    {
+      withCredentials: true,
+    }
   );
 
   if (response.status === 200) {
@@ -12,4 +15,4 @@ const login_api = async () => {
   }
 };
 
-export default login_api;
+export default logout_api;

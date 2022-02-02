@@ -16,7 +16,10 @@ const usePostRefreshTokenAxios = () => {
     async function fetchData() {
       try {
         let response = await axios.post(
-          'https://justlikenew-vaauo.ondigitalocean.app/api/refreshtokenview/'
+          'https://justlikenew-vaauo.ondigitalocean.app/api/refreshtokenview/',
+          {
+            withCredentials: true,
+          }
         );
         if (response.status === 200 && response.data['nickname']) {
           localStorage.setItem('access', response.data.access_token);

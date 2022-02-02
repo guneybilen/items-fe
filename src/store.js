@@ -101,6 +101,7 @@ export default createStore({
             'Content-Type': 'multipart/form-data',
             accept: 'application/json',
             authorization: `Bearer ${localStorage.getItem('access')}`,
+            withCredentials: true,
           },
         }
       );
@@ -128,6 +129,7 @@ export default createStore({
             'Content-Type': 'application/json',
             accept: 'application/json',
             authorization: `Bearer ${localStorage.getItem('access')}`,
+            withCredentials: true,
           },
         }
       );
@@ -158,6 +160,7 @@ export default createStore({
           headers: {
             'Content-Type': 'multipart/form-data',
             authorization: `Bearer ${localStorage.getItem('access')}`,
+            withCredentials: true,
           },
         }
       );

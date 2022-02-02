@@ -18,7 +18,10 @@ const useAxiosFetch = (dataUrl) => {
         const response = await axios.get(url, {
           params: {},
           cancelToken: source.token,
-          headers: { auth: `Bearer ${localStorage.getItem('access')}` },
+          headers: {
+            authorization: `Bearer ${localStorage.getItem('access')}`,
+            withCredentials: true,
+          },
         });
 
         if (isMounted) {

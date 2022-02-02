@@ -8,6 +8,7 @@ const login_api = async (username, password, success, fail) => {
     {
       headers: {
         'Content-Type': 'application/json',
+        withCredentials: true,
       },
     }
   );
