@@ -42,17 +42,18 @@ const Nav = () => {
 
   useEffect(() => {
     try {
-      const filteredResults =
-        Array.isArray(items) &&
-        items.length > 0 &&
-        items.filter(
+      if (Array.isArray(items) && items.length > 0) {
+        const filteredResults = items.filter(
           (item) =>
             item.brand.toLowerCase().includes(search.toLowerCase()) ||
             item.model.toLowerCase().includes(search.toLowerCase()) ||
             parseInt(item.price) === parseInt(search.toLowerCase()) ||
             item.entry.toLowerCase().includes(search.toLowerCase())
         );
-      setSearchResults(filteredResults?.reverse());
+        setSearchResults(filteredResults.reverse());
+      } else {
+        throw new Error('problem in filteredResults variable');
+      }
     } catch (e) {
       console.error(e);
       setSearchResults('');
