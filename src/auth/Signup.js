@@ -156,7 +156,6 @@ const Signup = () => {
               required
             />{' '}
             <br />
-            <br />
             <input
               type="submit"
               value="Signup"
