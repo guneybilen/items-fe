@@ -28,17 +28,13 @@ const usePostRefreshTokenAxios = () => {
             refresh: `Bearer ${localStorage.getItem('refresh')}`,
           },
         });
-        console.log('response.data', response.data);
+
         if (response.status === 200 && response.data['nickname']) {
           localStorage.setItem('access', response.data.access_token);
           localStorage.setItem('nickname', response.data.nickname);
           localStorage.setItem('loggedInId', response.data.user_id);
           setLoggedInNickname(response.data['nickname']);
         }
-        // if (response.data.user === null) {
-        //   localStorage.clear();
-        //   setLoggedInNickname('');
-        // }
       } catch (e) {
         console.log(e.message);
         localStorage.clear();

@@ -2,7 +2,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import logout_api from '../api/logout_api';
-// import jwt_decode from 'jwt-decode';
 
 const Nav = () => {
   const history = useNavigate();
@@ -17,22 +16,6 @@ const Nav = () => {
     (actions) => actions.setSearchResults
   );
 
-  // useEffect(() => {
-  // let decoded =
-  // localStorage.getItem('access') &&
-  // jwt_decode(localStorage.getItem('access'));
-  // let expiration = decoded && decoded['exp'];
-  // let now = Math.floor(Date.now() / 1000);
-  // console.log(expiration, now);
-
-  // if (expiration && expiration < now && localStorage.getItem('access')) {
-  // console.log('bilen');
-
-  // console.log(decoded['exp'] > Date.now());
-  // setLoggedInNickname('');
-  // }
-  // });
-
   const handleLogout = () => {
     logout_api();
     setLoggedInNickname('');
@@ -40,21 +23,16 @@ const Nav = () => {
   };
 
   useEffect(() => {
-    try {
-      if (Array.isArray(items) && items.length > 0) {
-        const filteredResults = items.filter(
-          (item) =>
-            item.brand.toLowerCase().includes(search.toLowerCase()) ||
-            item.model.toLowerCase().includes(search.toLowerCase()) ||
-            parseInt(item.price) === parseInt(search.toLowerCase()) ||
-            item.entry.toLowerCase().includes(search.toLowerCase())
-        );
-        setSearchResults(filteredResults.reverse());
-      } else {
-        throw new Error('problem in filteredResults variable');
-      }
-    } catch (e) {
-      console.error(e);
+    if (Array.isArray(items) && items.length > 0) {
+      const filteredResults = items.filter(
+        (item) =>
+          item.brand.toLowerCase().includes(search.toLowerCase()) ||
+          item.model.toLowerCase().includes(search.toLowerCase()) ||
+          parseInt(item.price) === parseInt(search.toLowerCase()) ||
+          item.entry.toLowerCase().includes(search.toLowerCase())
+      );
+      setSearchResults(filteredResults.reverse());
+    } else {
       setSearchResults('');
     }
   }, [items, search, setSearchResults]);
@@ -85,7 +63,7 @@ const Nav = () => {
         <li>
           {localStorage.getItem('nickname') && (
             //eslint-disable-next-line
-            <a href="#" onClick={handleLogout}>
+            <a href="/" onClick={handleLogout}>
               Logout
             </a>
           )}

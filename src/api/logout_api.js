@@ -8,22 +8,19 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
 }
 
 const logout_api = async () => {
-  console.log(`Bearer ${localStorage.getItem('refresh')}`);
   let response = await axios.post(
     `${origin}/logout/`,
     { id: localStorage.getItem('loggedInId') },
     {
       headers: {
         'Content-Type': 'application/json',
-        // access: `Bearer ${localStorage.getItem('access')}`,
         refresh: `Bearer ${localStorage.getItem('refresh')}`,
       },
     }
   );
   if (response.status === 202) {
+    console.log('Logged out');
     localStorage.clear();
-    console.log('success');
-    // window.location.href = '/login';
   } else {
     console.log('login out failed ', response.status);
   }
