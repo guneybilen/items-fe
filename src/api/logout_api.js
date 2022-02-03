@@ -23,7 +23,7 @@ const logout_api = async () => {
   if (response.status === 202) {
     localStorage.clear();
     console.log('success');
-    window.location.href = '/login';
+    // window.location.href = '/login';
   } else {
     console.log('login out failed ', response.status);
   }
