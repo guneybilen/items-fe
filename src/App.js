@@ -13,11 +13,16 @@ import RequireAuth from './components/RequireAuth';
 import { Routes, Route } from 'react-router-dom';
 // import jwt_decode from 'jwt-decode';
 
+let url;
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+  url = 'http://localhost:8000/api';
+} else {
+  url = 'https://justlikenew-vaauo.ondigitalocean.app/api';
+}
+
 function App() {
   const setItems = useStoreActions((actions) => actions.setItems);
-  const { data } = useAxiosFetch(
-    'https://items-fe-8xk84.ondigitalocean.app/api/items/'
-  );
+  const { data } = useAxiosFetch(`${url}/items/`);
 
   useEffect(() => {
     // console.log(data);

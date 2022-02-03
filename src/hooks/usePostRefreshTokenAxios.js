@@ -6,8 +6,14 @@ import axios from 'axios';
 // axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 // axios.defaults.xsrfCookieName = 'csrftoken';
 
+let backend;
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+  backend = 'http://localhost:8000/api';
+} else {
+  backend = 'https://justlikenew-vaauo.ondigitalocean.app/api';
+}
+
 const usePostRefreshTokenAxios = () => {
-  axios.defaults.withCredentials = true;
   const history = useNavigate();
   const setLoggedInNickname = useStoreActions(
     (actions) => actions.setLoggedInNickname
@@ -16,25 +22,31 @@ const usePostRefreshTokenAxios = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        let response = await axios.post(
-          'https://justlikenew-vaauo.ondigitalocean.app/api/refreshtokenview/'
-        );
+        let response = await axios.get(`${backend}/refreshtokenview/`, {
+          headers: {
+            // access: `Bearer ${localStorage.getItem('access')}`,
+            refresh: `Bearer ${localStorage.getItem('refresh')}`,
+          },
+        });
+        console.log('response.data', response.data);
         if (response.status === 200 && response.data['nickname']) {
           localStorage.setItem('access', response.data.access_token);
           localStorage.setItem('nickname', response.data.nickname);
           localStorage.setItem('loggedInId', response.data.user_id);
           setLoggedInNickname(response.data['nickname']);
         }
-        if (response.status === 204) {
-          localStorage.removeItem('nickname');
-          setLoggedInNickname('');
-        }
+        // if (response.data.user === null) {
+        //   localStorage.clear();
+        //   setLoggedInNickname('');
+        // }
       } catch (e) {
         console.log(e.message);
         localStorage.clear();
       }
     }
-    fetchData();
+    if (localStorage.getItem('refresh')) {
+      fetchData();
+    }
   }, [history, setLoggedInNickname]);
 };
 

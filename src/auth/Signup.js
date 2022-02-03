@@ -55,7 +55,15 @@ const Signup = () => {
       nickname: nickname,
     };
 
-    fetch('https://justlikenew-vaauo.ondigitalocean.app/api/users/', {
+    let url;
+
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+      url = 'http://localhost:8000/api/users';
+    } else {
+      url = 'https://justlikenew-vaauo.ondigitalocean.app/api/users/';
+    }
+
+    fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import login_api from '../api/login_api';
 import { useStoreActions } from 'easy-peasy';
 import { useNavigate } from 'react-router-dom';
@@ -14,15 +14,20 @@ export default function Login() {
     (actions) => actions.setLoggedInNickname
   );
 
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
+
   const success = (data) => {
     console.log('Authenticated!');
-    // console.log(data);
+    console.log(data.user.nickname);
     localStorage.setItem('access', data.access_token);
+    localStorage.setItem('refresh', data.refresh_token);
     localStorage.setItem('nickname', data['user']['nickname']);
     localStorage.setItem('loggedInId', data['user']['id']);
     setLoggedInID(data['user']['id']);
     setLoggedInNickname(data['user']['nickname']);
-    // console.log(data['user']['nickname']);
+    console.log(data['user']['nickname']);
     history('/');
   };
 

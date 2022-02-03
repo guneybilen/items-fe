@@ -4,6 +4,13 @@ import { createStore, action, thunk, computed } from 'easy-peasy';
 axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 axios.defaults.xsrfCookieName = 'csrftoken';
 
+let dest;
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+  dest = 'http://localhost:8000/api';
+} else {
+  dest = 'https://justlikenew-vaauo.ondigitalocean.app/api';
+}
+
 export default createStore({
   loggedInNickname: '',
   setLoggedInNickname: action((state, payload) => {
@@ -96,17 +103,14 @@ export default createStore({
   savePost: thunk(async (actions, newItem, helpers) => {
     const { items } = helpers.getState();
     try {
-      const response = await axios.post(
-        `https://items-fe-8xk84.ondigitalocean.app/api/item/`,
-        newItem,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            accept: 'application/json',
-            authorization: `Bearer ${localStorage.getItem('access')}`,
-          },
-        }
-      );
+      let response = await axios.post(`${dest}/item/`, newItem, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          accept: 'application/json',
+          access: `Bearer ${localStorage.getItem('access')}`,
+          refresh: `Bearer ${localStorage.getItem('refresh')}`,
+        },
+      });
       actions.setItems([...items, response.data]);
       actions.setSlug('');
       actions.setBrand('');
@@ -124,13 +128,14 @@ export default createStore({
     console.log('nickname', nickname);
     try {
       await axios.delete(
-        `https://items-fe-8xk84.ondigitalocean.app/api/items/${slug}`,
+        `${dest}/items/${slug}`,
         { data: { nickname: nickname } },
         {
           headers: {
             'Content-Type': 'application/json',
             accept: 'application/json',
-            authorization: `Bearer ${localStorage.getItem('access')}`,
+            access: `Bearer ${localStorage.getItem('access')}`,
+            refresh: `Bearer ${localStorage.getItem('refresh')}`,
           },
         }
       );
@@ -154,16 +159,13 @@ export default createStore({
     const form_data = updatedItem.form_data;
 
     try {
-      const response = await axios.put(
-        `https://items-fe-8xk84.ondigitalocean.app/api/items/${slug}/`,
-        form_data,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            authorization: `Bearer ${localStorage.getItem('access')}`,
-          },
-        }
-      );
+      let response = await axios.put(`${dest}/items/${slug}/`, form_data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          access: `Bearer ${localStorage.getItem('access')}`,
+          refresh: `Bearer ${localStorage.getItem('refresh')}`,
+        },
+      });
 
       actions.setItems(
         items.map((item) => (item.slug === slug ? { ...response.data } : item))

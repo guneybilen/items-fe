@@ -19,7 +19,8 @@ const useAxiosFetch = (dataUrl) => {
           params: {},
           cancelToken: source.token,
           headers: {
-            authorization: `Bearer ${localStorage.getItem('access')}`,
+            access: `Bearer ${localStorage.getItem('access')}`,
+            refresh: `Bearer ${localStorage.getItem('refresh')}`,
           },
         });
 
@@ -28,6 +29,7 @@ const useAxiosFetch = (dataUrl) => {
           setFetchError(null);
         }
       } catch (error) {
+        console.log(error);
         if (isMounted) {
           setFetchError(error.message);
           setData([]);

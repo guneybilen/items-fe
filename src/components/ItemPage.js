@@ -49,7 +49,7 @@ const ItemPage = () => {
                   addSuffix: true,
                 })}
             </p>
-            <p className="itemImage">
+            {/* <p className="itemImage">
               <image src={item?.item_image1?.url} />
             </p>
             <p className="itemImage">
@@ -57,7 +57,7 @@ const ItemPage = () => {
             </p>
             <p className="itemImage">
               <image src={item?.item_image3?.url} />
-            </p>
+            </p> */}
             {itemOwner && (
               <>
                 <Link to={`/edit/${item.slug}`}>

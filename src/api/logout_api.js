@@ -1,17 +1,31 @@
 import axios from 'axios';
 
-axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
-axios.defaults.xsrfCookieName = 'csrftoken';
+let origin;
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+  origin = 'http://localhost:8000/api';
+} else {
+  origin = 'https://justlikenew-vaauo.ondigitalocean.app/api';
+}
 
 const logout_api = async () => {
-  const response = await axios.get(
-    `https://justlikenew-vaauo.ondigitalocean.app/api/logout/`
+  console.log(`Bearer ${localStorage.getItem('refresh')}`);
+  let response = await axios.post(
+    `${origin}/logout/`,
+    { id: localStorage.getItem('loggedInId') },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        // access: `Bearer ${localStorage.getItem('access')}`,
+        refresh: `Bearer ${localStorage.getItem('refresh')}`,
+      },
+    }
   );
-
-  if (response.status === 200) {
+  if (response.status === 202) {
+    localStorage.clear();
     console.log('success');
+    window.location.href = '/login';
   } else {
-    console.log('login in failed ', response.status);
+    console.log('login out failed ', response.status);
   }
 };
 

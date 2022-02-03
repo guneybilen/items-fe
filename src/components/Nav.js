@@ -34,7 +34,6 @@ const Nav = () => {
   // });
 
   const handleLogout = () => {
-    localStorage.clear();
     logout_api();
     setLoggedInNickname('');
     history('/');
