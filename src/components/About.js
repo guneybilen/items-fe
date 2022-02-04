@@ -3,7 +3,8 @@ const About = () => {
     <main className="About">
       <h2>About</h2>
       <p style={{ marginTop: '1rem' }}>
-        Canada's Best Electronics Sales Website...
+        Canada's Best <br />
+        Electronics Sales Website...
       </p>
     </main>
   );

@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import useAxiosFetch from './hooks/useAxiosFetch';
 import RequireAuth from './components/RequireAuth';
 import { Routes, Route } from 'react-router-dom';
+// import { construction } from '../public/construction.png';
 
 let url;
 if (process.env.NODE_ENV === 'development') {
@@ -30,6 +31,11 @@ function App() {
 
   return (
     <div className="App">
+      <img
+        src="/construction.png"
+        className="construction"
+        alt="construction"
+      />
       <Header title="electronics guru" />
       <Nav />
       <Routes>

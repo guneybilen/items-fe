@@ -321,3 +321,13 @@ body {
 #undobuttonForRemove1 {
   display: none;
 }
+
+.construction {
+  position: absolute;
+  width: 35%;
+  height: 45%;
+  top: 10%;
+  margin-left: auto;
+  margin-right: auto;
+  transform: rotate(-45deg);
+}
