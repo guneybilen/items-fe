@@ -11,10 +11,9 @@ import { useEffect } from 'react';
 import useAxiosFetch from './hooks/useAxiosFetch';
 import RequireAuth from './components/RequireAuth';
 import { Routes, Route } from 'react-router-dom';
-// import jwt_decode from 'jwt-decode';
 
 let url;
-if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development') {
   url = 'http://localhost:8000/api';
 } else {
   url = 'https://justlikenew-vaauo.ondigitalocean.app/api';

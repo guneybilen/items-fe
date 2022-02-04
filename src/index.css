@@ -256,8 +256,7 @@ body {
   .Nav li:focus,
   .Nav li:hover a,
   .Nav li:focus a {
-    background-color: #eee;
-    color: #333;
+    color: navy;
   }
 
   .searchForm {
