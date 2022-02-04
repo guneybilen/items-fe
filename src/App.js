@@ -14,10 +14,15 @@ import { Routes, Route } from 'react-router-dom';
 // import { construction } from '../public/construction.png';
 
 let url;
+let comp;
 if (process.env.NODE_ENV === 'development') {
   url = 'http://localhost:8000/api';
+  comp = <span></span>;
 } else {
   url = 'https://justlikenew-vaauo.ondigitalocean.app/api';
+  comp = (
+    <img src="/construction.png" className="construction" alt="construction" />
+  );
 }
 
 function App() {
@@ -31,11 +36,7 @@ function App() {
 
   return (
     <div className="App">
-      <img
-        src="/construction.png"
-        className="construction"
-        alt="construction"
-      />
+      {comp}
       <Header title="electronics guru" />
       <Nav />
       <Routes>

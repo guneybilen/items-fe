@@ -8,9 +8,6 @@ const Nav = () => {
   const items = useStoreState((state) => state.items);
   const search = useStoreState((state) => state.search);
   const setSearch = useStoreActions((actions) => actions.setSearch);
-  const setLoggedInNickname = useStoreActions(
-    (actions) => actions.setLoggedInNickname
-  );
 
   const setSearchResults = useStoreActions(
     (actions) => actions.setSearchResults
@@ -18,7 +15,6 @@ const Nav = () => {
 
   const handleLogout = () => {
     logout_api();
-    setLoggedInNickname('');
     history('/');
   };
 

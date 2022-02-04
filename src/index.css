@@ -331,3 +331,19 @@ body {
   margin-right: auto;
   transform: rotate(-45deg);
 }
+
+.itemImage {
+  max-width: 30% !important;
+  max-height: 30% !important;
+
+  border-radius: 8px;
+}
+.span {
+  max-width: 10%;
+}
+
+.itemImageonError {
+  opacity: 0;
+  width: 0px;
+  height: 0px;
+}

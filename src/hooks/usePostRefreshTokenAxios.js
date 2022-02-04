@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useStoreActions } from 'easy-peasy';
 import axios from 'axios';
 
 // axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
@@ -15,9 +14,6 @@ if (process.env.NODE_ENV === 'development') {
 
 const usePostRefreshTokenAxios = () => {
   const history = useNavigate();
-  const setLoggedInNickname = useStoreActions(
-    (actions) => actions.setLoggedInNickname
-  );
 
   useEffect(() => {
     async function fetchData() {
@@ -33,7 +29,6 @@ const usePostRefreshTokenAxios = () => {
           localStorage.setItem('access', response.data.access_token);
           localStorage.setItem('nickname', response.data.nickname);
           localStorage.setItem('loggedInId', response.data.user_id);
-          setLoggedInNickname(response.data['nickname']);
         }
       } catch (e) {
         console.log(e.message);
@@ -43,7 +38,7 @@ const usePostRefreshTokenAxios = () => {
     if (localStorage.getItem('refresh')) {
       fetchData();
     }
-  }, [history, setLoggedInNickname]);
+  }, [history]);
 };
 
 export default usePostRefreshTokenAxios;

@@ -12,19 +12,9 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 export default createStore({
-  loggedInNickname: '',
-  setLoggedInNickname: action((state, payload) => {
-    state.loggedInNickname = payload;
-  }),
-
   sellerNickname: '',
   setSellerNickname: action((state, payload) => {
     state.sellerNickname = payload;
-  }),
-
-  loggedInID: '',
-  setLoggedInID: action((state, payload) => {
-    state.loggedInID = payload;
   }),
 
   items: [],

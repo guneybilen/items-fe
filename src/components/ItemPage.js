@@ -49,15 +49,37 @@ const ItemPage = () => {
                   addSuffix: true,
                 })}
             </p>
-            {/* <p className="itemImage">
-              <image src={item?.item_image1?.url} />
-            </p>
-            <p className="itemImage">
-              <image src={item?.item_image2?.url} />
-            </p>
-            <p className="itemImage">
-              <image src={item?.item_image3?.url} />
-            </p> */}
+            <span className="spanImage">
+              <img
+                src={item?.item_image1}
+                alt="1"
+                className="itemImage"
+                width="150px"
+                height="75px"
+              />
+            </span>
+            <span className="spanImage">
+              <img
+                src={item?.item_image2}
+                alt="2"
+                className="itemImage"
+                width="150px"
+                height="75px"
+              />
+            </span>
+            <span className="spanImage">
+              <img
+                src={item.item_image3}
+                alt="3"
+                className={
+                  !!item.item_image3 === false
+                    ? 'itemImageonError'
+                    : 'itemImage'
+                }
+              />
+            </span>
+            <br />
+            <br />
             {itemOwner && (
               <>
                 <Link to={`/edit/${item.slug}`}>

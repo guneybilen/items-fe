@@ -1,14 +1,9 @@
 import React, { useState, useRef } from 'react';
 import login_api from '../api/login_api';
-import { useStoreActions } from 'easy-peasy';
 import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
   const scrollRef = useRef(null);
-  const setNicknameEasyPeasy = useStoreActions(
-    (actions) => actions.setLoggedInNickname
-  );
-
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [password1, setPassword1] = useState('');
@@ -29,19 +24,16 @@ const Signup = () => {
   const success = (data) => {
     console.log('Authenticated!');
     // console.log(data);
-    localStorage.setItem('loggedInId', data.user.id);
-    localStorage.setItem('nickname', data.user.nickname);
-    setNicknameEasyPeasy(nickname);
     history('/');
   };
 
   //eslint-disable-next-line
   const fail = () => {
+    localStorage.clear();
     setEmail('');
     setPassword1('');
     setPassword2('');
     setNickname('');
-    localStorage.clear();
     setErrors(true);
   };
 
@@ -58,7 +50,7 @@ const Signup = () => {
     let url;
 
     if (process.env.NODE_ENV === 'development') {
-      url = 'http://localhost:8000/api/users';
+      url = 'http://localhost:8000/api/users/';
     } else {
       url = 'https://justlikenew-vaauo.ondigitalocean.app/api/users/';
     }
