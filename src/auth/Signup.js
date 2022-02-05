@@ -21,7 +21,7 @@ const Signup = () => {
   };
 
   //eslint-disable-next-line
-  const success = (data) => {
+  const success = () => {
     console.log('Authenticated!');
     // console.log(data);
     history('/');
