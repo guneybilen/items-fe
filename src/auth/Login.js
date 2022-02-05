@@ -53,10 +53,11 @@ export default function Login() {
           </label>
           <input
             autoFocus
-            type="text"
+            type="email"
             className="form-control"
+            required="true"
             id="username"
-            placeholder="username"
+            placeholder="example@example.com"
             onChange={(e) => {
               setUsername(e.target.value);
             }}
@@ -72,6 +73,7 @@ export default function Login() {
             className="form-control"
             id="password"
             placeholder="password"
+            required="true"
             autoComplete="on"
             onChange={(e) => {
               setPassword(e.target.value);
@@ -79,7 +81,6 @@ export default function Login() {
             value={password}
           />
         </div>
-        <br />
         <button
           type="submit"
           className="btn btn-primary btn-lg w-100"
