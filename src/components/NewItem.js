@@ -1,11 +1,11 @@
 import { useStoreActions } from 'easy-peasy';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 const NewPost = () => {
-  // const loggedInId = localStorage.getItem('loggedInId');
-  // console.log(loggedInId);
   const history = useNavigate();
+  const scrollRef = useRef(null);
+
   const [show0, setShow0] = useState(false);
   const [show1, setShow1] = useState(true);
   const [show2, setShow2] = useState(true);
@@ -24,12 +24,20 @@ const NewPost = () => {
   const [imageUpload1, setImageUpload1] = useState(null);
   const [imageUpload2, setImageUpload2] = useState(null);
   const [imageUpload3, setImageUpload3] = useState(null);
+  const [error, setError] = useState('');
+  const [closeButtonShouldShow, setCloseButtonShouldShow] = useState(false);
+
+  const scrollTo = (ref) => {
+    if (ref && ref.current /* + other conditions */) {
+      ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   const savePost = useStoreActions((actions) => actions.savePost);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    console.log('image1', image1);
     let form_data = new FormData();
     if (image1) form_data.append('item_image1', imageUpload1);
     if (image2) form_data.append('item_image2', imageUpload2);
@@ -40,12 +48,43 @@ const NewPost = () => {
     form_data.append('model', model);
     form_data.append('seller', localStorage.getItem('loggedInId'));
 
-    savePost(form_data);
-    history('/');
+    savePost({
+      form_data: form_data,
+      cb: (brandormodelerror, error, status) => {
+        let error_sentence = null;
+        if (brandormodelerror) {
+          setError(brandormodelerror);
+          setCloseButtonShouldShow(true);
+          scrollTo(scrollRef);
+        } else {
+          error_sentence =
+            status === 400 &&
+            (error?.item_image1 || error?.item_image2 || error?.item_image3);
+          setError(error_sentence);
+          setCloseButtonShouldShow(true);
+          scrollTo(scrollRef);
+        }
+
+        if (!brandormodelerror && !error_sentence) history('/');
+      },
+    });
+  };
+
+  const displayNone = (e) => {
+    e.preventDefault();
+    setCloseButtonShouldShow(false);
   };
 
   return (
     <main className="NewPost">
+      {error && closeButtonShouldShow && (
+        <div className="alert text-center" id="id001" ref={scrollRef}>
+          <span className="closebtn" onClick={(e) => displayNone(e)}>
+            &times;
+          </span>
+          <strong>{error}</strong>
+        </div>
+      )}
       <h2>New Item</h2>
       <form
         action=""
@@ -96,7 +135,6 @@ const NewPost = () => {
               setShow1(true);
               setShow2(true);
               setShow0(false);
-              setImage1(true);
             }}
           />
         </div>
@@ -109,11 +147,15 @@ const NewPost = () => {
             name="image"
             accept="image/*"
             onChange={(e) => {
+              e.target.files[0] === undefined
+                ? setImage1(false)
+                : setImage1(true);
               setImageUpload1(e.target.files[0]);
+            }}
+            onClick={() => {
               setShow3(true);
               setShow4(true);
               setShow2(false);
-              setImage1(true);
             }}
           />
           <input
@@ -138,12 +180,16 @@ const NewPost = () => {
             name="image"
             accept="image/*"
             onChange={(e) => {
+              e.target.files[0] === undefined
+                ? setImage2(false)
+                : setImage2(true);
               setImageUpload2(e.target.files[0]);
+            }}
+            onClick={() => {
               setShow3(true);
               setShow4(false);
               setShow5(true);
               setShow6(true);
-              setImage2(true);
             }}
           />
           <input
@@ -171,9 +217,13 @@ const NewPost = () => {
             name="image"
             accept="image/*"
             onChange={(e) => {
+              e.target.files[0] === undefined
+                ? setImage3(false)
+                : setImage3(true);
               setImageUpload3(e.target.files[0]);
+            }}
+            onClick={() => {
               setShow6(true);
-              setImage3(true);
             }}
           />
           <input
@@ -190,10 +240,11 @@ const NewPost = () => {
           />
         </div>
         <button
-          type="button"
+          type="submit"
           onClick={(e) => {
             handleSubmit(e);
           }}
+          className="btn btn-primary btn-lg w-100"
         >
           Submit
         </button>

@@ -86,30 +86,49 @@ export default createStore({
   ),
 
   getItemById: computed((state) => {
-    // console.log('state ', state);
     return (slug) => state.items.find((item) => item.slug.toString() === slug);
   }),
 
-  savePost: thunk(async (actions, newItem, helpers) => {
+  savePost: thunk(async (actions, data, helpers) => {
     const { items } = helpers.getState();
-    try {
-      let response = await axios.post(`${dest}/item/`, newItem, {
+    const form_data = data.form_data;
+    const cb = data.cb;
+    axios
+      .post(`${dest}/item/`, form_data, {
         headers: {
           'Content-Type': 'multipart/form-data',
           accept: 'application/json',
           access: `Bearer ${localStorage.getItem('access')}`,
           refresh: `Bearer ${localStorage.getItem('refresh')}`,
         },
+      })
+      .then((response) => {
+        console.log('response.data', response.data);
+        if (response.data['error'])
+          return cb(response.data['error'], null, null);
+        if (
+          !response.data['error'] &&
+          (response.data.item_image1?.length > 0 ||
+            response.data.item_image2?.length > 0 ||
+            response.data.item_image3?.length > 0)
+        ) {
+          return cb(null, response.data, null);
+        } else {
+          actions.setItems([...items, response.data]);
+          actions.setSlug('');
+          actions.setBrand('');
+          actions.setPrice('');
+          actions.setModel('');
+          actions.setEntry('');
+          return cb(null, null);
+        }
+      })
+      .then((data) => {
+        console.log('data', data);
+      })
+      .catch((error) => {
+        cb(null, error.response.data, error.response.status);
       });
-      actions.setItems([...items, response.data]);
-      actions.setSlug('');
-      actions.setBrand('');
-      actions.setPrice('');
-      actions.setModel('');
-      actions.setEntry('');
-    } catch (err) {
-      console.log(`Error: ${err.message}`);
-    }
   }),
 
   deleteItem: thunk(async (actions, info, helpers) => {

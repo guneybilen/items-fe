@@ -53,7 +53,11 @@ const ItemPage = () => {
               <img
                 src={item?.item_image1}
                 alt="1"
-                className="itemImage"
+                className={
+                  !!item.item_image1 === false
+                    ? 'itemImageonError'
+                    : 'itemImage'
+                }
                 width="150px"
                 height="75px"
               />
@@ -62,7 +66,11 @@ const ItemPage = () => {
               <img
                 src={item?.item_image2}
                 alt="2"
-                className="itemImage"
+                className={
+                  !!item.item_image2 === false
+                    ? 'itemImageonError'
+                    : 'itemImage'
+                }
                 width="150px"
                 height="75px"
               />
@@ -76,6 +84,8 @@ const ItemPage = () => {
                     ? 'itemImageonError'
                     : 'itemImage'
                 }
+                width="150px"
+                height="75px"
               />
             </span>
             <br />
