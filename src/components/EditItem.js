@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useStoreState, useStoreActions } from 'easy-peasy';
-// import { format } from 'date-fns';
+import { formatDistance, parseISO } from 'date-fns';
 
 const EditItem = () => {
   const history = useNavigate();
@@ -42,6 +42,11 @@ const EditItem = () => {
   const [imageUpload1, setImageUpload1] = useState(null);
   const [imageUpload2, setImageUpload2] = useState(null);
   const [imageUpload3, setImageUpload3] = useState(null);
+  const [dt, setDt] = useState('');
+
+  // const [downloadedImage1, setDownloadedImage1] = useState(null);
+  // const [downloadedImage2, setDownloadedImage2] = useState(null);
+  // const [downloadedImage3, setDownloadedImage3] = useState(null);
 
   const setEntry = useStoreActions((actions) => actions.setEntry);
   const setSlug = useStoreActions((actions) => actions.setSlug);
@@ -68,6 +73,7 @@ const EditItem = () => {
 
   useEffect(() => {
     if (item) {
+      setDt(formatDistance(new Date(), parseISO(item.createdAt)));
       setSlug(slug);
       setBrand(item.brand);
       setModel(item.model);
@@ -94,13 +100,10 @@ const EditItem = () => {
   const handleEdit = (sluggy) => {
     // const datetime = format(new Date(), 'MMMM dd, yyyy pp');
     let form_data = new FormData();
-    console.log(image1);
-    console.log(image2);
-    console.log(image3);
 
-    if (image1) form_data.append('item_image1', imageUpload1);
-    if (image2) form_data.append('item_image2', imageUpload2);
-    if (image3) form_data.append('item_image3', imageUpload3);
+    if (imageUpload1) form_data.append('item_image1', imageUpload1);
+    if (imageUpload2) form_data.append('item_image2', imageUpload2);
+    if (imageUpload3) form_data.append('item_image3', imageUpload3);
 
     form_data.append('slug', sluggy);
     form_data.append('brand', brand);
@@ -153,6 +156,7 @@ const EditItem = () => {
       {item && (
         <>
           <h2>Edit Item</h2>
+          <span className="postDate">...{dt}</span>
           <form
             action=""
             className="newPostForm"
@@ -179,7 +183,7 @@ const EditItem = () => {
             <input
               type="text"
               id="itemPrice"
-              value={price ? '' : price}
+              value={price}
               onChange={(e) => setPrice(e.target.value)}
             />
             <label htmlFor="itemBody">Entry:</label>
@@ -207,6 +211,7 @@ const EditItem = () => {
               id="forImageButton1"
               style={{ display: show1 ? 'block' : 'none' }}
             >
+              <br />
               <span className="spanImage">
                 <img
                   src={item?.item_image1}
@@ -220,8 +225,9 @@ const EditItem = () => {
                   height="75px"
                 />
               </span>
+              <br />
 
-              <label htmlFor="image1">image1:</label>
+              <label htmlFor="image1">change image1: &nbsp;</label>
               <input
                 type="file"
                 id="image1"
@@ -229,10 +235,8 @@ const EditItem = () => {
                 name="image"
                 accept="image/*"
                 onChange={(e) => {
-                  e.target.files[0] === undefined
-                    ? setImage1(false)
-                    : setImage1(true);
-                  setImageUpload1(e.target.files[0]);
+                  e.target.files[0] === undefined ||
+                    setImageUpload1(e.target.files[0]);
                 }}
                 onClick={() => {
                   setShow3(true);
@@ -278,10 +282,8 @@ const EditItem = () => {
                 name="image"
                 accept="image/*"
                 onChange={(e) => {
-                  e.target.files[0] === undefined
-                    ? setImage2(false)
-                    : setImage2(true);
-                  setImageUpload2(e.target.files[0]);
+                  e.target.files[0] === undefined ||
+                    setImageUpload2(e.target.files[0]);
                 }}
                 onClick={() => {
                   setShow3(true);
@@ -328,10 +330,8 @@ const EditItem = () => {
                 name="image"
                 accept="image/*"
                 onChange={(e) => {
-                  e.target.files[0] === undefined
-                    ? setImage3(false)
-                    : setImage3(true);
-                  setImageUpload3(e.target.files[0]);
+                  e.target.files[0] === undefined ||
+                    setImageUpload3(e.target.files[0]);
                 }}
                 onClick={() => {
                   setShow6(true);

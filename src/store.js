@@ -103,7 +103,6 @@ export default createStore({
         },
       })
       .then((response) => {
-        console.log('response.data', response.data);
         if (response.data['error'])
           return cb(response.data['error'], null, null);
         if (
@@ -166,28 +165,53 @@ export default createStore({
 
     const slug = updatedItem.sluggy;
     const form_data = updatedItem.form_data;
+    const cb = updatedItem.cb;
 
     try {
-      let response = await axios.put(`${dest}/items/${slug}/`, form_data, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          access: `Bearer ${localStorage.getItem('access')}`,
-          refresh: `Bearer ${localStorage.getItem('refresh')}`,
-        },
-      });
+      axios
+        .put(`${dest}/items/${slug}/`, form_data, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            access: `Bearer ${localStorage.getItem('access')}`,
+            refresh: `Bearer ${localStorage.getItem('refresh')}`,
+          },
+        })
+        .then((response) => {
+          if (response.data['error'])
+            return cb(response.data['error'], null, null);
+          if (
+            !response.data['error'] &&
+            (response.data.item_image1?.length > 0 ||
+              response.data.item_image2?.length > 0 ||
+              response.data.item_image3?.length > 0)
+          ) {
+            return cb(null, response.data, null);
+          } else {
+            actions.setItems([...items, response.data]);
+            actions.setItems(
+              items.map((item) =>
+                item.slug === slug ? { ...response.data } : item
+              )
+            );
 
-      actions.setItems(
-        items.map((item) => (item.slug === slug ? { ...response.data } : item))
-      );
+            actions.setSlug('');
+            actions.setBrand('');
+            actions.setPrice('');
+            actions.setModel('');
+            actions.setEntry('');
+            actions.Image1(null);
+            actions.Image2(null);
+            actions.Image3(null);
 
-      actions.setSlug('');
-      actions.setBrand('');
-      actions.setPrice('');
-      actions.setModel('');
-      actions.setEntry('');
-      actions.Image1(null);
-      actions.Image2(null);
-      actions.Image3(null);
+            return cb(null, null);
+          }
+        })
+        // .then((data) => {
+        //   console.log('data', data);
+        // })
+        .catch((error) => {
+          cb(null, error.response.data, error.response.status);
+        });
     } catch (err) {
       console.log(`Error: ${err}`);
     }
