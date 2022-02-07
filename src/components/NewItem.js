@@ -6,14 +6,6 @@ const NewPost = () => {
   const history = useNavigate();
   const scrollRef = useRef(null);
 
-  const [show0, setShow0] = useState(false);
-  const [show1, setShow1] = useState(true);
-  const [show2, setShow2] = useState(true);
-  const [show3, setShow3] = useState(false);
-  const [show4, setShow4] = useState(false);
-  const [show5, setShow5] = useState(false);
-  const [show6, setShow6] = useState(false);
-
   const [brand, setBrand] = useState('');
   const [model, setModel] = useState('');
   const [entry, setEntry] = useState('');
@@ -37,11 +29,11 @@ const NewPost = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('image1', image1);
+
     let form_data = new FormData();
-    if (image1) form_data.append('item_image1', imageUpload1);
-    if (image2) form_data.append('item_image2', imageUpload2);
-    if (image3) form_data.append('item_image3', imageUpload3);
+    if (imageUpload1) form_data.append('item_image1', imageUpload1);
+    if (imageUpload2) form_data.append('item_image2', imageUpload2);
+    if (imageUpload3) form_data.append('item_image3', imageUpload3);
     form_data.append('brand', brand);
     form_data.append('price', price);
     form_data.append('entry', entry);
@@ -85,170 +77,176 @@ const NewPost = () => {
           <strong>{error}</strong>
         </div>
       )}
-      <h2>New Item</h2>
-      <form
-        action=""
-        className="newPostForm"
-        onSubmit={(e) => e.preventDefault()}
-        encType="multipart/form-data"
-      >
-        <label htmlFor="itemBrand">Brand:</label>
-        <input
-          type="text"
-          id="itemBrand"
-          required
-          value={brand}
-          onChange={(e) => setBrand(e.target.value)}
-        />
-        <label htmlFor="itemModel">Model:</label>
-        <input
-          type="text"
-          id="itemModel"
-          required
-          value={model}
-          onChange={(e) => setModel(e.target.value)}
-        />
-        <label htmlFor="itemPrice">(CAD$) Price:</label>
-        <input
-          type="text"
-          id="itemPrice"
-          required
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-        />
-        <label htmlFor="itemBody">Entry:</label>
-        <textarea
-          type="text"
-          id="itemBody"
-          required
-          value={entry}
-          onChange={(e) => setEntry(e.target.value)}
-        />
-        <br />
-        <div>
+      <>
+        <h2>New Item</h2>
+        <form action="" className="newPostForm" encType="multipart/form-data">
+          <label htmlFor="itemBrand">Brand:</label>
           <input
-            type="button"
-            style={{ display: show0 ? 'inline-block' : 'none' }}
-            value="undo"
-            id="undobuttonForRemove1"
-            onClick={() => {
-              setShow1(true);
-              setShow2(true);
-              setShow0(false);
-            }}
+            type="text"
+            id="itemBrand"
+            required
+            value={brand}
+            onChange={(e) => setBrand(e.target.value)}
           />
-        </div>
-        <div id="forImageButton1" style={{ display: show1 ? 'block' : 'none' }}>
-          <label htmlFor="image1">image1:</label>
+          <label htmlFor="itemModel">Model:</label>
           <input
-            type="file"
-            id="image1"
-            alt="item"
-            name="image"
-            accept="image/*"
-            onChange={(e) => {
-              e.target.files[0] === undefined
-                ? setImage1(false)
-                : setImage1(true);
-              setImageUpload1(e.target.files[0]);
-            }}
-            onClick={() => {
-              setShow3(true);
-              setShow4(true);
-              setShow2(false);
-            }}
+            type="text"
+            id="itemModel"
+            required
+            value={model}
+            onChange={(e) => setModel(e.target.value)}
           />
+          <label htmlFor="itemPrice">CAD$ Price:</label>
           <input
-            type="button"
-            value="remove"
-            id="buttonForRemove1"
-            style={{ display: show2 ? 'inline-block' : 'none' }}
-            onClick={() => {
-              setShow2(false);
-              setShow1(false);
-              setShow0(true);
-              setImage1(false);
-            }}
+            type="text"
+            id="itemPrice"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
           />
-        </div>
-        <div id="forImageButton2" style={{ display: show3 ? 'block' : 'none' }}>
-          <label htmlFor="image2">image2:</label>
-          <input
-            type="file"
-            id="image2"
-            alt="item"
-            name="image"
-            accept="image/*"
-            onChange={(e) => {
-              e.target.files[0] === undefined
-                ? setImage2(false)
-                : setImage2(true);
-              setImageUpload2(e.target.files[0]);
-            }}
-            onClick={() => {
-              setShow3(true);
-              setShow4(false);
-              setShow5(true);
-              setShow6(true);
-            }}
+          <label htmlFor="itemBody">Entry:</label>
+          <textarea
+            type="text"
+            id="itemBody"
+            required
+            value={entry}
+            onChange={(e) => setEntry(e.target.value)}
           />
-          <input
-            type="button"
-            id="buttonForRemove2"
-            value="Remove"
-            style={{ display: show4 ? 'inline-block' : 'none' }}
-            onClick={() => {
-              setShow4(false);
-              setShow3(false);
-              setShow2(true);
-              setImage2(false);
+          <div>
+            <br />
+            {imageUpload1 && (
+              <img
+                className="itemImage"
+                src={URL.createObjectURL(imageUpload1)}
+                id="newImage1"
+                alt="newImage1"
+                width="150px"
+                height="75px"
+              />
+            )}
+            <span className="spanImage"></span>
+
+            {(imageUpload1 || image1) && (
+              <input
+                type="button"
+                value="delete image1"
+                className="btn btn-sm btn-danger"
+                onClick={() => {
+                  setImage1(false);
+                  setImageUpload1(false);
+                }}
+              />
+            )}
+
+            <br />
+          </div>
+          <div>
+            <label htmlFor="image1">
+              {image1 ? 'change image1' : 'add image 1'} &nbsp;
+            </label>
+            <input
+              type="file"
+              alt="item"
+              name="image"
+              accept="image/*"
+              onChange={(e) => {
+                e.target.files[0] === undefined ||
+                  setImageUpload1(e.target.files[0]);
+              }}
+            />
+          </div>
+          <br />
+          <div>
+            {imageUpload2 && (
+              <img
+                className="itemImage"
+                id="newImage2"
+                src={URL.createObjectURL(imageUpload2)}
+                alt="newImage2"
+                width="150px"
+                height="75px"
+              />
+            )}
+            <span className="spanImage">
+              {(imageUpload2 || image2) && (
+                <input
+                  type="button"
+                  value="delete image2"
+                  className="btn btn-sm btn-danger"
+                  onClick={() => {
+                    setImage2(false);
+                    setImageUpload2(false);
+                  }}
+                />
+              )}
+            </span>
+            <br />
+            <label htmlFor="image2">
+              {image2 ? 'change image2' : 'add image 2'} &nbsp;
+            </label>
+            <input
+              type="file"
+              id="image2"
+              alt="item"
+              name="image"
+              accept="image/*"
+              onChange={(e) => {
+                e.target.files[0] === undefined ||
+                  setImageUpload2(e.target.files[0]);
+              }}
+            />
+          </div>
+          <br />
+          <div>
+            {imageUpload3 && (
+              <img
+                className="itemImage"
+                id="newImage3"
+                src={URL.createObjectURL(imageUpload3)}
+                alt="newImage3"
+                width="150px"
+                height="75px"
+              />
+            )}
+            <span className="spanImage">
+              {(imageUpload3 || image3) && (
+                <input
+                  type="button"
+                  value="delete image3"
+                  className="btn btn-sm btn-danger"
+                  onClick={() => {
+                    setImage3(false);
+                    setImageUpload3(false);
+                  }}
+                />
+              )}
+            </span>
+            <br />
+            <label htmlFor="image3">
+              {image3 ? 'change image3' : 'add image 3'} &nbsp;
+            </label>
+            <input
+              type="file"
+              id="image3"
+              alt="item"
+              name="image"
+              accept="image/*"
+              onChange={(e) => {
+                e.target.files[0] === undefined ||
+                  setImageUpload3(e.target.files[0]);
+              }}
+            />
+          </div>
+          <button
+            type="submit"
+            onClick={(e) => {
+              handleSubmit(e);
             }}
-          />
-        </div>{' '}
-        <div
-          id="forImageButton3"
-          style={{ display: show5 ? 'inline-block' : 'none' }}
-        >
-          <label htmlFor="image3">image3:</label>
-          <input
-            type="file"
-            id="image3"
-            alt="item"
-            name="image"
-            accept="image/*"
-            onChange={(e) => {
-              e.target.files[0] === undefined
-                ? setImage3(false)
-                : setImage3(true);
-              setImageUpload3(e.target.files[0]);
-            }}
-            onClick={() => {
-              setShow6(true);
-            }}
-          />
-          <input
-            type="button"
-            style={{ display: show6 ? 'inline-block' : 'none' }}
-            id="buttonForRemove3"
-            value="Remove"
-            onClick={() => {
-              setShow5(false);
-              setShow4(true);
-              setShow6(false);
-              setImage3(false);
-            }}
-          />
-        </div>
-        <button
-          type="submit"
-          onClick={(e) => {
-            handleSubmit(e);
-          }}
-          className="btn btn-primary btn-lg w-100"
-        >
-          Submit
-        </button>
-      </form>
+            className="btn btn-primary btn-lg w-100"
+          >
+            Submit
+          </button>
+        </form>
+      </>
     </main>
   );
 };

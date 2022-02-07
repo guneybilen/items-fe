@@ -163,7 +163,7 @@ export default createStore({
   editItem: thunk(async (actions, updatedItem, helpers) => {
     const { items } = helpers.getState();
 
-    const slug = updatedItem.sluggy;
+    const slug = updatedItem.slug;
     const form_data = updatedItem.form_data;
     const cb = updatedItem.cb;
 

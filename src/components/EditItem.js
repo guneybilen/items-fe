@@ -5,8 +5,6 @@ import { formatDistance, parseISO } from 'date-fns';
 
 const EditItem = () => {
   const history = useNavigate();
-  const updated = useRef(false);
-  const dirty = useRef(false);
   const scrollRef = useRef(null);
 
   const formEl = useRef(null);
@@ -24,7 +22,6 @@ const EditItem = () => {
   const [error, setError] = useState('');
   const [closeButtonShouldShow, setCloseButtonShouldShow] = useState(false);
 
-  const sluggy = useStoreState((state) => state.slug);
   const setBrand = useStoreActions((actions) => actions.setBrand);
   const setModel = useStoreActions((actions) => actions.setModel);
   const setPrice = useStoreActions((actions) => actions.setPrice);
@@ -35,7 +32,6 @@ const EditItem = () => {
   const [imageUpload2, setImageUpload2] = useState(null);
   const [imageUpload3, setImageUpload3] = useState(null);
   const [dt, setDt] = useState('');
-  const [forUpload, setForUpload] = useState('');
 
   const [deleteImage1, setDeleteImage1] = useState(false);
   const [deleteImage2, setDeleteImage2] = useState(false);
@@ -55,19 +51,8 @@ const EditItem = () => {
   };
 
   useEffect(() => {
-    if (updated.current === true && dirty.current === false) {
-      history(`/items/${slug}`);
-    }
-
-    if (updated.current === true && dirty.current === true) {
-      history(`/items/${sluggy}`);
-    }
-  });
-
-  useEffect(() => {
     if (item) {
       setDt(formatDistance(new Date(), parseISO(item.createdAt)));
-      setSlug(slug);
       setBrand(item.brand);
       setModel(item.model);
       setPrice(item.price);
@@ -77,28 +62,27 @@ const EditItem = () => {
       setImage2(item.item_image2);
       setImage3(item.item_image3);
     }
+  }, [
+    item,
+    setBrand,
+    setModel,
+    setPrice,
+    setEntry,
+    setImage1,
+    setImage2,
+    setImage3,
+    setSlug,
+  ]);
 
-    let eventVar;
-    if (formEl && formEl.current) {
-      eventVar = formEl.current.addEventListener('input', () => {
-        dirty.current = true;
-      });
-    }
+  const handleEdit = (e) => {
+    e.preventDefault();
 
-    return () => eventVar?.removeEventListener('input');
-
-    //eslint-disable-next-line
-  }, [item, setBrand, setModel, setPrice, setEntry, setSlug]);
-
-  const handleEdit = (sluggy) => {
-    // const datetime = format(new Date(), 'MMMM dd, yyyy pp');
     let form_data = new FormData();
 
     if (imageUpload1) form_data.append('item_image1', imageUpload1);
     if (imageUpload2) form_data.append('item_image2', imageUpload2);
     if (imageUpload3) form_data.append('item_image3', imageUpload3);
 
-    form_data.append('slug', sluggy);
     form_data.append('brand', brand);
     form_data.append('price', price);
     form_data.append('entry', entry);
@@ -111,7 +95,7 @@ const EditItem = () => {
 
     editItem({
       form_data,
-      sluggy,
+      slug,
       cb: (brandormodelerror, error, status) => {
         let error_sentence = null;
         if (brandormodelerror) {
@@ -127,24 +111,16 @@ const EditItem = () => {
           scrollTo(scrollRef);
         }
 
-        // if (!brandormodelerror && !error_sentence) history('/');
+        if (!brandormodelerror && !error_sentence) {
+          history(`/items/${slug}`);
+        }
       },
     });
-
-    updated.current = true;
   };
 
   const displayNone = (e) => {
     e.preventDefault();
     setCloseButtonShouldShow(false);
-  };
-
-  const setPresentation = (e, newImage) => {
-    e.preventDefault();
-    console.log('newImage ', newImage);
-    setForUpload(true);
-
-    setForUpload(URL.createObjectURL(e.target.files[0]));
   };
 
   return (
@@ -203,8 +179,8 @@ const EditItem = () => {
               {imageUpload1 && (
                 <img
                   className="itemImage"
-                  src={forUpload}
                   id="newImage1"
+                  src={URL.createObjectURL(imageUpload1)}
                   alt="newImage1"
                   width="150px"
                   height="75px"
@@ -253,8 +229,7 @@ const EditItem = () => {
                 onChange={(e) => {
                   setDeleteImage1(false);
                   e.target.files[0] === undefined ||
-                    setImageUpload1(e.target.files[0]) ||
-                    setPresentation(e, 'newImage1');
+                    setImageUpload1(e.target.files[0]);
                 }}
               />
             </div>
@@ -263,8 +238,8 @@ const EditItem = () => {
               {imageUpload2 && (
                 <img
                   className="itemImage"
-                  src={forUpload}
                   id="newImage2"
+                  src={URL.createObjectURL(imageUpload2)}
                   alt="newImage2"
                   width="150px"
                   height="75px"
@@ -310,8 +285,7 @@ const EditItem = () => {
                 onChange={(e) => {
                   setDeleteImage2(false);
                   e.target.files[0] === undefined ||
-                    setImageUpload2(e.target.files[0]) ||
-                    setPresentation(e, 'newImage2');
+                    setImageUpload2(e.target.files[0]);
                 }}
               />
             </div>
@@ -320,8 +294,8 @@ const EditItem = () => {
               {imageUpload3 && (
                 <img
                   className="itemImage"
-                  src={forUpload}
                   id="newImage3"
+                  src={URL.createObjectURL(imageUpload3)}
                   alt="newImage3"
                   width="150px"
                   height="75px"
@@ -368,16 +342,14 @@ const EditItem = () => {
                 onChange={(e) => {
                   setDeleteImage3(false);
                   e.target.files[0] === undefined ||
-                    setImageUpload3(e.target.files[0]) ||
-                    setPresentation(e, 'newImage3');
+                    setImageUpload3(e.target.files[0]);
                 }}
               />
             </div>
             <button
               type="submit"
               onClick={(e) => {
-                e.preventDefault();
-                handleEdit(sluggy);
+                handleEdit(e);
               }}
               className="btn btn-primary btn-lg w-100"
             >
