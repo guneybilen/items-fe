@@ -89,18 +89,6 @@ const EditItem = () => {
     form_data.append('seller', localStorage.getItem('seller'));
     form_data.append('nickname', localStorage.getItem('nickname'));
 
-    // const updatedItem = {
-    //   slug: sluggy,
-    //   brand: brand,
-    //   model: model,
-    //   price: price,
-    //   entry: entry,
-    //   seller: localStorage.getItem('seller'),
-    //   nickname: localStorage.getItem('nickname'),
-    //   item_image1: image1,
-    //   item_image2: image2,
-    //   item_image3: image3,
-    // };
     editItem({ form_data, sluggy });
     updated.current = true;
   };
