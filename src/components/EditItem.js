@@ -9,14 +9,6 @@ const EditItem = () => {
   const dirty = useRef(false);
   const scrollRef = useRef(null);
 
-  const [show0, setShow0] = useState(false);
-  const [show1, setShow1] = useState(true);
-  const [show2, setShow2] = useState(true);
-  const [show3, setShow3] = useState(false);
-  const [show4, setShow4] = useState(false);
-  const [show5, setShow5] = useState(false);
-  const [show6, setShow6] = useState(false);
-
   const formEl = useRef(null);
 
   const { slug } = useParams();
@@ -44,9 +36,9 @@ const EditItem = () => {
   const [imageUpload3, setImageUpload3] = useState(null);
   const [dt, setDt] = useState('');
 
-  // const [downloadedImage1, setDownloadedImage1] = useState(null);
-  // const [downloadedImage2, setDownloadedImage2] = useState(null);
-  // const [downloadedImage3, setDownloadedImage3] = useState(null);
+  const [deleteImage1, setDeleteImage1] = useState(false);
+  const [deleteImage2, setDeleteImage2] = useState(false);
+  const [deleteImage3, setDeleteImage3] = useState(false);
 
   const setEntry = useStoreActions((actions) => actions.setEntry);
   const setSlug = useStoreActions((actions) => actions.setSlug);
@@ -110,6 +102,9 @@ const EditItem = () => {
     form_data.append('price', price);
     form_data.append('entry', entry);
     form_data.append('model', model);
+    form_data.append('deleteImage1', deleteImage1);
+    form_data.append('deleteImage2', deleteImage2);
+    form_data.append('deleteImage3', deleteImage3);
     form_data.append('seller', localStorage.getItem('seller'));
     form_data.append('nickname', localStorage.getItem('nickname'));
 
@@ -195,39 +190,39 @@ const EditItem = () => {
               onChange={(e) => setEntry(e.target.value)}
             />
             <div>
-              <input
-                type="button"
-                style={{ display: show0 ? 'inline-block' : 'none' }}
-                value="undo"
-                id="undobuttonForRemove1"
-                onClick={() => {
-                  setShow1(true);
-                  setShow2(true);
-                  setShow0(false);
-                }}
-              />
-            </div>
-            <div
-              id="forImageButton1"
-              style={{ display: show1 ? 'block' : 'none' }}
-            >
               <br />
-              <span className="spanImage">
-                <img
-                  src={item?.item_image1}
-                  alt="1"
-                  className={
-                    !!item.item_image1 === false
-                      ? 'itemImageonError'
-                      : 'itemImage'
-                  }
-                  width="150px"
-                  height="75px"
-                />
-              </span>
-              <br />
+              {image1 && (
+                <span className="spanImage">
+                  <img
+                    src={item?.item_image1}
+                    alt="1"
+                    className={
+                      !!item.item_image1 === false
+                        ? 'itemImageonError'
+                        : 'itemImage'
+                    }
+                    width="150px"
+                    height="75px"
+                  />
 
-              <label htmlFor="image1">change image1: &nbsp;</label>
+                  <input
+                    type="button"
+                    value="delete image1"
+                    className="btn btn-sm btn-danger"
+                    onClick={() => {
+                      setDeleteImage1(true);
+                      setImage1(false);
+                      setImageUpload1(false);
+                    }}
+                  />
+                </span>
+              )}
+              <br />
+            </div>
+            <div>
+              <label htmlFor="image1">
+                {image1 ? 'change image1' : 'add image 1'} &nbsp;
+              </label>
               <input
                 type="file"
                 id="image1"
@@ -235,46 +230,45 @@ const EditItem = () => {
                 name="image"
                 accept="image/*"
                 onChange={(e) => {
+                  setDeleteImage1(false);
                   e.target.files[0] === undefined ||
                     setImageUpload1(e.target.files[0]);
                 }}
-                onClick={() => {
-                  setShow3(true);
-                  setShow4(true);
-                  setShow2(false);
-                }}
-              />
-              <input
-                type="button"
-                value="remove"
-                id="buttonForRemove1"
-                style={{ display: show2 ? 'inline-block' : 'none' }}
-                onClick={() => {
-                  setShow2(false);
-                  setShow1(false);
-                  setShow0(true);
-                  setImage1(false);
-                }}
               />
             </div>
-            <div
-              id="forImageButton2"
-              style={{ display: show3 ? 'block' : 'none' }}
-            >
-              <span className="spanImage">
-                <img
-                  src={item?.item_image2}
-                  alt="2"
-                  className={
-                    !!item.item_image2 === false
-                      ? 'itemImageonError'
-                      : 'itemImage'
-                  }
-                  width="150px"
-                  height="75px"
-                />
-              </span>
-              <label htmlFor="image2">image2:</label>
+            <br />
+            <div>
+              {image2 && (
+                <span className="spanImage">
+                  <img
+                    src={item?.item_image2}
+                    alt="2"
+                    className={
+                      !!item.item_image2 === false
+                        ? 'itemImageonError'
+                        : 'itemImage'
+                    }
+                    width="150px"
+                    height="75px"
+                  />
+
+                  <input
+                    type="button"
+                    value="delete image2"
+                    className="btn btn-sm btn-danger"
+                    onClick={() => {
+                      setDeleteImage2(true);
+                      setImage2(false);
+                      setImageUpload2(false);
+                    }}
+                  />
+                </span>
+              )}
+
+              <br />
+              <label htmlFor="image2">
+                {image2 ? 'change image2' : 'add image 2'} &nbsp;
+              </label>
               <input
                 type="file"
                 id="image2"
@@ -282,47 +276,44 @@ const EditItem = () => {
                 name="image"
                 accept="image/*"
                 onChange={(e) => {
+                  setDeleteImage2(false);
                   e.target.files[0] === undefined ||
                     setImageUpload2(e.target.files[0]);
                 }}
-                onClick={() => {
-                  setShow3(true);
-                  setShow4(false);
-                  setShow5(true);
-                  setShow6(true);
-                }}
-              />
-              <input
-                type="button"
-                id="buttonForRemove2"
-                value="Remove"
-                style={{ display: show4 ? 'inline-block' : 'none' }}
-                onClick={() => {
-                  setShow4(false);
-                  setShow3(false);
-                  setShow2(true);
-                  setImage2(false);
-                }}
               />
             </div>
-            <div
-              id="forImageButton3"
-              style={{ display: show5 ? 'inline-block' : 'none' }}
-            >
-              <span className="spanImage">
-                <img
-                  src={item.item_image3}
-                  alt="3"
-                  className={
-                    !!item.item_image3 === false
-                      ? 'itemImageonError'
-                      : 'itemImage'
-                  }
-                  width="150px"
-                  height="75px"
-                />
-              </span>
-              <label htmlFor="image3">image3:</label>
+            <br />
+            <div>
+              {image3 && (
+                <span className="spanImage">
+                  <img
+                    src={item.item_image3}
+                    alt="3"
+                    className={
+                      !!item.item_image3 === false
+                        ? 'itemImageonError'
+                        : 'itemImage'
+                    }
+                    width="150px"
+                    height="75px"
+                  />
+
+                  <input
+                    type="button"
+                    value="delete image3"
+                    className="btn btn-sm btn-danger"
+                    onClick={() => {
+                      setDeleteImage3(true);
+                      setImage3(false);
+                      setImageUpload3(false);
+                    }}
+                  />
+                </span>
+              )}
+              <br />
+              <label htmlFor="image3">
+                {image3 ? 'change image3' : 'add image 3'} &nbsp;
+              </label>
               <input
                 type="file"
                 id="image3"
@@ -330,23 +321,9 @@ const EditItem = () => {
                 name="image"
                 accept="image/*"
                 onChange={(e) => {
+                  setDeleteImage3(false);
                   e.target.files[0] === undefined ||
                     setImageUpload3(e.target.files[0]);
-                }}
-                onClick={() => {
-                  setShow6(true);
-                }}
-              />
-              <input
-                type="button"
-                style={{ display: show6 ? 'inline-block' : 'none' }}
-                id="buttonForRemove3"
-                value="Remove"
-                onClick={() => {
-                  setShow5(false);
-                  setShow4(true);
-                  setShow6(false);
-                  setImage3(false);
                 }}
               />
             </div>

@@ -351,3 +351,13 @@ body {
 .hidden {
   display: none;
 }
+
+.btn-sm {
+  float: right;
+  margin-top: 1rem;
+}
+
+.itemImageonError {
+  max-width: 0px;
+  max-height: 0px;
+}
