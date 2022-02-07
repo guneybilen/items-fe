@@ -51,7 +51,10 @@ const NewPost = () => {
         } else {
           error_sentence =
             status === 400 &&
-            (error?.item_image1 || error?.item_image2 || error?.item_image3);
+            (error?.item_image1 ||
+              error?.item_image2 ||
+              error?.item_image3 ||
+              error?.price);
           setError(error_sentence);
           setCloseButtonShouldShow(true);
           scrollTo(scrollRef);
