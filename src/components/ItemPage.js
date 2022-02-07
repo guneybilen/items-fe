@@ -62,6 +62,7 @@ const ItemPage = () => {
                 height="75px"
               />
             </span>
+            &nbsp;
             <span className="spanImage">
               <img
                 src={item?.item_image2}
@@ -75,6 +76,7 @@ const ItemPage = () => {
                 height="75px"
               />
             </span>
+            &nbsp;
             <span className="spanImage">
               <img
                 src={item.item_image3}

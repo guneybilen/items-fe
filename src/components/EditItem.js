@@ -35,6 +35,7 @@ const EditItem = () => {
   const [imageUpload2, setImageUpload2] = useState(null);
   const [imageUpload3, setImageUpload3] = useState(null);
   const [dt, setDt] = useState('');
+  const [forUpload, setForUpload] = useState('');
 
   const [deleteImage1, setDeleteImage1] = useState(false);
   const [deleteImage2, setDeleteImage2] = useState(false);
@@ -138,6 +139,14 @@ const EditItem = () => {
     setCloseButtonShouldShow(false);
   };
 
+  const setPresentation = (e, newImage) => {
+    e.preventDefault();
+    console.log('newImage ', newImage);
+    setForUpload(true);
+
+    setForUpload(URL.createObjectURL(e.target.files[0]));
+  };
+
   return (
     <main className="NewPost">
       {error && closeButtonShouldShow && (
@@ -191,8 +200,18 @@ const EditItem = () => {
             />
             <div>
               <br />
-              {image1 && (
-                <span className="spanImage">
+              {imageUpload1 && (
+                <img
+                  className="itemImage"
+                  src={forUpload}
+                  id="newImage1"
+                  alt="newImage1"
+                  width="150px"
+                  height="75px"
+                />
+              )}
+              <span className="spanImage">
+                {image1 && (
                   <img
                     src={item?.item_image1}
                     alt="1"
@@ -204,19 +223,22 @@ const EditItem = () => {
                     width="150px"
                     height="75px"
                   />
+                )}
+              </span>
 
-                  <input
-                    type="button"
-                    value="delete image1"
-                    className="btn btn-sm btn-danger"
-                    onClick={() => {
-                      setDeleteImage1(true);
-                      setImage1(false);
-                      setImageUpload1(false);
-                    }}
-                  />
-                </span>
+              {(imageUpload1 || image1) && (
+                <input
+                  type="button"
+                  value="delete image1"
+                  className="btn btn-sm btn-danger"
+                  onClick={() => {
+                    setDeleteImage1(true);
+                    setImage1(false);
+                    setImageUpload1(false);
+                  }}
+                />
               )}
+
               <br />
             </div>
             <div>
@@ -225,21 +247,31 @@ const EditItem = () => {
               </label>
               <input
                 type="file"
-                id="image1"
                 alt="item"
                 name="image"
                 accept="image/*"
                 onChange={(e) => {
                   setDeleteImage1(false);
                   e.target.files[0] === undefined ||
-                    setImageUpload1(e.target.files[0]);
+                    setImageUpload1(e.target.files[0]) ||
+                    setPresentation(e, 'newImage1');
                 }}
               />
             </div>
             <br />
             <div>
-              {image2 && (
-                <span className="spanImage">
+              {imageUpload2 && (
+                <img
+                  className="itemImage"
+                  src={forUpload}
+                  id="newImage2"
+                  alt="newImage2"
+                  width="150px"
+                  height="75px"
+                />
+              )}
+              <span className="spanImage">
+                {image2 && (
                   <img
                     src={item?.item_image2}
                     alt="2"
@@ -251,7 +283,8 @@ const EditItem = () => {
                     width="150px"
                     height="75px"
                   />
-
+                )}
+                {(imageUpload2 || image2) && (
                   <input
                     type="button"
                     value="delete image2"
@@ -262,9 +295,8 @@ const EditItem = () => {
                       setImageUpload2(false);
                     }}
                   />
-                </span>
-              )}
-
+                )}
+              </span>
               <br />
               <label htmlFor="image2">
                 {image2 ? 'change image2' : 'add image 2'} &nbsp;
@@ -278,14 +310,25 @@ const EditItem = () => {
                 onChange={(e) => {
                   setDeleteImage2(false);
                   e.target.files[0] === undefined ||
-                    setImageUpload2(e.target.files[0]);
+                    setImageUpload2(e.target.files[0]) ||
+                    setPresentation(e, 'newImage2');
                 }}
               />
             </div>
             <br />
             <div>
-              {image3 && (
-                <span className="spanImage">
+              {imageUpload3 && (
+                <img
+                  className="itemImage"
+                  src={forUpload}
+                  id="newImage3"
+                  alt="newImage3"
+                  width="150px"
+                  height="75px"
+                />
+              )}
+              <span className="spanImage">
+                {image3 && (
                   <img
                     src={item.item_image3}
                     alt="3"
@@ -297,7 +340,9 @@ const EditItem = () => {
                     width="150px"
                     height="75px"
                   />
+                )}
 
+                {(imageUpload3 || image3) && (
                   <input
                     type="button"
                     value="delete image3"
@@ -308,8 +353,8 @@ const EditItem = () => {
                       setImageUpload3(false);
                     }}
                   />
-                </span>
-              )}
+                )}
+              </span>
               <br />
               <label htmlFor="image3">
                 {image3 ? 'change image3' : 'add image 3'} &nbsp;
@@ -323,7 +368,8 @@ const EditItem = () => {
                 onChange={(e) => {
                   setDeleteImage3(false);
                   e.target.files[0] === undefined ||
-                    setImageUpload3(e.target.files[0]);
+                    setImageUpload3(e.target.files[0]) ||
+                    setPresentation(e, 'newImage3');
                 }}
               />
             </div>
