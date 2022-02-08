@@ -1,15 +1,30 @@
-import React, { useState, useRef } from 'react';
-import login_api from '../api/login_api';
+import React, { useState, useRef, useEffect } from 'react';
+// import login_api from '../api/login_api';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+let backend;
+if (process.env.NODE_ENV === 'development') {
+  backend = 'http://localhost:8000/api/securityquestions/';
+} else {
+  backend =
+    'https://justlikenew-vaauo.ondigitalocean.app/api/securityquestions/';
+}
 
 const Signup = () => {
   const scrollRef = useRef(null);
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
+  const [names, setNames] = useState([]);
+  const [values, setValues] = useState([]);
+  const [forsend, setForSend] = useState('');
+  const [answer, setAnswer] = useState([]);
+
   const [password1, setPassword1] = useState('');
   const [password2, setPassword2] = useState('');
   const [nickname, setNickname] = useState('');
   const [errors, setErrors] = useState(false);
+
   //eslint-disable-next-line
   const [loading, setLoading] = useState(true);
   const history = useNavigate();
@@ -19,6 +34,17 @@ const Signup = () => {
       ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
+
+  useEffect(() => {
+    const grab = async () => {
+      const result = await axios.get(backend);
+      console.log(result.data);
+      setNames(result.data.names);
+      setValues(result.data.values);
+    };
+
+    grab();
+  }, []);
 
   //eslint-disable-next-line
   const success = () => {
@@ -45,6 +71,8 @@ const Signup = () => {
       password: password1,
       passwordConfirm: password2,
       nickname: nickname,
+      s_name: forsend,
+      s_answer: answer,
     };
 
     let url;
@@ -72,7 +100,8 @@ const Signup = () => {
         }
       })
       .then(() => {
-        login_api(email, password1, success, fail);
+        // login_api(email, password1, success, fail);
+        history('/login');
       })
       .catch((err) => {
         let errorLocal = err;
@@ -154,7 +183,42 @@ const Signup = () => {
               className="form-control"
               onChange={(e) => setNickname(e.target.value)}
               required
-            />{' '}
+            />
+            <br />
+            <label htmlFor="security_question" className="form-label">
+              Pick One For Your Secuirty Question:
+            </label>
+            <select
+              id="security_question"
+              className="form-select"
+              aria-label="Default select example"
+              value={forsend}
+              onChange={(e) => setForSend(e.target.value)}
+            >
+              <>
+                <option defaultValue="0">Open this select menu</option>
+                <option value={names[0]}>{values[0]}</option>
+                <option value={names[1]}>{values[1]}</option>
+                <option value={names[2]}>{values[2]}</option>
+                <option value={names[3]}>{values[3]}</option>
+                <option value={names[4]}>{values[4]}</option>
+                <option value={names[5]}>{values[5]}</option>
+              </>
+            </select>
+            <br />
+            <label htmlFor="security_question_answer" className="form-label">
+              Type Your Answer For The Selected Security Question:
+            </label>
+            <br />
+            <input
+              name="sqanswer"
+              id="security_question_answer"
+              type="text"
+              value={answer}
+              className="form-control"
+              onChange={(e) => setAnswer(e.target.value)}
+              required
+            />
             <br />
             <input
               type="submit"
