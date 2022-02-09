@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-// import login_api from '../api/login_api';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -18,7 +17,7 @@ const Signup = () => {
   const [names, setNames] = useState([]);
   const [values, setValues] = useState([]);
   const [forsend, setForSend] = useState('');
-  const [answer, setAnswer] = useState([]);
+  const [answer, setAnswer] = useState('');
 
   const [password1, setPassword1] = useState('');
   const [password2, setPassword2] = useState('');
@@ -46,23 +45,6 @@ const Signup = () => {
     grab();
   }, []);
 
-  //eslint-disable-next-line
-  const success = () => {
-    console.log('Authenticated!');
-    // console.log(data);
-    history('/');
-  };
-
-  //eslint-disable-next-line
-  const fail = () => {
-    localStorage.clear();
-    setEmail('');
-    setPassword1('');
-    setPassword2('');
-    setNickname('');
-    setErrors(true);
-  };
-
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -83,32 +65,31 @@ const Signup = () => {
       url = 'https://justlikenew-vaauo.ondigitalocean.app/api/users/';
     }
 
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(user),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          return res.text().then((text) => {
-            throw new Error(text);
-          });
-        } else {
-          return res.json();
-        }
+    axios
+      .post(url, user, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
       })
-      .then(() => {
-        // login_api(email, password1, success, fail);
+      .then((response) => {
+        return response.data;
+      })
+      .then((data) => {
+        console.log(data);
         history('/login');
       })
-      .catch((err) => {
-        let errorLocal = err;
-        // console.log('errorLocal', JSON.parse(errorLocal['message']).message);
-        setError(JSON.parse(errorLocal['message']).message);
+      .catch((error) => {
+        console.log(error.response);
+        setForSend('');
+        setError(true);
+        setErrors(error.response.data.message);
         scrollTo(scrollRef);
       });
+  };
+
+  const displayNone = (e) => {
+    e.preventDefault();
+    setError('');
   };
 
   return (
@@ -116,13 +97,10 @@ const Signup = () => {
       <main className="SignupPage text-center">
         {error && (
           <div className="alert" id="id001" ref={scrollRef}>
-            <span
-              className="closebtn"
-              // onClick="this.parentElement.style.display='none';"
-            >
+            <span className="closebtn" onClick={(e) => displayNone(e)}>
               &times;
             </span>
-            <strong>{error}</strong>
+            <strong>{errors}</strong>
           </div>
         )}
         <form onSubmit={onSubmit}>
@@ -158,7 +136,7 @@ const Signup = () => {
               required
             />{' '}
             <br />
-            <label htmlFor="password2" className="form-label">
+            <label htmlFor="password2" className="form-label" required>
               Confirm password:
             </label>{' '}
             <br />
@@ -196,7 +174,7 @@ const Signup = () => {
               onChange={(e) => setForSend(e.target.value)}
             >
               <>
-                <option defaultValue="0">Open this select menu</option>
+                <option value="">Choose one from the list</option>
                 <option value={names[0]}>{values[0]}</option>
                 <option value={names[1]}>{values[1]}</option>
                 <option value={names[2]}>{values[2]}</option>
