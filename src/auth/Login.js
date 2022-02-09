@@ -55,7 +55,7 @@ export default function Login() {
             autoFocus
             type="email"
             className="form-control"
-            required="true"
+            required
             id="username"
             placeholder="example@example.com"
             onChange={(e) => {
@@ -73,7 +73,7 @@ export default function Login() {
             className="form-control"
             id="password"
             placeholder="password"
-            required="true"
+            required
             autoComplete="on"
             onChange={(e) => {
               setPassword(e.target.value);
