@@ -48,7 +48,7 @@ function App() {
         <Route path="items/:slug" element={<ItemPage />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
-        <Route path="/newpassword" element={<NewPassword />} />
+        <Route path="/newpassword/:id/" element={<NewPassword />} />
       </Routes>
       <RequireAuth />
       <Footer />

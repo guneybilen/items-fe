@@ -12,8 +12,8 @@ if (process.env.NODE_ENV === 'development') {
 
 export default function ForgotPassword() {
   const [username, setUsername] = useState('');
-  const [error, setError] = useState('');
-  const [errors, setErrors] = useState('');
+  const [notification, setNotification] = useState(false);
+  const [camebackdata, setCameBackData] = useState('');
   const [link, setLink] = useState(false);
 
   useEffect(() => {
@@ -36,31 +36,32 @@ export default function ForgotPassword() {
         return response.data;
       })
       .then((data) => {
-        console.log(data);
-        setErrors('');
-        setErrors(data.state);
+        console.log(data.state);
+        setNotification(true);
+        setCameBackData('');
+        setCameBackData(data.state);
         setLink(true);
       })
       .catch((error) => {
         console.log(error.response);
-        setError(true);
-        setErrors(error.response.data.state);
+        setNotification(true);
+        setCameBackData(error.response.data.state);
       });
   };
 
   const displayNone = (e) => {
     e.preventDefault();
-    setError('');
+    setNotification(false);
   };
 
   return (
     <main className="LoginPage text-center">
-      {error && (
+      {notification && (
         <div className="alert" id="id001">
           <span className="closebtn" onClick={(e) => displayNone(e)}>
             &times;
           </span>
-          <strong>{errors}</strong>
+          <strong>{camebackdata}</strong>
         </div>
       )}
       <form>
@@ -91,7 +92,6 @@ export default function ForgotPassword() {
         </button>
       </form>
 
-      <br />
       <br />
       {link ? <Link to="/">Goto Main Page</Link> : <></>}
     </main>

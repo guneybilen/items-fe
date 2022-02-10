@@ -1,28 +1,24 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-
-let backend;
-if (process.env.NODE_ENV === 'development') {
-  backend = 'http://localhost:8000/api/securityquestions/';
-} else {
-  backend =
-    'https://justlikenew-vaauo.ondigitalocean.app/api/securityquestions/';
-}
 
 const NewPassword = () => {
   const scrollRef = useRef(null);
-  const [email, setEmail] = useState('');
-  const [error, setError] = useState('');
-  const [names, setNames] = useState([]);
-  const [values, setValues] = useState([]);
-  const [forsend, setForSend] = useState('');
+  const [error, setError] = useState(false);
   const [answer, setAnswer] = useState('');
+  let { token } = useParams();
+  token = token ? token : window.location.pathname.split('/')[2];
+  let backend;
+  if (process.env.NODE_ENV === 'development') {
+    backend = `http://localhost:8000/api/secretquestion/${token}/`;
+  } else {
+    backend = `https://justlikenew-vaauo.ondigitalocean.app/api/secretquestion/${token}/`;
+  }
 
   const [password1, setPassword1] = useState('');
   const [password2, setPassword2] = useState('');
-  const [nickname, setNickname] = useState('');
   const [errors, setErrors] = useState('');
+  const [secretquestion, setSecretQuestion] = useState('');
 
   const history = useNavigate();
 
@@ -34,33 +30,46 @@ const NewPassword = () => {
 
   useEffect(() => {
     const grab = async () => {
-      const result = await axios.get(backend);
+      const result = axios
+        .post(backend, {
+          token: token,
+        })
+        .then((response) => {
+          return response.data;
+        })
+        .then((data) => {
+          console.log(data);
+          setSecretQuestion(data.secretquestion);
+        })
+        .catch((error) => {
+          console.log(error.response.state);
+          setError(true);
+          setErrors(error.response.data.state);
+          scrollTo(scrollRef);
+        });
       console.log(result.data);
-      setNames(result.data.names);
-      setValues(result.data.values);
+      return;
     };
-
     grab();
-  }, []);
+  }, [backend, token]);
 
   const onSubmit = (e) => {
     e.preventDefault();
 
     const user = {
-      email: email,
       password: password1,
       passwordConfirm: password2,
-      nickname: nickname,
-      s_name: forsend,
-      s_answer: answer,
+      token: token,
+      answer: answer,
     };
 
     let url;
 
     if (process.env.NODE_ENV === 'development') {
-      url = 'http://localhost:8000/api/users/';
+      url = 'http://localhost:8000/api/passwordresetcomplete/';
     } else {
-      url = 'https://justlikenew-vaauo.ondigitalocean.app/api/users/';
+      url =
+        'https://justlikenew-vaauo.ondigitalocean.app/api/passwordresetcomplete/';
     }
 
     axios
@@ -74,13 +83,12 @@ const NewPassword = () => {
       })
       .then((data) => {
         console.log(data);
-        // history('/login');
+        history('/login');
       })
       .catch((error) => {
         console.log(error.statusCode);
-        setForSend('');
         setError(true);
-        setErrors(error.response.data.message);
+        setErrors(error.response.data.state);
         scrollTo(scrollRef);
       });
   };
@@ -103,19 +111,7 @@ const NewPassword = () => {
         )}
         <form onSubmit={onSubmit}>
           <div>
-            <h1>Signup</h1>
-            <label htmlFor="email" className="form-label">
-              Email address:
-            </label>{' '}
-            <br />
-            <input
-              name="email"
-              type="email"
-              className="form-control"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />{' '}
+            <h1>Password Reset</h1>
             <br />
             <label htmlFor="password1" className="form-label">
               Password:
@@ -145,42 +141,18 @@ const NewPassword = () => {
               required
             />{' '}
             <br />
-            <label htmlFor="nickname" className="form-label">
-              Nickname:
-            </label>{' '}
-            <br />
+            <label htmlFor="security_question" className="form-label">
+              here is your recorded security question:
+            </label>
             <input
-              name="nickname"
               type="text"
-              value={nickname}
               className="form-control"
-              onChange={(e) => setNickname(e.target.value)}
-              required
+              value={secretquestion}
+              readonly
             />
             <br />
-            <label htmlFor="security_question" className="form-label">
-              Pick One For Your Secuirty Question:
-            </label>
-            <select
-              id="security_question"
-              className="form-select"
-              aria-label="Default select example"
-              value={forsend}
-              onChange={(e) => setForSend(e.target.value)}
-            >
-              <>
-                <option value="">Choose one from the list</option>
-                <option value={names[0]}>{values[0]}</option>
-                <option value={names[1]}>{values[1]}</option>
-                <option value={names[2]}>{values[2]}</option>
-                <option value={names[3]}>{values[3]}</option>
-                <option value={names[4]}>{values[4]}</option>
-                <option value={names[5]}>{values[5]}</option>
-              </>
-            </select>
-            <br />
             <label htmlFor="security_question_answer" className="form-label">
-              Type Your Answer For The Selected Security Question:
+              type the answer for your recorded security question:
             </label>
             <br />
             <input
@@ -195,7 +167,7 @@ const NewPassword = () => {
             <br />
             <input
               type="submit"
-              value="Signup"
+              value="Change Password"
               className="btn btn-primary btn-lg w-100"
             />
           </div>
