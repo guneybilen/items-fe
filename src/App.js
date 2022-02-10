@@ -5,13 +5,15 @@ import About from './components/About';
 import Home from './components/Home';
 import Login from './auth/Login';
 import Signup from './auth/Signup';
+import NewPassword from './auth/NewPassword';
+import ForgotPassword from './auth/ForgotPassword';
+
 import ItemPage from './components/ItemPage';
 import { useStoreActions } from 'easy-peasy';
 import { useEffect } from 'react';
 import useAxiosFetch from './hooks/useAxiosFetch';
 import RequireAuth from './components/RequireAuth';
 import { Routes, Route } from 'react-router-dom';
-// import { construction } from '../public/construction.png';
 
 let url;
 let comp;
@@ -45,6 +47,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="items/:slug" element={<ItemPage />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/newpassword" element={<NewPassword />} />
       </Routes>
       <RequireAuth />
       <Footer />

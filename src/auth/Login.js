@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import login_api from '../api/login_api';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function Login() {
   const history = useNavigate();
@@ -49,7 +50,7 @@ export default function Login() {
       <form>
         <div className="mb-3">
           <label htmlFor="username" className="form-label">
-            Username
+            Email
           </label>
           <input
             autoFocus
@@ -88,6 +89,9 @@ export default function Login() {
         >
           Login
         </button>
+        <br />
+        <br />
+        <Link to="/forgotpassword">Forgot Password</Link>
       </form>
     </main>
   );

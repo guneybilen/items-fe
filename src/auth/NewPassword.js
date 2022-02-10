@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === 'development') {
     'https://justlikenew-vaauo.ondigitalocean.app/api/securityquestions/';
 }
 
-const Signup = () => {
+const NewPassword = () => {
   const scrollRef = useRef(null);
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
@@ -74,10 +74,10 @@ const Signup = () => {
       })
       .then((data) => {
         console.log(data);
-        history('/login');
+        // history('/login');
       })
       .catch((error) => {
-        console.log(error.response);
+        console.log(error.statusCode);
         setForSend('');
         setError(true);
         setErrors(error.response.data.message);
@@ -205,4 +205,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default NewPassword;
