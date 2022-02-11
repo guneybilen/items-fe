@@ -45,6 +45,7 @@ const Nav = () => {
           id="search"
           type="text"
           placeholder="search items"
+          className="form-control"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />

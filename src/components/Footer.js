@@ -3,7 +3,7 @@ const Footer = () => {
   const today = new Date();
   const itemCount = useStoreState((state) => state.itemCount);
   return (
-    <footer className="Footer">
+    <footer className="footer font-small">
       <p>
         {itemCount} items for sale - All Electronics (Copyright &copy;{' '}
         {today.getFullYear()})

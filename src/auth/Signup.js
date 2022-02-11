@@ -164,7 +164,7 @@ const Signup = () => {
               />
               <br />
               <label htmlFor="security_question" className="form-label">
-                Pick One For Your Secuirty Question:
+                Pick One For Your Security Question:
               </label>
               <select
                 id="security_question"

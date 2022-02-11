@@ -87,6 +87,7 @@ const NewPost = () => {
           <input
             type="text"
             id="itemBrand"
+            class="form-control"
             required
             value={brand}
             onChange={(e) => setBrand(e.target.value)}
@@ -96,6 +97,7 @@ const NewPost = () => {
             type="text"
             id="itemModel"
             required
+            class="form-control"
             value={model}
             onChange={(e) => setModel(e.target.value)}
           />
@@ -103,6 +105,7 @@ const NewPost = () => {
           <input
             type="text"
             id="itemPrice"
+            class="form-control"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
           />
@@ -110,6 +113,7 @@ const NewPost = () => {
           <textarea
             type="text"
             id="itemBody"
+            class="form-control"
             required
             value={entry}
             onChange={(e) => setEntry(e.target.value)}

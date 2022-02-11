@@ -11,7 +11,7 @@ html {
 }
 
 body {
-  min-height: 100vh;
+  /* min-height: 100vh; */
   font-family: 'Open Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -21,6 +21,7 @@ body {
 
 #root {
   flex-grow: 1;
+  /* height: 100%; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -28,21 +29,21 @@ body {
 
 .App {
   width: 100%;
-  max-width: 800px;
-  height: 100vh;
+  /* height: 100%; */
+  /* max-width: 1200px; */
+  /* height: 100vh; */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  border: 1px solid #333;
-  box-shadow: 0px 0px 15px gray;
+  /* border: 1px solid #333; */
+  /* box-shadow: 0px 0px 15px gray; */
 }
 
 .Header,
 .Footer {
   width: 100%;
-  height: 10%;
-  background-color: white;
+  height: 10vh;
   padding: 1rem;
   display: flex;
   justify-content: space-between;
@@ -57,16 +58,20 @@ body {
   font-size: 2rem;
 }
 
-.Footer {
-  padding: 0.75rem;
-  display: grid;
-  place-content: center;
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #efefef;
+  color: black;
+  text-align: center;
 }
 
 .Nav {
   width: 100%;
-  height: 15%;
-  background-color: deepskyblue;
+  height: 10vh;
+  background-color: #0b5ed7;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -86,6 +91,15 @@ body {
   padding: 0.25rem;
   border-radius: 0.25rem;
   outline: none;
+  background-color: rgb(232, 240, 254);
+}
+
+.form-control {
+  background-color: rgb(232, 240, 254);
+}
+
+.form-select {
+  background-color: rgb(232, 240, 254);
 }
 
 .searchForm label {
@@ -108,7 +122,7 @@ body {
 }
 
 .Nav li a {
-  color: black;
+  color: #fff;
   text-decoration: none;
 }
 
@@ -124,7 +138,6 @@ body {
   cursor: pointer;
 }
 
-.Home,
 .NewPost,
 .LoginPage,
 .PostPage,
@@ -134,8 +147,8 @@ body {
   width: 100%;
   flex-grow: 1;
   padding: 1rem;
-  overflow-y: auto;
-  background-color: #fff;
+  margin-bottom: 5rem;
+  /* overflow-y: auto; */
 }
 
 .post {
@@ -277,6 +290,10 @@ body {
   text-decoration: none;
 }
 
+article {
+  margin-top: 1rem;
+}
+
 .alert {
   padding: 20px;
   background-color: #f44336;
@@ -360,4 +377,9 @@ body {
 .itemImageonError {
   max-width: 0px;
   max-height: 0px;
+}
+
+main {
+  max-width: 50%;
+  text-align: center;
 }
