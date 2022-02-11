@@ -34,25 +34,29 @@ const Nav = () => {
   }, [items, search, setSearchResults]);
 
   return (
-    <nav className="Nav">
-      <form
-        action=""
-        className="searchForm"
-        onSubmit={(e) => e.preventDefault()}
-      >
-        <label htmlFor="search">Search Item</label>
-        <input
-          id="search"
-          type="text"
-          placeholder="search items"
-          className="form-control"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-      </form>
+    <>
+      <nav className="Nav">
+        <form
+          action=""
+          className="searchForm"
+          onSubmit={(e) => e.preventDefault()}
+        >
+          <label htmlFor="search">Search Item</label>
+          <input
+            id="search"
+            type="text"
+            placeholder="search items"
+            className="form-control"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </form>
+      </nav>
       <ul>
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/" className="homelink">
+            Home
+          </Link>
         </li>
         <li>
           <Link to="/item">New</Link>
@@ -71,7 +75,9 @@ const Nav = () => {
         </li>
         <li>
           {!localStorage.getItem('nickname') && (
-            <Link to="/signup">Signup</Link>
+            <Link to="/signup" className="lastlink">
+              Signup
+            </Link>
           )}
 
           {localStorage.getItem('nickname') && (
@@ -81,7 +87,7 @@ const Nav = () => {
           )}
         </li>
       </ul>
-    </nav>
+    </>
   );
 };
 
