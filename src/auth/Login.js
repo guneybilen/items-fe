@@ -1,17 +1,62 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import login_api from '../api/login_api';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 export default function Login() {
+  const myRef = useRef(null);
   const history = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [error, setError] = useState(false);
+  const [alert, setAlert] = useState('');
+  const [link, setLink] = useState(false);
 
-  useEffect(() => {
-    localStorage.clear();
-  }, []);
+  const requestActivation = (e) => {
+    e.preventDefault();
+    let url;
+
+    if (process.env.NODE_ENV === 'development') {
+      url = 'http://localhost:8000/api/repeatactivate/';
+    } else {
+      url = 'https://justlikenew.shop/api/repeatactivate/';
+    }
+
+    axios
+      .post(
+        url,
+        { username: username },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      .then((response) => {
+        return response.data;
+      })
+      .then((data) => {
+        // console.log(data);
+        if (data.state) {
+          setError(true);
+          setAlert(data.state);
+          scrollTo(myRef);
+        }
+      })
+      .catch((error) => {
+        console.log(error.response);
+        setError(true);
+        setAlert(error.response.data.message);
+        scrollTo(myRef);
+      });
+  };
+
+  const scrollTo = (ref) => {
+    if (ref && ref.current /* + other conditions */) {
+      ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   const success = () => {
     console.log('Authenticated!');
@@ -21,10 +66,16 @@ export default function Login() {
   const fail = (status) => {
     console.log('Authentication Failed!');
     localStorage.clear();
-    if (status === 401) setError('please enter your email and password');
-    if (status === 403)
-      setError('there is a problem with your email or password');
-    if (status === 500) setError('a problem in the server occurred');
+    scrollTo(myRef);
+    if (status === 401) setAlert('wrong email and/or password');
+    if (status === 403) {
+      setLink(true);
+
+      setAlert(
+        'You need to activate your account in order to authorize. You can request another activtion email from the link below'
+      );
+    }
+    if (status === 500) setAlert('a problem in the server occurred');
   };
 
   const tryLogin = async (e) => {
@@ -34,17 +85,18 @@ export default function Login() {
 
   const displayNone = (e) => {
     e.preventDefault();
-    setError('');
+    setError(false);
   };
 
   return (
     <main className="LoginPage text-center">
-      {error && (
-        <div className="alert" id="id001">
+      {(error || alert?.length > 0) && (
+        <div className="alert" id="id001" ref={myRef}>
           <span className="closebtn" onClick={(e) => displayNone(e)}>
             &times;
           </span>
-          <strong>{error}</strong>
+          <strong>{error ? error : <></>}</strong>
+          <strong>{alert ? alert : <></>}</strong>
         </div>
       )}
       <form>
@@ -89,6 +141,18 @@ export default function Login() {
         >
           Login
         </button>
+        <br />
+        <br />
+        {link ? (
+          <button
+            className="btn btn-primary btn-lg w-100"
+            onClick={(e) => requestActivation(e)}
+          >
+            Request Activation Email
+          </button>
+        ) : (
+          <></>
+        )}
         <br />
         <br />
         <Link to="/forgotpassword">Forgot Password</Link>

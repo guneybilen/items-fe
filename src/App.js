@@ -7,7 +7,7 @@ import Login from './auth/Login';
 import Signup from './auth/Signup';
 import NewPassword from './auth/NewPassword';
 import ForgotPassword from './auth/ForgotPassword';
-
+import Activation from './auth/Activation';
 import ItemPage from './components/ItemPage';
 import { useStoreActions } from 'easy-peasy';
 import { useEffect } from 'react';
@@ -21,7 +21,7 @@ if (process.env.NODE_ENV === 'development') {
   url = 'http://localhost:8000/api';
   comp = <span></span>;
 } else {
-  url = 'https://justlikenew-vaauo.ondigitalocean.app/api';
+  url = 'https://justlikenew.shop/api';
   comp = (
     <img src="/construction.png" className="construction" alt="construction" />
   );
@@ -43,7 +43,8 @@ function App() {
       <Nav />
       <Routes>
         <Route forceRefresh={true} path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/activation/:token" element={<Activation />} />
+        <Route path="/login/" element={<Login />} />
         <Route path="/about" element={<About />} />
         <Route path="items/:slug" element={<ItemPage />} />
         <Route path="/signup" element={<Signup />} />

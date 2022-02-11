@@ -31,7 +31,7 @@ const usePostRefreshTokenAxios = () => {
           localStorage.setItem('loggedInId', response.data.user_id);
         }
       } catch (e) {
-        console.log(e.message);
+        console.log(e.response.status);
         localStorage.clear();
       }
     }
