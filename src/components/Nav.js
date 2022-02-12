@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import logout_api from '../api/logout_api';
@@ -75,12 +75,14 @@ const Nav = () => {
       </nav>
       <ul>
         <li>
-          <Link to="/" className="homelink">
+          <NavLink to="/" className="homelink" activeClassName="currentLink">
             Home
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/item">New</Link>
+          <NavLink to="/item" activeClassName="currentLink">
+            New
+          </NavLink>
         </li>
         <li>
           {localStorage.getItem('nickname') && (
@@ -89,16 +91,22 @@ const Nav = () => {
               Logout
             </a>
           )}
-          {!localStorage.getItem('nickname') && <Link to="/login">Login</Link>}
+          {!localStorage.getItem('nickname') && (
+            <NavLink to="/login" activeClassName="currentLink">
+              Login
+            </NavLink>
+          )}
         </li>
         <li>
-          <Link to="/about">About</Link>
+          <NavLink to="/about" activeClassName="currentLink">
+            About
+          </NavLink>
         </li>
         <li>
           {!localStorage.getItem('nickname') && (
-            <Link to="/signup" className="lastlink">
+            <NavLink to="/signup" activeClassName="currentLink">
               Signup
-            </Link>
+            </NavLink>
           )}
 
           {localStorage.getItem('nickname') && (

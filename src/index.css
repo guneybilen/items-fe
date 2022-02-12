@@ -7,7 +7,7 @@
 }
 
 html {
-  font-size: 16px;
+  font-size: 20px;
 }
 
 body {
@@ -73,7 +73,7 @@ h1 {
   left: 0;
   bottom: 0;
   width: 100%;
-  font-size: x-small;
+  font-size: medium;
   background-color: lightgrey;
   color: black;
   text-align: center;
@@ -89,6 +89,13 @@ h1 {
   align-items: flex-start;
 }
 
+.btn-primary {
+  background-color: #0b5ed7;
+}
+
+.btn-primary:hover {
+  background-color: #0d6efd;
+}
 .searchForm input[type='text'] {
   font-family: 'Open Sans', sans-serif;
   width: 100%;
@@ -127,21 +134,18 @@ li {
 }
 
 li a {
-  color: #000;
+  color: darkblue;
   text-decoration: none;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
 }
 
-li:hover,
-li:focus,
-li:hover a,
-li:focus a {
-  color: #0b5ed7;
-}
-
-li:hover a,
-li:focus a {
+li:hover a {
   cursor: pointer;
+}
+
+.active {
+  font-weight: bold;
+  font-style: italic;
 }
 
 .NewPost,
@@ -271,15 +275,8 @@ li:focus a {
     align-items: center;
   }
 
-  /* .Nav ul {
-    text-align: right;
-  } */
-
-  li:hover,
-  li:focus,
-  li:hover a,
-  li:focus a {
-    color: navy;
+  label {
+    font-size: 1.25em;
   }
 
   .searchForm {
@@ -293,6 +290,9 @@ li:focus a {
 
   .newPostForm textarea {
     height: 300px;
+  }
+  .footer {
+    font-size: small;
   }
 }
 
@@ -328,6 +328,16 @@ article {
 @media only screen and (min-width: 992px) {
   .Header svg {
     font-size: 3rem;
+  }
+  .footer {
+    font-size: medium;
+  }
+  .Header h1 {
+    font-size: 3rem;
+  }
+
+  label {
+    font-size: 1.5em;
   }
 }
 
@@ -408,4 +418,8 @@ main {
   background-repeat: no-repeat;
   background-size: cover;
   border-radius: 50%;
+}
+
+label {
+  font-size: 1.25em;
 }
