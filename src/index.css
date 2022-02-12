@@ -16,7 +16,15 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   display: flex;
-  background-color: #efefef;
+  background-color: lightgrey;
+}
+
+.canada {
+  float: left;
+}
+
+.about {
+  padding-top: 20%;
 }
 
 #root {
@@ -51,11 +59,11 @@ body {
 }
 
 .Header h1 {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
 }
 
 .Header svg {
-  font-size: 2rem;
+  font-size: 1.25rem;
 }
 
 .footer {
@@ -63,7 +71,7 @@ body {
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: #efefef;
+  background-color: lightgrey;
   color: black;
   text-align: center;
 }
@@ -143,15 +151,6 @@ li:focus a {
   /* padding: 1rem; */
   margin-bottom: 5rem;
   /* overflow-y: auto; */
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  padding-bottom: 1rem;
 }
 
 .post {
@@ -250,11 +249,11 @@ h6 {
 
 @media only screen and (min-width: 610px) {
   html {
-    font-size: 22px;
+    font-size: 16px;
   }
 
   .Header h1 {
-    font-size: 2rem;
+    font-size: 1.25rem;
   }
 
   .Nav {
@@ -389,10 +388,16 @@ main {
 
 .loader {
   position: absolute;
-  margin-top: 30%;
+  margin-top: 2%;
   z-index: 1000;
 }
 
-/* .blur {
-  background-image: url(../public/image.jpeg);
-} */
+.blur {
+  background-image: url(../public/bye.jpeg);
+  height: 75vh;
+  width: 75vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 50%;
+}

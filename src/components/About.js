@@ -1,11 +1,19 @@
 const About = () => {
   return (
     <main className="About">
-      <h2>About</h2>
-      <p style={{ marginTop: '1rem' }}>
-        Canada's Best <br />
-        Electronics Sales Website...
-      </p>
+      <div>
+        <img
+          src="/canada.jpg"
+          alt="Canada"
+          className="canada img-fluid"
+          width="200px"
+          height="200px"
+        />
+        <p className="about">
+          Canada's Best <br />
+          Electronics Sales Website...
+        </p>
+      </div>
     </main>
   );
 };

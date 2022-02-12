@@ -9,18 +9,21 @@ const Nav = () => {
   const search = useStoreState((state) => state.search);
   const setSearch = useStoreActions((actions) => actions.setSearch);
   const [show, setShow] = useState(false);
+  const [closonclick, setCloseOnClick] = useState(false);
 
   const setSearchResults = useStoreActions(
     (actions) => actions.setSearchResults
   );
 
-  const handleLogout = () => {
+  const handleLogout = (e) => {
+    e.preventDefault();
     setShow(true);
     logout_api()
       .then(() => {
         setShow(false);
       })
       .catch(() => {});
+    setCloseOnClick(false);
     history('/');
   };
 
@@ -39,9 +42,20 @@ const Nav = () => {
     }
   }, [items, search, setSearchResults]);
 
+  const displayNone = (e) => {
+    e.preventDefault();
+    setCloseOnClick(true);
+  };
+
   return (
     <>
-      {show && <div class="spinner-border loader text-primary" role="status" />}
+      {show && !closonclick && (
+        <div
+          className="blur loader"
+          role="status"
+          onClick={(e) => displayNone(e)}
+        />
+      )}
       <nav className="Nav">
         <form
           action=""
@@ -71,7 +85,7 @@ const Nav = () => {
         <li>
           {localStorage.getItem('nickname') && (
             //eslint-disable-next-line
-            <a href="/" onClick={handleLogout}>
+            <a href="/" onClick={(e) => handleLogout(e)}>
               Logout
             </a>
           )}
