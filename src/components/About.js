@@ -9,10 +9,10 @@ const About = () => {
           width="200px"
           height="200px"
         />
-        <p className="about">
+        <h1 className="about">
           Canada's Best <br />
           Electronics Sales Website...
-        </p>
+        </h1>
       </div>
     </main>
   );
