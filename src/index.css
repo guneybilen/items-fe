@@ -339,6 +339,10 @@ article {
   label {
     font-size: 1.5em;
   }
+
+  li a {
+    font-size: 2rem;
+  }
 }
 
 #forImageButton2,
