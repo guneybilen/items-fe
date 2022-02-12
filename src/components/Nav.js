@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import logout_api from '../api/logout_api';
 
@@ -8,13 +8,19 @@ const Nav = () => {
   const items = useStoreState((state) => state.items);
   const search = useStoreState((state) => state.search);
   const setSearch = useStoreActions((actions) => actions.setSearch);
+  const [show, setShow] = useState(false);
 
   const setSearchResults = useStoreActions(
     (actions) => actions.setSearchResults
   );
 
   const handleLogout = () => {
-    logout_api();
+    setShow(true);
+    logout_api()
+      .then(() => {
+        setShow(false);
+      })
+      .catch(() => {});
     history('/');
   };
 
@@ -35,6 +41,7 @@ const Nav = () => {
 
   return (
     <>
+      {show && <div class="spinner-border loader text-primary" role="status" />}
       <nav className="Nav">
         <form
           action=""
