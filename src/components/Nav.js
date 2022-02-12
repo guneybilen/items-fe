@@ -57,20 +57,22 @@ const Nav = () => {
         />
       )}
       <nav className="Nav">
-        <form
-          action=""
-          className="searchForm"
-          onSubmit={(e) => e.preventDefault()}
-        >
-          <label htmlFor="search">Search Item</label>
-          <input
-            id="search"
-            type="text"
-            placeholder="search items"
-            className="form-control"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+        <form action="" className="inline" onSubmit={(e) => e.preventDefault()}>
+          <div class="form-group">
+            <input
+              id="search"
+              type="text"
+              placeholder="search items"
+              className="searchInput"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            {localStorage.getItem('nickname') && (
+              <i className="nickname">
+                <i>{localStorage.getItem('nickname')}</i>
+              </i>
+            )}
+          </div>
         </form>
       </nav>
       <ul>
@@ -110,9 +112,11 @@ const Nav = () => {
           )}
 
           {localStorage.getItem('nickname') && (
-            <span>
-              <i>{localStorage.getItem('nickname')}</i>
-            </span>
+            <>
+              <NavLink to="/profile" className="profileLink">
+                Profile
+              </NavLink>
+            </>
           )}
         </li>
       </ul>
