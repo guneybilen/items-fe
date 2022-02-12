@@ -325,6 +325,10 @@ article {
   color: black;
 }
 
+span > i {
+  font-size: 2rem;
+}
+
 @media only screen and (min-width: 992px) {
   .Header svg {
     font-size: 3rem;
