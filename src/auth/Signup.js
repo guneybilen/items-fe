@@ -108,7 +108,7 @@ const Signup = () => {
         ) && (
           <form onSubmit={onSubmit}>
             <div>
-              <h1>Signup</h1>
+              <br />
               <label htmlFor="email" className="form-label">
                 Email address:
               </label>{' '}

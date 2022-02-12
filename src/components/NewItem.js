@@ -81,13 +81,12 @@ const NewPost = () => {
         </div>
       )}
       <>
-        <h2>New Item</h2>
         <form action="" className="newPostForm" encType="multipart/form-data">
           <label htmlFor="itemBrand">Brand:</label>
           <input
             type="text"
             id="itemBrand"
-            class="form-control"
+            className="form-control"
             required
             value={brand}
             onChange={(e) => setBrand(e.target.value)}
@@ -97,7 +96,7 @@ const NewPost = () => {
             type="text"
             id="itemModel"
             required
-            class="form-control"
+            className="form-control"
             value={model}
             onChange={(e) => setModel(e.target.value)}
           />
@@ -105,7 +104,7 @@ const NewPost = () => {
           <input
             type="text"
             id="itemPrice"
-            class="form-control"
+            className="form-control"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
           />
@@ -113,7 +112,7 @@ const NewPost = () => {
           <textarea
             type="text"
             id="itemBody"
-            class="form-control"
+            className="form-control"
             required
             value={entry}
             onChange={(e) => setEntry(e.target.value)}

@@ -138,11 +138,20 @@ li:focus a {
 .SignupPage,
 .About,
 .Missing {
-  width: 100%;
+  width: 80%;
   flex-grow: 1;
-  padding: 1rem;
+  /* padding: 1rem; */
   margin-bottom: 5rem;
   /* overflow-y: auto; */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  padding-bottom: 1rem;
 }
 
 .post {
@@ -267,7 +276,7 @@ li:focus a {
   }
 
   .searchForm {
-    width: 30%;
+    width: 50%;
     padding: 0.1rem 0;
   }
 
@@ -374,6 +383,12 @@ article {
 }
 
 main {
-  max-width: 50%;
+  max-width: 100vh;
   text-align: center;
+}
+
+.loader {
+  position: absolute;
+  margin-top: 30%;
+  z-index: 1000;
 }
