@@ -23,8 +23,9 @@ body {
   float: left;
 }
 
-.about {
-  padding-top: 5%;
+h1 {
+  font-size: 1.25rem;
+  margin-top: 5%;
 }
 
 #root {
@@ -127,6 +128,7 @@ li {
 li a {
   color: #000;
   text-decoration: none;
+  font-size: 1.5rem;
 }
 
 li:hover,
@@ -152,6 +154,10 @@ li:focus a {
   /* padding: 1rem; */
   margin-bottom: 5rem;
   /* overflow-y: auto; */
+}
+
+.About {
+  padding-bottom: 5rem;
 }
 
 .post {
