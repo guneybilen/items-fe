@@ -27,9 +27,16 @@ h1 {
 }
 
 .searchInput {
-  margin-left: 2rem;
-  padding: 0.5rem;
-  width: 40%;
+  color: black;
+  float: left;
+  background-color: rgb(232, 240, 254);
+  margin-left: 1rem;
+  margin-top: 0.5rem;
+  height: 3rem;
+  text-decoration: none;
+  font-size: 1.15rem;
+  text-indent: 1rem;
+  width: 30%;
 }
 
 #root {
@@ -92,11 +99,6 @@ h1 {
 
 .btn-primary:hover {
   background-color: #0d6efd;
-}
-
-.searchForm {
-  padding-top: 1.5rem;
-  background-color: rgb(232, 240, 254);
 }
 
 .searchForm input[type='text'] {
@@ -354,7 +356,7 @@ article {
   padding: 0.5rem;
   text-decoration: none;
   padding-right: 2rem;
-  font-size: 1.25rem;
+  font-size: 2rem;
 }
 
 .login:hover {
