@@ -38,7 +38,6 @@ function App() {
 
   return (
     <div className="App">
-      {comp}
       <Header title="electronics guru" />
       <Nav />
       <Routes>
