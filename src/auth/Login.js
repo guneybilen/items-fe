@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import login_api from '../api/login_api';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -12,6 +12,14 @@ export default function Login() {
   const [error, setError] = useState(false);
   const [alert, setAlert] = useState('');
   const [link, setLink] = useState(false);
+
+  const [ckbox, setCkbox] = useState(false);
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    document.getElementById('sbn-btn').disabled = true;
+    document.getElementById('sbn-pass').disabled = true;
+  }, []);
 
   const requestActivation = (e) => {
     e.preventDefault();
@@ -88,8 +96,34 @@ export default function Login() {
     setError(false);
   };
 
+  const timeRequest = (e) => {
+    if (!e.target.checked) {
+      document.getElementById('sbn-btn').disabled = true;
+      document.getElementById('sbn-pass').disabled = true;
+      document.getElementById('username').style.pointerEvents = 'none';
+    }
+    setShow(true);
+
+    setTimeout(() => {
+      setCkbox(e.target.checked);
+      setShow(false);
+      if (e.target.checked) {
+        document.getElementById('sbn-btn').disabled = false;
+        document.getElementById('sbn-pass').disabled = false;
+        document.getElementById('username').style.pointerEvents = 'auto';
+      }
+    }, 2000);
+  };
+
   return (
     <main className="LoginPage text-center">
+      {show && (
+        <div
+          className="spinner-border text-primary"
+          role="status"
+          onClick={(e) => displayNone(e)}
+        />
+      )}
       {(error || alert?.length > 0) && (
         <div className="alert" id="id001" ref={myRef}>
           <span className="closebtn" onClick={(e) => displayNone(e)}>
@@ -119,13 +153,13 @@ export default function Login() {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="password" className="form-label">
+          <label htmlFor="sbn-pass" className="form-label">
             Password
           </label>
           <input
             type="password"
             className="form-control"
-            id="password"
+            id="sbn-pass"
             placeholder="password"
             required
             autoComplete="on"
@@ -138,6 +172,7 @@ export default function Login() {
         <button
           type="submit"
           className="btn btn-primary btn-lg w-100"
+          id="sbn-btn"
           onClick={tryLogin}
         >
           Login
@@ -154,6 +189,21 @@ export default function Login() {
         ) : (
           <></>
         )}
+        <div className="ckbox">
+          <input
+            type="checkbox"
+            id="human"
+            className="humancheckbox"
+            required
+            value={ckbox}
+            onChange={(e) => {
+              timeRequest(e);
+            }}
+          />
+          <label htmlFor="submitButton>" id="submitLabel">
+            please, check to ensure you are a human
+          </label>
+        </div>
         <br />
         <br />
         <Link to="/forgotpassword">Forgot Password</Link>

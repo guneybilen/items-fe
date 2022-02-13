@@ -479,3 +479,15 @@ main {
 label {
   font-size: 1.25em;
 }
+
+.humancheckbox {
+  width: 2rem;
+  height: 2rem;
+  margin-right: 1rem;
+}
+
+input[type='checkbox'] {
+  vertical-align: middle;
+  outline: 0.2rem solid #0b5ed7 !important;
+  border-radius: 50% !important;
+}
