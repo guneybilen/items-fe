@@ -29,6 +29,7 @@ h1 {
 .searchInput {
   margin-left: 2rem;
   padding: 0.5rem;
+  width: 40%;
 }
 
 #root {
@@ -332,6 +333,32 @@ article {
   padding: 0.5rem;
   padding-right: 2rem;
   font-size: 1.25rem;
+}
+
+.logout {
+  color: white;
+  float: right;
+  padding: 0.5rem;
+  text-decoration: none;
+  padding-right: 2rem;
+  font-size: 1.25rem;
+}
+
+.logout:hover {
+  color: black;
+}
+
+.login {
+  color: white;
+  float: right;
+  padding: 0.5rem;
+  text-decoration: none;
+  padding-right: 2rem;
+  font-size: 1.25rem;
+}
+
+.login:hover {
+  color: black;
 }
 
 @media only screen and (min-width: 992px) {

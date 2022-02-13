@@ -58,7 +58,7 @@ const Nav = () => {
       )}
       <nav className="Nav">
         <form action="" className="inline" onSubmit={(e) => e.preventDefault()}>
-          <div class="form-group">
+          <div className="form-group">
             <input
               id="search"
               type="text"
@@ -68,47 +68,38 @@ const Nav = () => {
               onChange={(e) => setSearch(e.target.value)}
             />
             {localStorage.getItem('nickname') && (
-              <i className="nickname">
-                <i>{localStorage.getItem('nickname')}</i>
-              </i>
+              <>
+                <a href="/" className="logout" onClick={(e) => handleLogout(e)}>
+                  Logout
+                </a>
+                <i className="nickname">
+                  <i>{localStorage.getItem('nickname')}</i>
+                </i>
+              </>
+            )}
+            {!localStorage.getItem('nickname') && (
+              <NavLink to="/login" className="login">
+                Login
+              </NavLink>
             )}
           </div>
         </form>
       </nav>
       <ul>
         <li>
-          <NavLink to="/" className="homelink" activeClassName="currentLink">
+          <NavLink to="/" className="homelink">
             Home
           </NavLink>
         </li>
         <li>
-          <NavLink to="/item" activeClassName="currentLink">
-            New
-          </NavLink>
+          <NavLink to="/item">New</NavLink>
         </li>
         <li>
-          {localStorage.getItem('nickname') && (
-            //eslint-disable-next-line
-            <a href="/" onClick={(e) => handleLogout(e)}>
-              Logout
-            </a>
-          )}
-          {!localStorage.getItem('nickname') && (
-            <NavLink to="/login" activeClassName="currentLink">
-              Login
-            </NavLink>
-          )}
-        </li>
-        <li>
-          <NavLink to="/about" activeClassName="currentLink">
-            About
-          </NavLink>
+          <NavLink to="/about">About</NavLink>
         </li>
         <li>
           {!localStorage.getItem('nickname') && (
-            <NavLink to="/signup" activeClassName="currentLink">
-              Signup
-            </NavLink>
+            <NavLink to="/signup">Signup</NavLink>
           )}
 
           {localStorage.getItem('nickname') && (

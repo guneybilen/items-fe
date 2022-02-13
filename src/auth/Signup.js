@@ -110,7 +110,7 @@ const Signup = () => {
             <div>
               <br />
               <label htmlFor="email" className="form-label">
-                Email address:
+                Email Address:
               </label>{' '}
               <br />
               <input
@@ -137,7 +137,7 @@ const Signup = () => {
               />{' '}
               <br />
               <label htmlFor="password2" className="form-label" required>
-                Confirm password:
+                Confirm Password:
               </label>{' '}
               <br />
               <input

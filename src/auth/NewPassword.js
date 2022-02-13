@@ -164,6 +164,7 @@ const NewPassword = () => {
               required
             />
             <br />
+            <br />
             <input
               type="submit"
               value="Change Password"
