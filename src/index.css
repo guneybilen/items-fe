@@ -460,6 +460,22 @@ main {
   border-radius: 50%;
 }
 
+.like {
+  background-image: url(../public/like.jpg);
+  height: 75vh;
+  width: 75vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 50%;
+  height: 60rem;
+}
+
+.spinner-grow {
+  position: absolute !important;
+  margin-top: 55% !important;
+}
+
 label {
   font-size: 1.25em;
 }

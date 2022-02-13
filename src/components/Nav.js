@@ -9,7 +9,7 @@ const Nav = () => {
   const search = useStoreState((state) => state.search);
   const setSearch = useStoreActions((actions) => actions.setSearch);
   const [show, setShow] = useState(false);
-  const [closonclick, setCloseOnClick] = useState(false);
+  const [closeonclick, setCloseOnClick] = useState(false);
 
   const setSearchResults = useStoreActions(
     (actions) => actions.setSearchResults
@@ -49,7 +49,7 @@ const Nav = () => {
 
   return (
     <>
-      {show && !closonclick && (
+      {show && !closeonclick && (
         <div
           className="blur loader"
           role="status"

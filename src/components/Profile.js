@@ -24,7 +24,7 @@ const Profile = () => {
   const scrollRef = useRef(null);
   const history = useNavigate();
 
-  const [email, setEmail] = useState('example@example.com');
+  const [email, setEmail] = useState('');
   const [error, setError] = useState(false);
   const [names, setNames] = useState([]);
   const [values, setValues] = useState([]);
@@ -35,6 +35,7 @@ const Profile = () => {
   const [password2, setPassword2] = useState('');
   const [nickname, setNickname] = useState('');
   const [alert, setAlert] = useState('');
+  const [show, setShow] = useState(false);
 
   const scrollTo = (ref) => {
     if (ref && ref.current /* + other conditions */) {
@@ -52,33 +53,16 @@ const Profile = () => {
 
     const grab = async () => {
       const result = await axios.get(backend);
-      // console.log(result.data);
       setNames(result.data.names);
       setValues(result.data.values);
     };
 
-    // const getUser = async () => {
-    //   const user = await axios.get(
-    //     server,
-    //     {},
-    //     {
-    //       headers: {
-    //         'Content-Type': 'multipart/form-data',
-    //         accept: 'application/json',
-    //         access: `Bearer ${localStorage.getItem('access')}`,
-    //         refresh: `Bearer ${localStorage.getItem('refresh')}`,
-    //       },
-    //     }
-    //   );
-    //   console.log('user', user);
-    // };
-
     grab();
-    // getUser();
   }, []);
 
   const onSubmit = (e) => {
     e.preventDefault();
+    setShow(true);
     const user = {
       pk: localStorage.getItem('loggedInId'),
       email: email,
@@ -109,12 +93,14 @@ const Profile = () => {
       .then((data) => {
         console.log(data);
         localStorage.setItem('nickname', data.nickname);
+        setShow(true);
         if (data.id) {
           history('/');
         }
       })
       .catch((error) => {
         console.log(error.response);
+        setShow(false);
         setForSend('');
         setError(true);
         setAlert(error.response.data.message);
@@ -125,12 +111,20 @@ const Profile = () => {
 
   const displayNone = (e) => {
     e.preventDefault();
+
     setError(false);
     setAlert('');
   };
 
   return (
     <>
+      {show && (
+        <div
+          className="spinner-grow text-primary"
+          role="status"
+          onClick={(e) => displayNone(e)}
+        />
+      )}
       <main className="SignupPage text-center">
         {error && (
           <div className="alert" id="id001" ref={scrollRef}>
