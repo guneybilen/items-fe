@@ -2,6 +2,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import { formatDistance, parseISO } from 'date-fns';
 import { useState, useEffect } from 'react';
+import { DefaultEditor } from 'react-simple-wysiwyg';
 
 const ItemPage = () => {
   const { slug } = useParams();
@@ -10,6 +11,7 @@ const ItemPage = () => {
   const loggedInID = useStoreState((state) => state.loggedInID);
   const deleteItem = useStoreActions((actions) => actions.deleteItem);
   const getItemById = useStoreState((state) => state.getItemById);
+
   const item = getItemById(slug);
   if (item) {
     localStorage.setItem('seller', item.seller);
@@ -41,7 +43,11 @@ const ItemPage = () => {
             <h3>{item?.brand}</h3>
             <p>{item?.model}</p>
             <p>CAD$ {item.price}</p>
-            <p className="itemBody">{item?.entry}</p>
+            <DefaultEditor
+              value={item?.entry}
+              contentEditable="false"
+              className="form-control wysiwyg"
+            />
             <p className="itemDate">
               ...
               {item.createdAt &&

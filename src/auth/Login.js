@@ -19,6 +19,7 @@ export default function Login() {
   useEffect(() => {
     document.getElementById('sbn-btn').disabled = true;
     document.getElementById('sbn-pass').disabled = true;
+    document.getElementById('username').style.pointerEvents = 'none';
   }, []);
 
   const requestActivation = (e) => {

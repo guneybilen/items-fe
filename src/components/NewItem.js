@@ -1,6 +1,7 @@
 import { useStoreActions } from 'easy-peasy';
 import { useNavigate } from 'react-router-dom';
 import { useState, useRef } from 'react';
+import { DefaultEditor } from 'react-simple-wysiwyg';
 
 const NewPost = () => {
   const history = useNavigate();
@@ -8,7 +9,7 @@ const NewPost = () => {
 
   const [brand, setBrand] = useState('');
   const [model, setModel] = useState('');
-  const [entry, setEntry] = useState('');
+  // const [entry, setEntry] = useState('');
   const [price, setPrice] = useState('');
   const [image1, setImage1] = useState(false);
   const [image2, setImage2] = useState(false);
@@ -18,6 +19,7 @@ const NewPost = () => {
   const [imageUpload3, setImageUpload3] = useState(null);
   const [error, setError] = useState('');
   const [closeButtonShouldShow, setCloseButtonShouldShow] = useState(false);
+  const [html, setHtml] = useState('You can start typing here...');
 
   const scrollTo = (ref) => {
     if (ref && ref.current /* + other conditions */) {
@@ -36,7 +38,7 @@ const NewPost = () => {
     if (imageUpload3) form_data.append('item_image3', imageUpload3);
     form_data.append('brand', brand);
     form_data.append('price', price);
-    form_data.append('entry', entry);
+    form_data.append('entry', html);
     form_data.append('model', model);
     form_data.append('seller', localStorage.getItem('loggedInId'));
 
@@ -64,6 +66,10 @@ const NewPost = () => {
       },
     });
   };
+
+  function onChange(e) {
+    setHtml(e.target.value);
+  }
 
   const displayNone = (e) => {
     e.preventDefault();
@@ -108,15 +114,22 @@ const NewPost = () => {
             value={price}
             onChange={(e) => setPrice(e.target.value)}
           />
-          <label htmlFor="itemBody">Entry:</label>
-          <textarea
+          <label htmlFor="itemBody">
+            Entry (enter your contact details, as well):
+          </label>
+          <DefaultEditor
+            value={html}
+            className="form-control"
+            onChange={onChange}
+          />
+          {/* <textarea
             type="text"
             id="itemBody"
             className="form-control"
             required
             value={entry}
             onChange={(e) => setEntry(e.target.value)}
-          />
+          /> */}
           <div>
             <br />
             {imageUpload1 && (
@@ -242,6 +255,7 @@ const NewPost = () => {
               }}
             />
           </div>
+          <br />
           <button
             type="submit"
             onClick={(e) => {

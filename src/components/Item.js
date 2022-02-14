@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { formatDistance, parseISO } from 'date-fns';
+import { DefaultEditor } from 'react-simple-wysiwyg';
 
 const Item = ({ item }) => {
   // let dt = format(parseISO(item.createdAt), 'MMMM dd, yyyy pp');
@@ -14,11 +15,17 @@ const Item = ({ item }) => {
         </div>
       </Link>
       <div className="h5 text-dark">CAD$ {item.price}</div>
-      <p className="postBody">
-        {item.entry?.length < 25
-          ? item.entry
-          : `${item.entry?.slice(0, 25)}...`}
-      </p>
+      <div class="wysiwyg-home">
+        <DefaultEditor
+          value={
+            item.entry?.length < 25
+              ? item.entry
+              : `${item.entry?.slice(0, 25)} ...`
+          }
+          contentEditable="false"
+          className="form-control"
+        />
+      </div>
       <p className="postDate">...{dt}</p>
       <hr />
     </article>

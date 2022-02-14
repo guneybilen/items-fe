@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import { formatDistance, parseISO } from 'date-fns';
+import { DefaultEditor } from 'react-simple-wysiwyg';
 
 const EditItem = () => {
   const history = useNavigate();
@@ -14,7 +15,7 @@ const EditItem = () => {
   const brand = useStoreState((state) => state.brand);
 
   const model = useStoreState((state) => state.model);
-  const entry = useStoreState((state) => state.entry);
+  // const entry = useStoreState((state) => state.entry);
   const price = useStoreState((state) => state.price);
   const image1 = useStoreState((state) => state.image1);
   const image2 = useStoreState((state) => state.image2);
@@ -42,6 +43,7 @@ const EditItem = () => {
   const editItem = useStoreActions((actions) => actions.editItem);
 
   const getItemById = useStoreState((state) => state.getItemById);
+  const [html, setHtml] = useState('You can start typing here...');
   const item = getItemById(slug);
 
   const scrollTo = (ref) => {
@@ -50,13 +52,17 @@ const EditItem = () => {
     }
   };
 
+  function onChange(e) {
+    setHtml(e.target.value);
+  }
+
   useEffect(() => {
     if (item) {
       setDt(formatDistance(new Date(), parseISO(item.createdAt)));
       setBrand(item.brand);
       setModel(item.model);
       setPrice(item.price);
-      setEntry(item.entry);
+      setHtml(item.entry);
       setSlug(item.slug);
       setImage1(item.item_image1);
       setImage2(item.item_image2);
@@ -85,7 +91,7 @@ const EditItem = () => {
 
     form_data.append('brand', brand);
     form_data.append('price', price);
-    form_data.append('entry', entry);
+    form_data.append('entry', html);
     form_data.append('model', model);
     form_data.append('deleteImage1', deleteImage1);
     form_data.append('deleteImage2', deleteImage2);
@@ -169,14 +175,21 @@ const EditItem = () => {
               value={price}
               onChange={(e) => setPrice(e.target.value)}
             />
-            <label htmlFor="itemBody">Entry:</label>
-            <textarea
+            <label htmlFor="itemBody">
+              Entry (enter your contact details, as well):
+            </label>
+            <DefaultEditor
+              value={html}
+              className="form-control"
+              onChange={onChange}
+            />
+            {/* <textarea
               type="text"
               id="itemBody"
               required
               value={entry}
               onChange={(e) => setEntry(e.target.value)}
-            />
+            /> */}
             <div>
               <br />
               {imageUpload1 && (
@@ -369,6 +382,7 @@ const EditItem = () => {
                 }}
               />
             </div>
+            <br />
             <button
               type="submit"
               onClick={(e) => {
