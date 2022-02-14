@@ -23,6 +23,8 @@ const Signup = () => {
   const [password2, setPassword2] = useState('');
   const [nickname, setNickname] = useState('');
   const [alert, setAlert] = useState('');
+  const [ckbox, setCkbox] = useState(false);
+  const [show, setShow] = useState(false);
 
   const scrollTo = (ref) => {
     if (ref && ref.current /* + other conditions */) {
@@ -43,7 +45,6 @@ const Signup = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    document.getElementById('form').reset();
     const user = {
       email: email,
       password: password1,
@@ -92,8 +93,49 @@ const Signup = () => {
     setAlert('');
   };
 
+  const timeRequest = (e) => {
+    if (!e.target.checked) {
+      document
+        .getElementsByClassName('signupForm')[0]
+        .classList.remove('signupForm-enabled');
+    }
+    setShow(true);
+
+    setTimeout(() => {
+      setCkbox(e.target.checked);
+      setShow(false);
+      if (e.target.checked) {
+        document
+          .getElementsByClassName('signupForm')[0]
+          .classList.add('signupForm-enabled');
+      }
+    }, 2000);
+  };
+
   return (
     <>
+      {show && (
+        <div
+          className="spinner-border text-primary"
+          role="status"
+          onClick={(e) => displayNone(e)}
+        />
+      )}
+      <div className="ckbox">
+        <input
+          type="checkbox"
+          id="human"
+          className="humancheckbox"
+          required
+          value={ckbox}
+          onChange={(e) => {
+            timeRequest(e);
+          }}
+        />
+        <label htmlFor="submitButton>" id="submitLabel">
+          please, check to ensure we are interacting with a human
+        </label>
+      </div>
       <main className="SignupPage text-center">
         {error && (
           <div className="alert" id="id001" ref={scrollRef}>
@@ -106,7 +148,7 @@ const Signup = () => {
         {!alert.includes(
           'Please, check your email and activate your account'
         ) && (
-          <form onSubmit={onSubmit}>
+          <form onSubmit={onSubmit} className="signupForm">
             <div>
               <br />
               <label htmlFor="email" className="form-label">
@@ -197,6 +239,7 @@ const Signup = () => {
                 onChange={(e) => setAnswer(e.target.value)}
                 required
               />
+              <br />
               <br />
               <input
                 type="submit"

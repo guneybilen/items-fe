@@ -202,7 +202,7 @@ export default function Login() {
             }}
           />
           <label htmlFor="submitButton>" id="submitLabel">
-            please, check to ensure you are a human
+            please, check to ensure we are interacting with a human
           </label>
         </div>
         <br />

@@ -135,6 +135,7 @@ li a {
 }
 
 li:hover a {
+  text-decoration: underline;
   cursor: pointer;
 }
 
@@ -351,9 +352,18 @@ article {
   padding-right: 1rem;
   font-size: 1.5rem;
 }
+.signup:hover {
+  color: rgb(232, 240, 254);
+  text-decoration: underline;
+}
 
 .login:hover {
-  color: black;
+  color: rgb(232, 240, 254);
+  text-decoration: underline;
+}
+
+.login:hover {
+  text-decoration: underline;
 }
 
 @media only screen and (min-width: 992px) {
@@ -525,4 +535,12 @@ div.wysiwyg-home > .rsw-editor {
 
 div.wysiwyg-home > .rsw-editor > .rsw-toolbar {
   display: none;
+}
+
+.signupForm {
+  pointer-events: none;
+}
+
+.signupForm-enabled {
+  pointer-events: auto;
 }
