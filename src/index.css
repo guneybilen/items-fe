@@ -32,6 +32,8 @@ h1 {
   background-color: rgb(232, 240, 254);
   margin-left: 1rem;
   margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+
   height: 3rem;
   text-decoration: none;
   font-size: 1.15rem;
@@ -56,22 +58,12 @@ h1 {
 
 .Header {
   width: 100%;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0rem;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  text-align: left;
+  padding: 0.1rem;
 }
 
 .Header h1 {
-  font-size: 1.5rem;
-}
-
-.Header svg {
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 .footer {
@@ -337,26 +329,28 @@ article {
   font-size: 1.25rem;
 }
 
-.logout {
-  color: white;
-  float: right;
-  padding: 0.5rem;
-  text-decoration: none;
-  padding-right: 2rem;
-  font-size: 1.25rem;
-}
-
 .logout:hover {
   color: black;
 }
 
-.login {
+.login,
+.logout,
+.nickname-navbar {
   color: white;
   float: right;
   padding: 0.5rem;
   text-decoration: none;
-  padding-right: 2rem;
-  font-size: 2rem;
+  padding-right: 1rem;
+  font-size: 1.5rem;
+}
+
+.signup {
+  color: white;
+  float: right;
+  padding: 0.5rem;
+  text-decoration: none;
+  padding-right: 1rem;
+  font-size: 1.5rem;
 }
 
 .login:hover {
@@ -364,14 +358,11 @@ article {
 }
 
 @media only screen and (min-width: 992px) {
-  .Header svg {
-    font-size: 3rem;
-  }
   .footer {
     font-size: medium;
   }
   .Header h1 {
-    font-size: 3rem;
+    font-size: 1rem;
   }
 
   label {
@@ -411,14 +402,14 @@ article {
   transform: rotate(-45deg);
 }
 
-.itemImage {
-  max-width: 30% !important;
-  max-height: 30% !important;
+.itemImage,
+.spanImage {
+  width: 15rem !important;
+  height: 15rem !important;
+  padding: 1rem;
 
   border-radius: 8px;
-}
-.span {
-  max-width: 10%;
+  float: center;
 }
 
 .itemImageonError {
@@ -492,4 +483,18 @@ input[type='checkbox'] {
   vertical-align: middle;
   outline: 0.2rem solid #0b5ed7 !important;
   border-radius: 50% !important;
+}
+
+.no-update-image {
+  float: left;
+}
+
+.editdeletebuttons {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  /* float: center; */
 }

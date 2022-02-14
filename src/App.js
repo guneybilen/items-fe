@@ -16,15 +16,15 @@ import RequireAuth from './components/RequireAuth';
 import { Routes, Route } from 'react-router-dom';
 
 let url;
-let comp;
+// let comp;
 if (process.env.NODE_ENV === 'development') {
   url = 'http://localhost:8000/api';
-  comp = <span></span>;
+  // comp = <span></span>;
 } else {
   url = 'https://justlikenew.shop/api';
-  comp = (
-    <img src="/construction.png" className="construction" alt="construction" />
-  );
+  // comp = (
+  //   <img src="/construction.png" className="construction" alt="construction" />
+  // );
 }
 
 function App() {

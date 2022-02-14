@@ -185,8 +185,6 @@ const EditItem = () => {
                   id="newImage1"
                   src={URL.createObjectURL(imageUpload1)}
                   alt="newImage1"
-                  width="150px"
-                  height="75px"
                 />
               )}
               <span className="spanImage">
@@ -199,8 +197,6 @@ const EditItem = () => {
                         ? 'itemImageonError'
                         : 'itemImage'
                     }
-                    width="150px"
-                    height="75px"
                   />
                 )}
               </span>
@@ -218,6 +214,17 @@ const EditItem = () => {
                 />
               )}
 
+              {imageUpload1 && image1 && (
+                <input
+                  type="button"
+                  value="don't update image1"
+                  className="btn btn-sm btn-danger no-update-image"
+                  onClick={() => {
+                    setImageUpload1(null);
+                  }}
+                />
+              )}
+
               <br />
             </div>
             <div>
@@ -231,8 +238,8 @@ const EditItem = () => {
                 accept="image/*"
                 onChange={(e) => {
                   setDeleteImage1(false);
-                  e.target.files[0] === undefined ||
-                    setImageUpload1(e.target.files[0]);
+                  // e.target.files[0] === undefined ||
+                  setImageUpload1(e.target.files[0]);
                 }}
               />
             </div>
@@ -244,8 +251,6 @@ const EditItem = () => {
                   id="newImage2"
                   src={URL.createObjectURL(imageUpload2)}
                   alt="newImage2"
-                  width="150px"
-                  height="75px"
                 />
               )}
               <span className="spanImage">
@@ -258,8 +263,6 @@ const EditItem = () => {
                         ? 'itemImageonError'
                         : 'itemImage'
                     }
-                    width="150px"
-                    height="75px"
                   />
                 )}
                 {(imageUpload2 || image2) && (
@@ -271,6 +274,16 @@ const EditItem = () => {
                       setDeleteImage2(true);
                       setImage2(false);
                       setImageUpload2(false);
+                    }}
+                  />
+                )}
+                {imageUpload2 && image2 && (
+                  <input
+                    type="button"
+                    value="don't update image2"
+                    className="btn btn-sm btn-danger no-update-image"
+                    onClick={() => {
+                      setImageUpload2(null);
                     }}
                   />
                 )}
@@ -287,8 +300,8 @@ const EditItem = () => {
                 accept="image/*"
                 onChange={(e) => {
                   setDeleteImage2(false);
-                  e.target.files[0] === undefined ||
-                    setImageUpload2(e.target.files[0]);
+                  // e.target.files[0] === undefined ||
+                  setImageUpload2(e.target.files[0]);
                 }}
               />
             </div>
@@ -300,8 +313,6 @@ const EditItem = () => {
                   id="newImage3"
                   src={URL.createObjectURL(imageUpload3)}
                   alt="newImage3"
-                  width="150px"
-                  height="75px"
                 />
               )}
               <span className="spanImage">
@@ -314,8 +325,6 @@ const EditItem = () => {
                         ? 'itemImageonError'
                         : 'itemImage'
                     }
-                    width="150px"
-                    height="75px"
                   />
                 )}
 
@@ -328,6 +337,17 @@ const EditItem = () => {
                       setDeleteImage3(true);
                       setImage3(false);
                       setImageUpload3(false);
+                    }}
+                  />
+                )}
+
+                {imageUpload3 && image3 && (
+                  <input
+                    type="button"
+                    value="don't update image3"
+                    className="btn btn-sm btn-danger no-update-image"
+                    onClick={() => {
+                      setImageUpload3(null);
                     }}
                   />
                 )}
@@ -344,8 +364,8 @@ const EditItem = () => {
                 accept="image/*"
                 onChange={(e) => {
                   setDeleteImage3(false);
-                  e.target.files[0] === undefined ||
-                    setImageUpload3(e.target.files[0]);
+                  // e.target.files[0] === undefined ||
+                  setImageUpload3(e.target.files[0]);
                 }}
               />
             </div>

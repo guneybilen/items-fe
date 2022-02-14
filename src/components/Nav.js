@@ -70,12 +70,17 @@ const Nav = () => {
             {localStorage.getItem('nickname') && (
               <>
                 <a href="/" className="logout" onClick={(e) => handleLogout(e)}>
-                  Logout
+                  | Logout
                 </a>
-                <i className="nickname">
-                  <i>{localStorage.getItem('nickname')}</i>
-                </i>
+                <span className="nickname nickname-navbar">
+                  Hey, {localStorage.getItem('nickname')}!
+                </span>
               </>
+            )}
+            {!localStorage.getItem('nickname') && (
+              <NavLink to="/signup" className="signup">
+                | Signup
+              </NavLink>
             )}
             {!localStorage.getItem('nickname') && (
               <NavLink to="/login" className="login">
@@ -98,10 +103,6 @@ const Nav = () => {
           <NavLink to="/about">About</NavLink>
         </li>
         <li>
-          {!localStorage.getItem('nickname') && (
-            <NavLink to="/signup">Signup</NavLink>
-          )}
-
           {localStorage.getItem('nickname') && (
             <>
               <NavLink to="/profile" className="profileLink">

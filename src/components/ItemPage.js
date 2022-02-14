@@ -49,6 +49,7 @@ const ItemPage = () => {
                   addSuffix: true,
                 })}
             </p>
+
             <span className="spanImage">
               <img
                 src={item?.item_image1}
@@ -58,11 +59,8 @@ const ItemPage = () => {
                     ? 'itemImageonError'
                     : 'itemImage'
                 }
-                width="150px"
-                height="75px"
               />
             </span>
-            &nbsp;
             <span className="spanImage">
               <img
                 src={item?.item_image2}
@@ -72,11 +70,9 @@ const ItemPage = () => {
                     ? 'itemImageonError'
                     : 'itemImage'
                 }
-                width="150px"
-                height="75px"
               />
             </span>
-            &nbsp;
+
             <span className="spanImage">
               <img
                 src={item.item_image3}
@@ -86,14 +82,12 @@ const ItemPage = () => {
                     ? 'itemImageonError'
                     : 'itemImage'
                 }
-                width="150px"
-                height="75px"
               />
             </span>
             <br />
             <br />
             {itemOwner && (
-              <>
+              <div className="editdeletebuttons">
                 <Link to={`/edit/${item.slug}`}>
                   <button className="editButton">Edit Item</button>
                 </Link>
@@ -103,7 +97,7 @@ const ItemPage = () => {
                 >
                   Delete Item
                 </button>
-              </>
+              </div>
             )}
           </>
         )}
