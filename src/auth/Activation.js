@@ -13,7 +13,7 @@ export default function Activation() {
   if (process.env.NODE_ENV === 'development') {
     url = `http://localhost:8000/api/activateaccount/${token}/`;
   } else {
-    url = `https://justlikenew.shop/api/activateaccount/${token}/`;
+    url = `https://justlikenew-vaauo.ondigitalocean.app/api/activateaccount/${token}/`;
   }
 
   useEffect(() => {

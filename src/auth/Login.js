@@ -29,7 +29,7 @@ export default function Login() {
     if (process.env.NODE_ENV === 'development') {
       url = 'http://localhost:8000/api/repeatactivate/';
     } else {
-      url = 'https://justlikenew.shop/api/repeatactivate/';
+      url = 'https://justlikenew-vaauo.ondigitalocean.app/api/repeatactivate/';
     }
 
     axios

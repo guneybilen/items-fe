@@ -4,7 +4,7 @@ let server;
 if (process.env.NODE_ENV === 'development') {
   server = 'http://localhost:8000/api';
 } else {
-  server = 'https://justlikenew.shop/api';
+  server = 'https://justlikenew-vaauo.ondigitalocean.app/api';
 }
 
 const login_api = async (username, password, success, fail) => {

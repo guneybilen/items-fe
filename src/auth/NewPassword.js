@@ -12,7 +12,7 @@ const NewPassword = () => {
   if (process.env.NODE_ENV === 'development') {
     backend = `http://localhost:8000/api/secretquestion/${token}/`;
   } else {
-    backend = `https://justlikenew.shop/api/secretquestion/${token}/`;
+    backend = `https://justlikenew-vaauo.ondigitalocean.app/api/secretquestion/${token}/`;
   }
 
   const [password1, setPassword1] = useState('');
@@ -68,7 +68,8 @@ const NewPassword = () => {
     if (process.env.NODE_ENV === 'development') {
       url = 'http://localhost:8000/api/passwordresetcomplete/';
     } else {
-      url = 'https://justlikenew.shop/api/passwordresetcomplete/';
+      url =
+        'https://justlikenew-vaauo.ondigitalocean.app/api/passwordresetcomplete/';
     }
 
     axios

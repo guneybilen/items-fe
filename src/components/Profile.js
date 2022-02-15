@@ -78,7 +78,7 @@ const Profile = () => {
     if (process.env.NODE_ENV === 'development') {
       url = 'http://localhost:8000/api/updateuser/';
     } else {
-      url = 'https://justlikenew.shop/api/updateuser/';
+      url = 'https://justlikenew-vaauo.ondigitalocean.app/api/updateuser/';
     }
 
     axios

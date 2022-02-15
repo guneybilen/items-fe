@@ -63,7 +63,7 @@ const Signup = () => {
     if (process.env.NODE_ENV === 'development') {
       url = 'http://localhost:8000/api/users/';
     } else {
-      url = 'https://justlikenew.shop/api/users/';
+      url = 'https://justlikenew-vaauo.ondigitalocean.app/api/users/';
     }
 
     axios

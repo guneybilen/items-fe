@@ -21,7 +21,7 @@ if (process.env.NODE_ENV === 'development') {
   url = 'http://localhost:8000/api';
   // comp = <span></span>;
 } else {
-  url = 'https://justlikenew.shop/api';
+  url = 'https://justlikenew-vaauo.ondigitalocean.app/api';
   // comp = (
   //   <img src="/construction.png" className="construction" alt="construction" />
   // );
