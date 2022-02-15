@@ -45,6 +45,10 @@ const Signup = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    document
+      .getElementsByClassName('signupForm')[0]
+      .classList.remove('signupForm-enabled');
+
     const user = {
       email: email,
       password: password1,
@@ -73,6 +77,8 @@ const Signup = () => {
       })
       .then((data) => {
         console.log(data);
+        scrollTo(scrollRef);
+
         if (data.id) {
           setError(true);
           setAlert('Please, check your email and activate your account');
@@ -142,113 +148,111 @@ const Signup = () => {
             <span className="closebtn" onClick={(e) => displayNone(e)}>
               &times;
             </span>
-            <strong>{alert}</strong>
+            <strong>{error ? error : ''}</strong>
+            <strong>{alert ? alert : ''}</strong>
           </div>
         )}
-        {!alert.includes(
-          'Please, check your email and activate your account'
-        ) && (
-          <form onSubmit={onSubmit} className="signupForm">
-            <div>
-              <br />
-              <label htmlFor="email" className="form-label">
-                Email Address:
-              </label>{' '}
-              <br />
-              <input
-                name="email"
-                type="email"
-                className="form-control"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />{' '}
-              <br />
-              <label htmlFor="password1" className="form-label">
-                Password:
-              </label>{' '}
-              <br />
-              <input
-                name="password1"
-                type="password"
-                className="form-control"
-                value={password1}
-                autoComplete="on"
-                onChange={(e) => setPassword1(e.target.value)}
-                required
-              />{' '}
-              <br />
-              <label htmlFor="password2" className="form-label" required>
-                Confirm Password:
-              </label>{' '}
-              <br />
-              <input
-                name="password2"
-                autoComplete="on"
-                type="password"
-                className="form-control"
-                value={password2}
-                onChange={(e) => setPassword2(e.target.value)}
-                required
-              />{' '}
-              <br />
-              <label htmlFor="nickname" className="form-label">
-                Nickname:
-              </label>{' '}
-              <br />
-              <input
-                name="nickname"
-                type="text"
-                value={nickname}
-                className="form-control"
-                onChange={(e) => setNickname(e.target.value)}
-                required
-              />
-              <br />
-              <label htmlFor="security_question" className="form-label">
-                Pick One For Your Security Question:
-              </label>
-              <select
-                id="security_question"
-                className="form-select"
-                aria-label="Default select example"
-                value={forsend}
-                onChange={(e) => setForSend(e.target.value)}
-              >
-                <>
-                  <option value="">Choose one from the list</option>
-                  <option value={names[0]}>{values[0]}</option>
-                  <option value={names[1]}>{values[1]}</option>
-                  <option value={names[2]}>{values[2]}</option>
-                  <option value={names[3]}>{values[3]}</option>
-                  <option value={names[4]}>{values[4]}</option>
-                  <option value={names[5]}>{values[5]}</option>
-                </>
-              </select>
-              <br />
-              <label htmlFor="security_question_answer" className="form-label">
-                Type Your Answer For The Selected Security Question:
-              </label>
-              <br />
-              <input
-                name="sqanswer"
-                id="security_question_answer"
-                type="text"
-                value={answer}
-                className="form-control"
-                onChange={(e) => setAnswer(e.target.value)}
-                required
-              />
-              <br />
-              <br />
-              <input
-                type="submit"
-                value="Signup"
-                className="btn btn-primary btn-lg w-100"
-              />
-            </div>
-          </form>
-        )}
+
+        <form onSubmit={onSubmit} className="signupForm">
+          <div>
+            <br />
+            <label htmlFor="email" className="form-label">
+              Email Address:
+            </label>{' '}
+            <br />
+            <input
+              name="email"
+              type="email"
+              className="form-control"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />{' '}
+            <br />
+            <label htmlFor="password1" className="form-label">
+              Password:
+            </label>{' '}
+            <br />
+            <input
+              name="password1"
+              type="password"
+              className="form-control"
+              value={password1}
+              autoComplete="on"
+              onChange={(e) => setPassword1(e.target.value)}
+              required
+            />{' '}
+            <br />
+            <label htmlFor="password2" className="form-label" required>
+              Confirm Password:
+            </label>{' '}
+            <br />
+            <input
+              name="password2"
+              autoComplete="on"
+              type="password"
+              className="form-control"
+              value={password2}
+              onChange={(e) => setPassword2(e.target.value)}
+              required
+            />{' '}
+            <br />
+            <label htmlFor="nickname" className="form-label">
+              Nickname:
+            </label>{' '}
+            <br />
+            <input
+              name="nickname"
+              type="text"
+              value={nickname}
+              className="form-control"
+              onChange={(e) => setNickname(e.target.value)}
+              required
+            />
+            <br />
+            <label htmlFor="security_question" className="form-label">
+              Pick One For Your Security Question:
+            </label>
+            <select
+              id="security_question"
+              className="form-select"
+              aria-label="Default select example"
+              value={forsend}
+              onChange={(e) => setForSend(e.target.value)}
+            >
+              <>
+                <option value="">Choose one from the list</option>
+                <option value={names[0]}>{values[0]}</option>
+                <option value={names[1]}>{values[1]}</option>
+                <option value={names[2]}>{values[2]}</option>
+                <option value={names[3]}>{values[3]}</option>
+                <option value={names[4]}>{values[4]}</option>
+                <option value={names[5]}>{values[5]}</option>
+              </>
+            </select>
+            <br />
+            <label htmlFor="security_question_answer" className="form-label">
+              Type Your Answer For The Selected Security Question:
+            </label>
+            <br />
+            <input
+              name="sqanswer"
+              id="security_question_answer"
+              type="text"
+              value={answer}
+              className="form-control"
+              onChange={(e) => setAnswer(e.target.value)}
+              required
+            />
+            <br />
+            <br />
+            <input
+              type="submit"
+              value="Signup"
+              className="btn btn-primary btn-lg w-100"
+            />
+          </div>
+        </form>
       </main>
     </>
   );
