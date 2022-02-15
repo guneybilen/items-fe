@@ -145,6 +145,7 @@ const Signup = () => {
           please, check to ensure we are interacting with a human
         </label>
       </div>
+      <br />
       <main className="SignupPage text-center">
         {error && (
           <div className="alert" id="id001" ref={scrollRef}>
