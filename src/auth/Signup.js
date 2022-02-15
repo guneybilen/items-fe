@@ -85,6 +85,9 @@ const Signup = () => {
         }
       })
       .catch((error) => {
+        document
+          .getElementsByClassName('signupForm')[0]
+          .classList.add('signupForm-enabled');
         console.log(error.response);
         setForSend('');
         setError(true);
