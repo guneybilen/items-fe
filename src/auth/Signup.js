@@ -46,6 +46,7 @@ const Signup = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     setAlert('');
+    setShow(true);
     document
       .getElementsByClassName('signupForm')[0]
       .classList.remove('signupForm-enabled');
@@ -81,6 +82,7 @@ const Signup = () => {
         scrollTo(scrollRef);
 
         if (data.id) {
+          setShow(false);
           setError(true);
           setAlert(
             'Please, check your inbox and (spam folder as well) and activate your account'
@@ -88,6 +90,7 @@ const Signup = () => {
         }
       })
       .catch((error) => {
+        setShow(false);
         document
           .getElementsByClassName('signupForm')[0]
           .classList.add('signupForm-enabled');
