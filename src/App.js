@@ -17,7 +17,7 @@ import { Routes, Route } from 'react-router-dom';
 
 let url;
 // let comp;
-if (process.env.NODE_ENV === 'development') {
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   url = 'http://localhost:8000/api';
   // comp = <span></span>;
 } else {

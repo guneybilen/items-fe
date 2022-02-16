@@ -4,7 +4,7 @@ import axios from 'axios';
 // import logout_api from '../api/logout_api';
 
 let backend;
-if (process.env.NODE_ENV === 'development') {
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   backend = 'http://localhost:8000/api/securityquestions/';
 } else {
   backend =
@@ -75,7 +75,7 @@ const Profile = () => {
 
     let url;
 
-    if (process.env.NODE_ENV === 'development') {
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
       url = 'http://localhost:8000/api/updateuser/';
     } else {
       url = 'https://justlikenew-vaauo.ondigitalocean.app/api/updateuser/';

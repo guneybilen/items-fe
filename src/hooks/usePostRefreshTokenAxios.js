@@ -6,7 +6,7 @@ import axios from 'axios';
 // axios.defaults.xsrfCookieName = 'csrftoken';
 
 let backend;
-if (process.env.NODE_ENV === 'development') {
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   backend = 'http://localhost:8000/api';
 } else {
   backend = 'https://justlikenew-vaauo.ondigitalocean.app/api';

@@ -9,7 +9,7 @@ const NewPassword = () => {
   let { token } = useParams();
   token = token ? token : window.location.pathname.split('/')[2];
   let backend;
-  if (process.env.NODE_ENV === 'development') {
+  if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
     backend = `http://localhost:8000/api/secretquestion/${token}/`;
   } else {
     backend = `https://justlikenew-vaauo.ondigitalocean.app/api/secretquestion/${token}/`;
@@ -65,7 +65,7 @@ const NewPassword = () => {
 
     let url;
 
-    if (process.env.NODE_ENV === 'development') {
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
       url = 'http://localhost:8000/api/passwordresetcomplete/';
     } else {
       url =

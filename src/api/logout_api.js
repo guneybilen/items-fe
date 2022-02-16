@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 let origin;
-if (process.env.NODE_ENV === 'development') {
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   origin = 'http://localhost:8000/api';
 } else {
   origin = 'https://justlikenew-vaauo.ondigitalocean.app/api';

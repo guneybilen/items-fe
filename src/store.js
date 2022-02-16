@@ -5,7 +5,7 @@ axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 axios.defaults.xsrfCookieName = 'csrftoken';
 
 let dest;
-if (process.env.NODE_ENV === 'development') {
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   dest = 'http://localhost:8000/api';
 } else {
   dest = 'https://justlikenew-vaauo.ondigitalocean.app/api';

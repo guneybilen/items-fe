@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 let server;
-if (process.env.NODE_ENV === 'development') {
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   server = 'http://localhost:8000/api';
 } else {
   server = 'https://justlikenew-vaauo.ondigitalocean.app/api';
