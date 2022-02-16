@@ -1,13 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 
-let backend;
-if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  backend = 'http://localhost:8000/api/securityquestions/';
-} else {
-  backend =
-    'https://justlikenew-vaauo.ondigitalocean.app/api/securityquestions/';
-}
+let backend = 'http://localhost:8000/api/securityquestions/';
 
 const Signup = () => {
   const scrollRef = useRef(null);

@@ -1,11 +1,6 @@
 import axios from 'axios';
 
-let server;
-if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  server = 'http://localhost:8000/api';
-} else {
-  server = 'https://justlikenew-vaauo.ondigitalocean.app/api';
-}
+let server = 'http://localhost:8000/api';
 
 const login_api = async (username, password, success, fail) => {
   const json = JSON.stringify({ email: username, password: password });

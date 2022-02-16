@@ -4,12 +4,7 @@ import { createStore, action, thunk, computed } from 'easy-peasy';
 axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 axios.defaults.xsrfCookieName = 'csrftoken';
 
-let dest;
-if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  dest = 'http://localhost:8000/api';
-} else {
-  dest = 'https://justlikenew-vaauo.ondigitalocean.app/api';
-}
+let dest = 'http://localhost:8000/api';
 
 export default createStore({
   sellerNickname: '',

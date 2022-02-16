@@ -5,12 +5,7 @@ import axios from 'axios';
 // axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 // axios.defaults.xsrfCookieName = 'csrftoken';
 
-let backend;
-if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  backend = 'http://localhost:8000/api';
-} else {
-  backend = 'https://justlikenew-vaauo.ondigitalocean.app/api';
-}
+let backend = 'http://localhost:8000/api';
 
 const usePostRefreshTokenAxios = () => {
   const history = useNavigate();

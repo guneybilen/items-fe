@@ -3,13 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 // import logout_api from '../api/logout_api';
 
-let backend;
-if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  backend = 'http://localhost:8000/api/securityquestions/';
-} else {
-  backend =
-    'https://justlikenew-vaauo.ondigitalocean.app/api/securityquestions/';
-}
+let backend = 'http://localhost:8000/api/securityquestions/';
 
 // let server;
 // if (process.env.NODE_ENV === 'development') {
@@ -73,13 +67,7 @@ const Profile = () => {
       s_answer: answer,
     };
 
-    let url;
-
-    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-      url = 'http://localhost:8000/api/updateuser/';
-    } else {
-      url = 'https://justlikenew-vaauo.ondigitalocean.app/api/updateuser/';
-    }
+    let url = 'http://localhost:8000/api/updateuser/';
 
     axios
       .patch(url, user, {

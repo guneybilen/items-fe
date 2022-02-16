@@ -2,13 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-let url;
-
-if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  url = 'http://localhost:8000/api/passwordreset/';
-} else {
-  url = 'https://justlikenew-vaauo.ondigitalocean.app/api/passwordreset/';
-}
+let url = 'http://localhost:8000/api/passwordreset/';
 
 export default function ForgotPassword() {
   const [username, setUsername] = useState('');

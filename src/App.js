@@ -15,17 +15,7 @@ import useAxiosFetch from './hooks/useAxiosFetch';
 import RequireAuth from './components/RequireAuth';
 import { Routes, Route } from 'react-router-dom';
 
-let url;
-// let comp;
-if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  url = 'http://localhost:8000/api';
-  // comp = <span></span>;
-} else {
-  url = 'https://justlikenew-vaauo.ondigitalocean.app/api';
-  // comp = (
-  //   <img src="/construction.png" className="construction" alt="construction" />
-  // );
-}
+let url = 'http://localhost:8000/api';
 
 function App() {
   const setItems = useStoreActions((actions) => actions.setItems);

@@ -8,12 +8,8 @@ const NewPassword = () => {
   const [answer, setAnswer] = useState('');
   let { token } = useParams();
   token = token ? token : window.location.pathname.split('/')[2];
-  let backend;
-  if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-    backend = `http://localhost:8000/api/secretquestion/${token}/`;
-  } else {
-    backend = `https://justlikenew-vaauo.ondigitalocean.app/api/secretquestion/${token}/`;
-  }
+
+  let backend = `http://localhost:8000/api/secretquestion/${token}/`;
 
   const [password1, setPassword1] = useState('');
   const [password2, setPassword2] = useState('');
@@ -63,14 +59,7 @@ const NewPassword = () => {
       answer: answer,
     };
 
-    let url;
-
-    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-      url = 'http://localhost:8000/api/passwordresetcomplete/';
-    } else {
-      url =
-        'https://justlikenew-vaauo.ondigitalocean.app/api/passwordresetcomplete/';
-    }
+    let url = 'http://localhost:8000/api/passwordresetcomplete/';
 
     axios
       .post(url, user, {
