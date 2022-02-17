@@ -15,7 +15,7 @@ import useAxiosFetch from './hooks/useAxiosFetch';
 import RequireAuth from './components/RequireAuth';
 import { Routes, Route } from 'react-router-dom';
 
-let url = 'http://localhost:8000/api';
+let url = '/api';
 
 function App() {
   const setItems = useStoreActions((actions) => actions.setItems);

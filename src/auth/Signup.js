@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 
-let backend = 'http://localhost:8000/api/securityquestions/';
+let backend = '/api/securityquestions/';
 
 const Signup = () => {
   const scrollRef = useRef(null);
@@ -54,13 +54,7 @@ const Signup = () => {
       s_answer: answer,
     };
 
-    let url;
-
-    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-      url = 'http://localhost:8000/api/users/';
-    } else {
-      url = 'https://justlikenew-vaauo.ondigitalocean.app/api/users/';
-    }
+    let url = '/api/users/';
 
     axios
       .post(url, user, {

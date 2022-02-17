@@ -9,7 +9,7 @@ export default function Activation() {
 
   let { token } = useParams();
 
-  let url = `http://localhost:8000/api/activateaccount/${token}/`;
+  let url = `/api/activateaccount/${token}/`;
 
   useEffect(() => {
     const grab = async () => {

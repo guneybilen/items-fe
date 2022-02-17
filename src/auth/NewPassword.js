@@ -9,7 +9,7 @@ const NewPassword = () => {
   let { token } = useParams();
   token = token ? token : window.location.pathname.split('/')[2];
 
-  let backend = `http://localhost:8000/api/secretquestion/${token}/`;
+  let backend = `/api/secretquestion/${token}/`;
 
   const [password1, setPassword1] = useState('');
   const [password2, setPassword2] = useState('');
@@ -59,7 +59,7 @@ const NewPassword = () => {
       answer: answer,
     };
 
-    let url = 'http://localhost:8000/api/passwordresetcomplete/';
+    let url = '/api/passwordresetcomplete/';
 
     axios
       .post(url, user, {

@@ -5,7 +5,7 @@ import axios from 'axios';
 // axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 // axios.defaults.xsrfCookieName = 'csrftoken';
 
-let backend = 'http://localhost:8000/api';
+let backend = '/api';
 
 const usePostRefreshTokenAxios = () => {
   const history = useNavigate();

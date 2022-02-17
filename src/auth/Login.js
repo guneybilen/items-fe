@@ -24,13 +24,7 @@ export default function Login() {
 
   const requestActivation = (e) => {
     e.preventDefault();
-    let url;
-
-    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-      url = 'http://localhost:8000/api/repeatactivate/';
-    } else {
-      url = 'https://justlikenew-vaauo.ondigitalocean.app/api/repeatactivate/';
-    }
+    let url = '/api/repeatactivate/';
 
     axios
       .post(

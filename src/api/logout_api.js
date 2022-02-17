@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let origin = 'http://localhost:8000/api';
+let origin = '/api';
 
 const logout_api = async () => {
   let response = await axios.post(

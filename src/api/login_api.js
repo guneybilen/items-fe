@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let server = 'http://localhost:8000/api';
+let server = '/api';
 
 const login_api = async (username, password, success, fail) => {
   const json = JSON.stringify({ email: username, password: password });

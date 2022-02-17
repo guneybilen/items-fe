@@ -3,16 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 // import logout_api from '../api/logout_api';
 
-let backend = 'http://localhost:8000/api/securityquestions/';
-
-// let server;
-// if (process.env.NODE_ENV === 'development') {
-//   server = `http://localhost:8000/api/${localStorage.getItem('loggedInId')}/`;
-// } else {
-//   server = `https://justlikenew-vaauo.ondigitalocean.app/api/${localStorage.getItem(
-//     'loggedInId'
-//   )}/`;
-// }
+let backend = '/api/securityquestions/';
 
 const Profile = () => {
   const scrollRef = useRef(null);
@@ -67,7 +58,7 @@ const Profile = () => {
       s_answer: answer,
     };
 
-    let url = 'http://localhost:8000/api/updateuser/';
+    let url = '/api/updateuser/';
 
     axios
       .patch(url, user, {
