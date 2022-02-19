@@ -67,11 +67,11 @@ const Signup = () => {
       })
       .then((data) => {
         console.log(data);
-        scrollTo(scrollRef);
 
         if (data.id) {
           setShow(false);
           setError(true);
+          scrollTo(scrollRef);
           setAlert(
             'Please, check your inbox and (spam folder as well) and activate your account'
           );
