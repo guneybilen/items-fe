@@ -115,7 +115,7 @@ const NewPost = () => {
             onChange={(e) => setPrice(e.target.value)}
           />
           <label htmlFor="itemBody">
-            Entry (enter your contact details, as well):
+            Entry (enter your non-private contact details also, so buyers can reach you!):
           </label>
           <DefaultEditor
             value={html}

@@ -40,15 +40,8 @@ const ItemPage = () => {
       <article className="post">
         {item && (
           <>
-            <div className="h4 text-dark">
-              {item.brand.length < 16
-                ? item.brand
-                : `${item.brand?.slice(0, 15)} ...`}
-              <br />
-              {item.model.length < 16
-                ? item.model
-                : `${item.model?.slice(0, 15)} ...`}
-            </div>
+            <h3>{item?.brand}</h3>
+            <p>{item?.model}</p>
             <p>CAD$ {item.price}</p>
             <DefaultEditor
               value={item?.entry}
@@ -70,7 +63,7 @@ const ItemPage = () => {
                 className={
                   !!item.item_image1 === false
                     ? 'itemImageonError'
-                    : 'itemImageSmallEdition'
+                    : 'itemImage'
                 }
               />
             </span>
@@ -81,7 +74,7 @@ const ItemPage = () => {
                 className={
                   !!item.item_image2 === false
                     ? 'itemImageonError'
-                    : 'itemImageSmallEdition'
+                    : 'itemImage'
                 }
               />
             </span>
@@ -93,7 +86,7 @@ const ItemPage = () => {
                 className={
                   !!item.item_image3 === false
                     ? 'itemImageonError'
-                    : 'itemImageSmallEdition'
+                    : 'itemImage'
                 }
               />
             </span>

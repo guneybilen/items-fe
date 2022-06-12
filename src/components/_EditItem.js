@@ -145,7 +145,7 @@ const EditItem = () => {
       {item && (
         <>
           <h2>Edit Item</h2>
-          <h5 className="">...{dt}</h5>
+          <span className="postDate">...{dt}</span>
           <form
             action=""
             className="newPostForm"
@@ -157,6 +157,7 @@ const EditItem = () => {
               type="text"
               id="itemBrand"
               required
+              className="form-control"
               value={brand}
               onChange={(e) => setBrand(e.target.value)}
             />
@@ -165,6 +166,7 @@ const EditItem = () => {
               type="text"
               id="itemModel"
               required
+              className="form-control"
               value={model}
               onChange={(e) => setModel(e.target.value)}
             />
@@ -172,17 +174,25 @@ const EditItem = () => {
             <input
               type="text"
               id="itemPrice"
+              className="form-control"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
             />
             <label htmlFor="itemBody">
-              Entry (enter your contact details, as well):
+              Entry (enter your non-private contact details also, so buyers can reach you!):
             </label>
             <DefaultEditor
               value={html}
               className="form-control"
               onChange={onChange}
             />
+            {/* <textarea
+              type="text"
+              id="itemBody"
+              required
+              value={entry}
+              onChange={(e) => setEntry(e.target.value)}
+            /> */}
             <div>
               <br />
               {imageUpload1 && (

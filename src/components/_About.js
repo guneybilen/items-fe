@@ -13,8 +13,6 @@ const About = () => {
           Canada's Best <br />
           Electronics Sales Website...
         </h1>
-        <h1>Located @ Guelph, ON, Canada.</h1>
-        <h1>reach us at: admin@justlikenew.shop</h1>
       </div>
     </main>
   );

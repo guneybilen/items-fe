@@ -7,28 +7,47 @@ const Item = ({ item }) => {
   let dt = formatDistance(new Date(), parseISO(item.createdAt));
 
   return (
-    <article className="item">
-      <Link to={`items/${item.slug}/`} className="item-link">
-        <div className="h4 text-dark">
-          {item.brand} &nbsp;
-          {item.model}
+    <>
+      <article className="item">
+        <Link to={`items/${item.slug}/`} className="item-link">
+          <div className="h4 h4-mainpage">
+            {item.brand.length < 16
+              ? item.brand
+              : `${item.brand?.slice(0, 15)} ...`}
+            <br />
+            {item.model.length < 16
+              ? item.model
+              : `${item.model?.slice(0, 15)} ...`}
+          </div>
+        </Link>
+        <div className="h5 text-dark">
+          {item.price ? 'CAD$' + item.price : ''}
         </div>
-      </Link>
-      <div className="h5 text-dark">CAD$ {item.price}</div>
-      <div class="wysiwyg-home">
-        <DefaultEditor
-          value={
-            item.entry?.length < 25
-              ? item.entry
-              : `${item.entry?.slice(0, 25)} ...`
-          }
-          contentEditable="false"
-          className="form-control"
-        />
-      </div>
-      <p className="postDate">...{dt}</p>
-      <hr />
-    </article>
+        <div className="wysiwyg-home">
+          <DefaultEditor
+            value={
+              item.entry?.length < 25
+                ? item.entry
+                : `${item.entry?.slice(0, 25)} ...`
+            }
+            contentEditable="false"
+            className="form-control"
+          />
+          <span className="spanImage">
+            <img
+              src={item?.item_image1}
+              alt="1"
+              className={
+                !!item.item_image1 === false
+                  ? 'itemImageonError'
+                  : 'mainPageImage'
+              }
+            />
+          </span>
+        </div>
+        <p className="postDate">...{dt}</p>
+      </article>
+    </>
   );
 };
 

@@ -15,6 +15,7 @@ import useAxiosFetch from './hooks/useAxiosFetch';
 import RequireAuth from './components/RequireAuth';
 import { Routes, Route } from 'react-router-dom';
 
+// for api variable see /etc/nginx/sites-enabled
 let url = '/api';
 
 function App() {
